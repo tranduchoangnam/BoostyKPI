@@ -10,7 +10,7 @@ import {
   ServerStackIcon,
   RectangleStackIcon,
 } from "@heroicons/react/24/solid";
-import { Home, Profile, Tables, Notifications } from "@/pages/dashboard";
+import { Home, ListKpi, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 
 const icon = {
@@ -31,7 +31,7 @@ export const routes = [
         icon: <ChartBarIcon {...icon} />,
         name: "KPIs",
         path: "/kpi",
-        element: <Profile />,
+        element: <ListKpi />,
       },
       {
         icon: <DocumentPlusIcon {...icon} />,

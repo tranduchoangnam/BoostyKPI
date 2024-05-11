@@ -15,8 +15,8 @@ import {
     CardFooter,
 } from "@material-tailwind/react";
 import { EllipsisVerticalIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
-import { StatisticsCard } from "@/widgets/cards";
-import { StatisticsChart } from "@/widgets/charts";
+import { StatisticsCard } from "@/components/cards";
+import { StatisticsChart } from "@/components/charts";
 import {
     statisticsCardsData,
     statisticsChartsData,
