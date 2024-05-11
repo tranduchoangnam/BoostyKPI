@@ -24,6 +24,7 @@ import {
     ordersOverviewData,
 } from "@/data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { PriorityButton } from "@/components/buttons/PriorityButton";
 
 export function Home() {
     return (
@@ -136,10 +137,10 @@ export function Home() {
                                         "Deadline",
                                         "Priority",
                                         "Completion",
-                                    ].map((el) => (
+                                    ].map((el,index) => (
                                         <th
                                             key={el}
-                                            className="border-b border-blue-gray-50 py-3 px-6 text-left"
+                                            className={`border-b border-blue-gray-50 py-3 px-6 text-left ${index===2&&"text-center"}`}
                                         >
                                             <Typography
                                                 variant="small"
@@ -190,13 +191,10 @@ export function Home() {
                                                         {deadline}
                                                     </Typography>
                                                 </td>
-                                                <td className={className}>
-                                                    <Typography
-                                                        variant="small"
-                                                        className="text-xs font-medium text-blue-gray-600"
-                                                    >
-                                                        {priority}
-                                                    </Typography>
+                                                <td className={className+" flex justify-center"}>
+                                                    <PriorityButton
+                                                        priority={priority}
+                                                    />
                                                 </td>
                                                 <td className={className}>
                                                     <div className="w-10/12">
