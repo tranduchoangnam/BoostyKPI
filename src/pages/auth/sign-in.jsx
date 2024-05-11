@@ -14,6 +14,7 @@ export function SignIn() {
     const [formData, setFormData] = useState({
         email: "",
         password: "",
+        remember_me: false,
     });
     const auth = useAuth();
     const navigate = useNavigate();
@@ -26,9 +27,8 @@ export function SignIn() {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!checkBox) {
-            alert("Please agree to the terms and conditions");
-            return;
+        if (checkBox) {
+            setFormData({ ...formData, remember_me: true });
         }
         await auth.loginAction(formData);
     };
