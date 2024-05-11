@@ -1,16 +1,16 @@
 import {
-  BanknotesIcon,
-  UserPlusIcon,
-  UsersIcon,
+  CheckCircleIcon,
+  CalendarDaysIcon,
   ChartBarIcon,
-} from "@heroicons/react/24/solid";
+  ClockIcon,
+} from "@heroicons/react/24/outline";
 
 export const statisticsCardsData = [
   {
     color: "gray",
-    icon: BanknotesIcon,
-    title: "Today's Money",
-    value: "$53k",
+    icon: ChartBarIcon,
+    title: "Total KPIs",
+    value: "1234",
     footer: {
       color: "text-green-500",
       value: "+55%",
@@ -19,9 +19,9 @@ export const statisticsCardsData = [
   },
   {
     color: "gray",
-    icon: UsersIcon,
-    title: "Today's Users",
-    value: "2,300",
+    icon: CheckCircleIcon,
+    title: "Done",
+    value: "1056",
     footer: {
       color: "text-green-500",
       value: "+3%",
@@ -30,24 +30,24 @@ export const statisticsCardsData = [
   },
   {
     color: "gray",
-    icon: UserPlusIcon,
-    title: "New Clients",
+    icon: ClockIcon,
+    title: "Spending Hours",
     value: "3,462",
     footer: {
       color: "text-red-500",
       value: "-2%",
-      label: "than yesterday",
+      label: "than last week",
     },
   },
   {
     color: "gray",
-    icon: ChartBarIcon,
-    title: "Sales",
-    value: "$103,430",
+    icon: CalendarDaysIcon,
+    title: "Day streak",
+    value: "52",
     footer: {
       color: "text-green-500",
       value: "+5%",
-      label: "than yesterday",
+      label: "than last record",
     },
   },
 ];
