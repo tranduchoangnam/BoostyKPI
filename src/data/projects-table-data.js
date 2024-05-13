@@ -1,10 +1,11 @@
 export const projectsTableData = [
     {
-        id: 1,
+        id: "1",
         name: "AI Course",
         deadline: "24.05.2020",
         subtasks: [
             {
+                id: "5",
                 name: "Python Basics",
                 start_date: "2022-04-17T15:30",
                 end_date: "2022-04-17T15:30",
@@ -19,6 +20,7 @@ export const projectsTableData = [
                 },
             },
             {
+                id: "9",
                 name: "Machine Learning Basics",
                 start_date: "2022-04-17T15:30",
                 end_date: "2022-04-17T15:30",
@@ -38,11 +40,12 @@ export const projectsTableData = [
         completion: 60,
     },
     {
-        id: 2,
+        id: "2",
         name: "GPA 4.0",
         deadline: "24.05.2020",
         subtasks: [
             {
+                id: "1",
                 name: "Python Basics",
                 start_date: "2022-04-17T15:30",
                 end_date: "2022-04-17T15:30",
@@ -62,11 +65,12 @@ export const projectsTableData = [
         completion: 40,
     },
     {
-        id: 3,
+        id: "3",
         name: "Backend Certification",
         deadline: "24.05.2020",
         subtasks: [
             {
+                id: "2",
                 name: "Python Basics",
                 start_date: "2022-04-17T15:30",
                 end_date: "2022-04-17T15:30",
@@ -86,11 +90,12 @@ export const projectsTableData = [
         completion: 20,
     },
     {
-        id: 4,
+        id: "4",
         name: "JLPT N2",
         deadline: "24.05.2020",
         subtasks: [
             {
+                id: "4",
                 name: "Python Basics",
                 start_date: "2022-04-17T15:30",
                 end_date: "2022-04-17T15:30",
@@ -110,11 +115,12 @@ export const projectsTableData = [
         completion: 80,
     },
     {
-        id: 5,
+        id: "5",
         name: "Business Certification",
         deadline: "24.05.2020",
         subtasks: [
             {
+                id: "7",
                 name: "Python Basics",
                 start_date: "2022-04-17T15:30",
                 end_date: "2022-04-17T15:30",

@@ -1,20 +1,9 @@
-import { DropdownButton } from "@/components/buttons/DropdownButton";
 import {
     Typography,
     Card,
-    CardBody,
-    Progress,
-    Select,
-    Option,
     Input,
     Chip,
 } from "@material-tailwind/react";
-import dayjs, { Dayjs } from "dayjs";
-import { DatePicker } from "antd";
-import { projectsTableData } from "@/data";
-import { TaskTable } from "@/components/table/TaskTable";
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 export function TagsCard({ tags, onSetTags }) {
     return (

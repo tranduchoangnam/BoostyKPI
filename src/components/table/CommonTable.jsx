@@ -15,19 +15,21 @@ export function CommonTable({
     type,
     addRowJsx,
 }) {
+    const [data, setData] = useState(tableData);
     const [page, setPage] = useState(1);
     const [checkedList, setCheckedList] = useState([]);
-    const rowsPerPage = 3;
+    const rowsPerPage = 6;
     const totalPage = useMemo(() => {
-        return Math.ceil(tableData.length / rowsPerPage);
-    }, [tableData, rowsPerPage]);
-    
+        return Math.ceil(data.length / rowsPerPage);
+    }, [data, rowsPerPage]);
+
     const visibleData = useMemo(() => {
-        return tableData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
-    }, [page, rowsPerPage, tableData]);
+        return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+    }, [page, rowsPerPage, data]);
+
     const handleCheck = (check, index) => {
         if (index === 0) {
-            setCheckedList(check ? visibleData.map((_, i) => i + 1) : []);
+            setCheckedList(check ? visibleData.map((ele) => ele.id) : []);
         } else {
             setCheckedList((prevCheckedList) =>
                 check
@@ -38,12 +40,22 @@ export function CommonTable({
             );
         }
     };
+    const handleDelete = () => {
+        setData((prevData) =>
+            prevData.filter((ele) => !checkedList.includes(ele.id)),
+        );
+    };
+
     useEffect(() => {
         setCheckedList([]);
     }, [page, rowsPerPage, totalPage]);
 
+    useEffect(() => {
+        setData(tableData);
+    }, [tableData]);
     return (
         <Card className=" xl:col-span-2 shadow-none overflow-auto min-h-[540px] relative">
+            <div id="delete" onClick={() => handleDelete()}></div>
             <CardBody className="px-0 pt-0 h-full">
                 <table className="w-full min-w-[640px] table-auto">
                     <thead>
@@ -89,12 +101,12 @@ export function CommonTable({
                                                 color="blue"
                                                 className="hover:before:bg-[#1E5EFF]"
                                                 checked={checkedList.includes(
-                                                    key + 1,
+                                                    ele.id,
                                                 )}
                                                 onChange={(e) =>
                                                     handleCheck(
                                                         e.target.checked,
-                                                        key + 1,
+                                                        ele.id,
                                                     )
                                                 }
                                             />

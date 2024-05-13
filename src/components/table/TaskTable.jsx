@@ -11,6 +11,7 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DatePicker, Select } from "antd";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from 'uuid';
 
 export function TaskTable({ tableData }) {
     const [data, setData] = useState(tableData);
@@ -38,6 +39,7 @@ export function TaskTable({ tableData }) {
     const handleAddTask = () => {
         const formattedTask = {
             ...task,
+            id: uuidv4(),
             start_date: task.start_date.dateString,
             end_date: task.end_date.dateString,
         };
@@ -53,6 +55,7 @@ export function TaskTable({ tableData }) {
 
         setData([...data, formattedTask]);
         setTask({
+            id: null,
             name: null,
             start_date: {
                 value: null,
@@ -247,7 +250,9 @@ export function TaskTable({ tableData }) {
     useEffect(() => {
         setAddRowJsx(addRowJsxData);
     }, [task]);
-
+    useEffect(() => {
+        setData(tableData);
+    }, [tableData]);
     return (
         <>
             <CommonTable
@@ -256,7 +261,6 @@ export function TaskTable({ tableData }) {
                 rowJsx={rowJsx}
                 type="checkbox"
                 addRowJsx={addRowJsx}
-                refreshOnSubmit={false}
             />
         </>
     );

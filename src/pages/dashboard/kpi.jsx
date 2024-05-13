@@ -32,9 +32,11 @@ export function DetailKpi() {
     };
 
     useEffect(() => {
-        setKpi(projectsTableData.find((el) => el.id === parseInt(id)));
+        setKpi(projectsTableData.find((el) => el.id === id));
     }, []);
-    const handleDelete = () => {};
+    const handleDelete = () => {
+        document.getElementById("delete").click();
+    };
     return (
         <>
             {kpi && (
@@ -52,11 +54,11 @@ export function DetailKpi() {
                                     </Typography>
                                 </div>
                                 <div>
-                                    <div className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]">
-                                        <i
-                                            className="fas fa-trash text-[#1E5EFF]"
-                                            onClick={handleDelete}
-                                        />
+                                    <div
+                                        onClick={() => handleDelete()}
+                                        className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
+                                    >
+                                        <i className="fas fa-trash text-[#1E5EFF]" />
                                     </div>
                                 </div>
                             </div>
