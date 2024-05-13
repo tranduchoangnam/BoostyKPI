@@ -7,7 +7,7 @@ import {
     Select,
     Option,
     Input,
-    DemoItem,
+    Chip,
 } from "@material-tailwind/react";
 import dayjs, { Dayjs } from "dayjs";
 import { DatePicker } from "antd";
@@ -15,7 +15,8 @@ import { projectsTableData } from "@/data";
 import { TaskTable } from "@/components/table/TaskTable";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { textFieldClasses } from "@mui/material";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { TagsCard } from "@/components/cards/tags-card";
 
 export function DetailKpi() {
     const { id } = useParams();
@@ -36,7 +37,6 @@ export function DetailKpi() {
     const handleDelete = () => {};
     return (
         <>
-            {" "}
             {kpi && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <Card className="mx-0 mb-6 mt-8 py-6 px-4 pb-0 border border-blue-gray-100 md:col-span-2 col-span-1">
@@ -48,7 +48,7 @@ export function DetailKpi() {
                                         <br />
                                     </Typography>
                                     <Typography className="text-[16px] text-[#131523] font-bold">
-                                        Subtasks
+                                        Tasks
                                     </Typography>
                                 </div>
                                 <div>
@@ -90,11 +90,9 @@ export function DetailKpi() {
                                     }
                                     defaultValue={kpi.priority}
                                     className="w-[100px]"
-                                    containerProps={
-                                        {
-                                            className: "!w-[100px] !min-w-[100px]",
-                                        }
-                                    }
+                                    containerProps={{
+                                        className: "!w-[100px] !min-w-[100px]",
+                                    }}
                                 >
                                     <Option value={"High"}>High</Option>
                                     <Option value={"Medium"}>Medium</Option>
@@ -125,11 +123,15 @@ export function DetailKpi() {
                                 />
                             </div>
                         </Card>
-                        <Card className="mx-0 mb-6 mt-8 py-4 px-6 pb-0 border border-blue-gray-100">
-                            <Typography className="text-[16px] text-[#131523] font-bold">
-                                Tags
-                            </Typography>
-                        </Card>
+                        <TagsCard
+                            tags={kpi.tags}
+                            onSetTags={(tags) => {
+                                setKpi({
+                                    ...kpi,
+                                    tags,
+                                });
+                            }}
+                        />
                     </div>
                 </div>
             )}{" "}

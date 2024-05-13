@@ -16,7 +16,7 @@ export function StatusButton({ status }) {
   }
   return (
     <button
-      className={`text-[14px] rounded-[4px] py-1 px-2  min-w-[60px] last:mr-0 mr-1 ${
+      className={`text-[14px] rounded-[4px] whitespace-nowrap py-1 px-2  min-w-[60px] last:mr-0 mr-1 ${
         type === "Pending"
           ? "bg-[#E6E9F4] text-[#5A607F]"
           : type === "In Progress"

@@ -8,14 +8,23 @@ import {
 import { Pagination } from "@/components/table/Pagination";
 import { useState, useMemo, useEffect } from "react";
 
-export function CommonTable({ tableData, tableHeadJsx, rowJsx, type }) {
+export function CommonTable({
+    tableData,
+    tableHeadJsx,
+    rowJsx,
+    type,
+    addRowJsx,
+}) {
     const [page, setPage] = useState(1);
     const [checkedList, setCheckedList] = useState([]);
     const rowsPerPage = 3;
-    const totalPage = Math.ceil(tableData.length / rowsPerPage);
+    const totalPage = useMemo(() => {
+        return Math.ceil(tableData.length / rowsPerPage);
+    }, [tableData, rowsPerPage]);
+    
     const visibleData = useMemo(() => {
         return tableData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
-    }, [page, rowsPerPage, totalPage]);
+    }, [page, rowsPerPage, tableData]);
     const handleCheck = (check, index) => {
         if (index === 0) {
             setCheckedList(check ? visibleData.map((_, i) => i + 1) : []);
@@ -40,7 +49,7 @@ export function CommonTable({ tableData, tableHeadJsx, rowJsx, type }) {
                     <thead>
                         <tr>
                             {type === "checkbox" && (
-                                <td className="py-3 px-0 w-[24px] border-b border-blue-gray-50">
+                                <td className=" px-0 w-[48px] flex justify-center border-b border-blue-gray-50">
                                     <Checkbox
                                         className="hover:before:bg-[#1E5EFF]"
                                         color="blue"
@@ -58,6 +67,7 @@ export function CommonTable({ tableData, tableHeadJsx, rowJsx, type }) {
                         </tr>
                     </thead>
                     <tbody>
+                        <tr>{addRowJsx}</tr>
                         {visibleData.map((ele, key) => {
                             const className = `py-3 px-5 ${
                                 key === visibleData.length - 1
@@ -69,7 +79,7 @@ export function CommonTable({ tableData, tableHeadJsx, rowJsx, type }) {
                                 <tr key={page + "-" + key}>
                                     {type === "checkbox" && (
                                         <td
-                                            className={`py-3 px-0 w-[24px]${
+                                            className={`py-3 px-0 w-[48px] flex justify-center ${
                                                 key === visibleData.length - 1
                                                     ? ""
                                                     : "border-b border-blue-gray-50"

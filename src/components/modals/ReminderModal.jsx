@@ -2,22 +2,21 @@ import { Input, Select, Option, Switch } from "@material-tailwind/react";
 import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-export function ReminderModal({ reminder, status, onActive, onClose }) {
+import { toast } from "react-toastify";
+export function ReminderModal({ reminder, onSetReminder, onClose }) {
     const [reminderData, setReminderData] = useState(reminder);
-    const [active, setActive] = useState(status);
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-            <ToastContainer />
             <div className="bg-white py-4 px-8   rounded-lg relative">
                 <div className="flex justify-between pt-2 pb-4 border-b">
                     <h1 className="text-[16px] font-bold">Reminder</h1>
                     <Switch
                         id="custom-switch-component"
                         ripple={false}
-                        checked={active}
-                        onChange={(e) => setActive(e.target.checked)}
+                        checked={reminderData.status}
+                        onChange={(e) =>
+                            setReminderData({ ...reminderData, status: e.target.checked })
+                        }
                         className="h-full w-full checked:bg-[#1E5EFF]"
                         containerProps={{
                             className: "w-11 h-6",
@@ -80,7 +79,7 @@ export function ReminderModal({ reminder, status, onActive, onClose }) {
                         onChange={(e) =>
                             setReminderData({
                                 ...reminderData,
-                                custom_date: e,
+                                custom_date: e.target.value,
                             })
                         }
                     />
@@ -95,10 +94,15 @@ export function ReminderModal({ reminder, status, onActive, onClose }) {
                     <button
                         className="bg-[#1E5EFF] text-white px-8 py-2 rounded-[4px]"
                         onClick={() => {
-                            onActive(active);
-                            toast.success('Reminder saved successfully');
-                        }
-                    }
+                            onSetReminder({
+                                status: reminderData.status||false,
+                                before_start: reminderData.before_start||0,
+                                repeat: reminderData.repeat||"None",
+                                custom_time: reminderData.custom_time||"",
+                                custom_date: reminderData.custom_date||"",
+                            });
+                            toast.success("Reminder saved successfully");
+                        }}
                     >
                         Save
                     </button>

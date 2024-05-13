@@ -8,6 +8,8 @@ import {
   Footer,
 } from "@/components/layout";
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -15,6 +17,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#F5F6FA] font-['Inter']">
+      <ToastContainer />
       <Sidenav
         brandImg={
           sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
