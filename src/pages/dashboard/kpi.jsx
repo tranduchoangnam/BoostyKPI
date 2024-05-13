@@ -92,7 +92,7 @@ export function DetailKpi() {
                                     className="w-[100px]"
                                     containerProps={
                                         {
-                                            className: "w-[100px] min-w-[100px]",
+                                            className: "!w-[100px] !min-w-[100px]",
                                         }
                                     }
                                 >
