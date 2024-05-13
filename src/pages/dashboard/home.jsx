@@ -29,7 +29,7 @@ import { PriorityButton } from "@/components/buttons/PriorityButton";
 export function Home() {
     return (
         <div className="mt-12">
-            <div className="mb-12 grid gap-y-10 md:grid-cols-2 xl:gap-x-1 xl:grid-cols-4 gap-x-8">
+            <div className="mb-12 grid gap-y-6 grid-cols-2 xl:gap-x-1 xl:grid-cols-4 gap-x-4">
                 {statisticsCardsData.map(({ icon, title, footer, ...rest }) => (
                     <StatisticsCard
                         key={title}

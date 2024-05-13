@@ -8,8 +8,17 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { useMaterialTailwindController, setOpenSidenav } from "@/context";
+import {
+    HomeIcon,
+    ChartBarIcon,
+    DocumentPlusIcon,
+    CalendarDaysIcon,
+    Cog6ToothIcon,
+    ServerStackIcon,
+    RectangleStackIcon,
+} from "@heroicons/react/24/solid";
 
-export function Sidenav({ brandImg, brandName, routes }) {
+export function Sidenav({ brandImg, brandName }) {
     const [controller, dispatch] = useMaterialTailwindController();
     const { sidenavColor, sidenavType, openSidenav } = controller;
     const sidenavTypes = {
@@ -17,6 +26,55 @@ export function Sidenav({ brandImg, brandName, routes }) {
         white: "bg-white shadow-sm",
         transparent: "bg-transparent",
     };
+    const icon = {
+        className: "w-5 h-5 text-inherit",
+    };
+    const routes = [
+        {
+            pages: [
+                {
+                    icon: <HomeIcon {...icon} />,
+                    name: "dashboard",
+                    path: "",
+                },
+                {
+                    icon: <ChartBarIcon {...icon} />,
+                    name: "KPIs",
+                    path: "/kpi",
+                },
+                {
+                    icon: <DocumentPlusIcon {...icon} />,
+                    name: "Add KPI",
+                    path: "/add-kpi",
+                },
+                {
+                    icon: <CalendarDaysIcon {...icon} />,
+                    name: "calendar",
+                    path: "/calendar",
+                },
+                {
+                    icon: <Cog6ToothIcon {...icon} />,
+                    name: "settings",
+                    path: "/settings",
+                },
+            ],
+        },
+        {
+            title: "auth pages",
+            pages: [
+                {
+                    icon: <ServerStackIcon {...icon} />,
+                    name: "sign in",
+                    path: "/sign-in",
+                },
+                {
+                    icon: <RectangleStackIcon {...icon} />,
+                    name: "sign up",
+                    path: "/sign-up",
+                },
+            ],
+        },
+    ];
 
     return (
         <aside
@@ -48,7 +106,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                 </IconButton>
             </div>
             <div className="mx-4">
-                {routes.map(({ layout, title, pages }, key) => (
+                {routes.map(({ title, pages }, key) => (
                     <ul key={key} className="mb-4 flex flex-col gap-1">
                         {title && (
                             <li className="mx-3.5 mt-4 mb-2">
@@ -67,7 +125,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         )}
                         {pages.map(({ icon, name, path }) => (
                             <li key={name}>
-                                <NavLink to={`/${layout}${path}`}>
+                                <NavLink to={`${path}`}>
                                     {({ isActive }) => (
                                         <Button
                                             variant={!isActive && "text"}
@@ -105,7 +163,6 @@ Sidenav.defaultProps = {
 Sidenav.propTypes = {
     brandImg: PropTypes.string,
     brandName: PropTypes.string,
-    routes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 Sidenav.displayName = "/src/widgets/layout/sidnave.jsx";

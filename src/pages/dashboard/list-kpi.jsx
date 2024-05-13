@@ -15,19 +15,18 @@ export function ListKpi() {
         { value: "option2", label: "Option 2" },
         { value: "option3", label: "Option 3" },
     ];
-    const tableHead=["Name","Deadline","Priority","Completion"];
     const tableData= projectsTableData;
     const handleSearch = () => {};
     const handleDelete = () => {};
     return (
         <>
-            <Card className="mx-3 mb-6 mt-8 p-8 lg:mx-4 border border-blue-gray-100">
-                <div className="flex items-center justify-between">
-                    <div className="flex gap-8">
+            <Card className="mx-0 mb-6 mt-8 p-8 pb-0 border border-blue-gray-100">
+                <div className="flex items-start justify-between mb-8">
+                    <div className="flex gap-8 flex-wrap">
                         <div className="w-[180px]">
                             <DropdownButton name="Filter" options={options} />
                         </div>
-                        <div className="w-[350px]">
+                        <div className="sm:w-[350px] w-full">
                             <Input
                                 label="Search KPI..."
                                 icon={
@@ -46,7 +45,7 @@ export function ListKpi() {
                         />
                     </div>
                 </div>
-                <KpiTable tableHead={tableHead} tableData={tableData} />
+                <KpiTable tableData={tableData}  />
             </Card>
         </>
     );

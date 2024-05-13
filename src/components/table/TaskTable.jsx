@@ -1,17 +1,27 @@
 import { Typography, Progress } from "@material-tailwind/react";
-import { PriorityButton } from "@/components/buttons/PriorityButton";
+import {
+    PriorityButton,
+    StatusButton,
+    ReminderButton,
+} from "@/components/buttons";
 import { CommonTable } from "./CommonTable";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { CalendarIcon } from "@heroicons/react/24/outline";
 
-export function KpiTable({ tableData }) {
-    const naviagate=useNavigate();
-    const tableHead=["Name","Deadline","Subtasks","Priority","Completion"];
+export function TaskTable({ tableData }) {
+    const tableHead = [
+        "Name",
+        "Start Date",
+        "End Date",
+        "Priority",
+        "Status",
+        "Reminder",
+    ];
     const tableHeadJsx = tableHead.map((el, index) => (
         <th
             key={el}
             className={`border-b border-blue-gray-50 py-3 px-6 text-left ${
-                [2,3].includes(index) && "text-center"
+                [2, 3, 4, 5].includes(index) && "text-center"
             }`}
         >
             <Typography
@@ -25,7 +35,7 @@ export function KpiTable({ tableData }) {
 
     const rowJsx = (ele, className) => (
         <>
-            <td className={className+" cursor-pointer"} onClick={()=>naviagate(`/kpi/${ele.id}`)}>
+            <td className={className}>
                 <div className="flex items-center gap-4">
                     <Typography
                         variant="small"
@@ -42,7 +52,7 @@ export function KpiTable({ tableData }) {
                     variant="small"
                     className="text-xs font-medium text-blue-gray-600"
                 >
-                    {ele.deadline}
+                    {ele.start_date}
                 </Typography>
             </td>
             <td className={className}>
@@ -50,26 +60,18 @@ export function KpiTable({ tableData }) {
                     variant="small"
                     className="text-xs text-center font-medium text-blue-gray-600"
                 >
-                    {ele.subtasks.length}
+                    {ele.end_date}
                 </Typography>
             </td>
             <td className={className + " text-center"}>
                 <PriorityButton priority={ele.priority} />
             </td>
+            <td className={className + " text-center"}>
+                <StatusButton status={ele.status} />
+            </td>
             <td className={className}>
-                <div className="w-10/12">
-                    <Typography
-                        variant="small"
-                        className="mb-1 block text-xs font-medium text-blue-gray-600"
-                    >
-                        {ele.completion}%
-                    </Typography>
-                    <Progress
-                        value={ele.completion}
-                        variant="gradient"
-                        color={ele.completion === 100 ? "green" : "blue"}
-                        className="h-1"
-                    />
+                <div className="flex justify-center">
+                    <ReminderButton reminder={ele.reminder} />
                 </div>
             </td>
         </>

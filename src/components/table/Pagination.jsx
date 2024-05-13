@@ -7,7 +7,7 @@ export function Pagination({ page, totalPage, onChange }) {
 
     const getItemProps = (index) => ({
         variant: active === index ? "filled" : "text",
-        color: "gray",
+        className: active === index ? "bg-[#ECF2FF] text-[#1E5EFF]" : "",
         onClick: () => setActive(index),
     });
 
@@ -27,7 +27,7 @@ export function Pagination({ page, totalPage, onChange }) {
     }, [active]);
 
     return (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mb-0">
             <Button
                 variant="text"
                 className="flex items-center gap-2"

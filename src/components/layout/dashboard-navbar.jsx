@@ -1,4 +1,4 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import {
     Navbar,
     Typography,
@@ -26,20 +26,23 @@ import {
     setOpenSidenav,
 } from "@/context";
 import { useAuth } from "@/context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 export function DashboardNavbar() {
     const [controller, dispatch] = useMaterialTailwindController();
     const { fixedNavbar, openSidenav } = controller;
     const { pathname } = useLocation();
-    const [layout, page] = pathname.split("/").filter((el) => el !== "");
+    const prettyPathname = (pathname) => {
+        if (pathname === "/") return "Dashboard";
+        if (pathname.includes("kpi/")) return "Detail KPI";
+        return pathname.replace("/", "").replace("-", " ");
+    };
     const auth = useAuth();
-    const navigate=useNavigate();
+    const navigate = useNavigate();
     const handleUserClick = () => {
-      if (auth.user) {
-       //TODO
-      }
-      else navigate("/auth/sign-in");
-    }
+        if (auth.user) {
+            //TODO
+        } else navigate("/auth/sign-in");
+    };
     return (
         <Navbar
             color={fixedNavbar ? "white" : "transparent"}
@@ -51,9 +54,9 @@ export function DashboardNavbar() {
             fullWidth
             blurred={fixedNavbar}
         >
-            <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
+            <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-start">
                 <div className="capitalize">
-                    <Breadcrumbs
+                    {/* <Breadcrumbs
                         className={`bg-transparent p-0 transition-all ${
                             fixedNavbar ? "mt-1" : ""
                         }`}
@@ -74,9 +77,16 @@ export function DashboardNavbar() {
                         >
                             {page}
                         </Typography>
-                    </Breadcrumbs>
-                    <Typography variant="h6" color="blue-gray">
-                        {page}
+                    </Breadcrumbs> */}
+                    <Typography
+                        className="text-[14px] text-[#5A607F] flex cursor-pointer"
+                        onClick={() => navigate(-1)}
+                    >
+                        <ArrowLeftIcon className="h-5 w-5 text-blue-gray-500 mr-1" />
+                        Back
+                    </Typography>
+                    <Typography className="text-[24px] font-bold text-[#131523] mt-2 uppercase">
+                        {prettyPathname(pathname)}
                     </Typography>
                 </div>
                 <div className="flex items-center">
