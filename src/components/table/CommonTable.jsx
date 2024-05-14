@@ -20,7 +20,7 @@ export function CommonTable({
     const [checkedList, setCheckedList] = useState([]);
     const rowsPerPage = 6;
     const totalPage = useMemo(() => {
-        return Math.ceil(data.length / rowsPerPage);
+        return Math.max(Math.ceil(data.length / rowsPerPage),1);
     }, [data, rowsPerPage]);
 
     const visibleData = useMemo(() => {
@@ -67,7 +67,7 @@ export function CommonTable({
                                         color="blue"
                                         checked={
                                             checkedList.length ===
-                                            visibleData.length
+                                            visibleData.length&&checkedList.length>0
                                         }
                                         onChange={(e) =>
                                             handleCheck(e.target.checked, 0)

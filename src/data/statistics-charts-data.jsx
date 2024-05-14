@@ -10,30 +10,6 @@ const websiteViewsChart = {
             pie: {
                 startAngle: 0,
                 endAngle: 360,
-            },
-        },
-        dataLabels: {
-            enabled: false,
-        },
-        labels: ["Done", "In Progress"],
-        legend: {
-            show: false,
-        },
-        responsive: [
-            {
-                breakpoint: 480,
-                options: {
-                    chart: {
-                        width: 200,
-                    },
-                    legend: {
-                        position: "bottom",
-                    },
-                },
-            },
-        ],
-        plotOptions: {
-            pie: {
                 donut: {
                     labels: {
                         // value?: {
@@ -59,6 +35,26 @@ const websiteViewsChart = {
                 },
             },
         },
+        dataLabels: {
+            enabled: false,
+        },
+        labels: ["Done", "In Progress"],
+        legend: {
+            show: false,
+        },
+        responsive: [
+            {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: 200,
+                    },
+                    legend: {
+                        position: "bottom",
+                    },
+                },
+            },
+        ],
     },
 };
 
@@ -270,7 +266,6 @@ export const statisticsChartsData = [
                             KPIs total
                         </Typography>
                     </div>
-                    
                 </div>
             ),
         },

@@ -2,7 +2,7 @@ export const projectsTableData = [
     {
         id: "1",
         name: "AI Course",
-        deadline: "24.05.2020",
+        plan: ["24.05.2020", "24.05.2021"],
         subtasks: [
             {
                 id: "5",
@@ -42,7 +42,7 @@ export const projectsTableData = [
     {
         id: "2",
         name: "GPA 4.0",
-        deadline: "24.05.2020",
+        plan: ["24.05.2020", "24.05.2021"],
         subtasks: [
             {
                 id: "1",
@@ -67,7 +67,7 @@ export const projectsTableData = [
     {
         id: "3",
         name: "Backend Certification",
-        deadline: "24.05.2020",
+        plan: ["24.05.2020", "24.05.2021"],
         subtasks: [
             {
                 id: "2",
@@ -92,7 +92,7 @@ export const projectsTableData = [
     {
         id: "4",
         name: "JLPT N2",
-        deadline: "24.05.2020",
+        plan: ["24.05.2020", "24.05.2021"],
         subtasks: [
             {
                 id: "4",
@@ -117,7 +117,7 @@ export const projectsTableData = [
     {
         id: "5",
         name: "Business Certification",
-        deadline: "24.05.2020",
+        plan: ["24.05.2020", "24.05.2021"],
         subtasks: [
             {
                 id: "7",

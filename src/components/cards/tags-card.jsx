@@ -1,9 +1,4 @@
-import {
-    Typography,
-    Card,
-    Input,
-    Chip,
-} from "@material-tailwind/react";
+import { Typography, Card, Input, Chip } from "@material-tailwind/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 export function TagsCard({ tags, onSetTags }) {
     return (
@@ -24,9 +19,8 @@ export function TagsCard({ tags, onSetTags }) {
             />
             <div className="flex flex-wrap gap-2">
                 {tags.map((tag, index) => (
-                    <div className="relative">
+                    <div className="relative" key={"tag-" + index}>
                         <Chip
-                            key={"tag-" + index}
                             value={tag}
                             className="bg-[#E6E9F4] pr-[24px] text-[#5A607F] text-[14px] font-medium capitalize"
                         />
