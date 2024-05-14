@@ -10,13 +10,14 @@ export function KpiTable({ tableData }) {
     const tableHeadJsx = tableHead.map((el, index) => (
         <th
             key={el}
-            className={`border-b border-blue-gray-50 py-3 px-6 text-left ${
-                [2,3].includes(index) && "text-center"
-            }`}
+            className={`border-b border-blue-gray-50 px-2
+            } ${[0,1].includes(index) && " !px-0"}`}
         >
             <Typography
                 variant="small"
-                className="text-[11px] font-medium uppercase text-blue-gray-400"
+                className={`text-[11px]  text-left uppercase text-blue-gray-400 ${
+                    [1, 2, 3, 4, 5].includes(index) && "!text-center"
+                }`}
             >
                 {el}
             </Typography>
@@ -25,7 +26,7 @@ export function KpiTable({ tableData }) {
 
     const rowJsx = (ele, className) => (
         <>
-            <td className={className+" cursor-pointer"} onClick={()=>naviagate(`/kpi/${ele.id}`)}>
+            <td className={className+" !pl-0 !px-2 cursor-pointer"} onClick={()=>naviagate(`/kpi/${ele.id}`)}>
                 <div className="flex items-center gap-4">
                     <Typography
                         variant="small"
@@ -37,7 +38,7 @@ export function KpiTable({ tableData }) {
                 </div>
             </td>
 
-            <td className={className}>
+            <td className={className + " text-center !px-2"}>
                 <Typography
                     variant="small"
                     className="text-xs font-medium text-blue-gray-600"

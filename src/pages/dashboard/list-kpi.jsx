@@ -7,7 +7,7 @@ import {
     Input,
 } from "@material-tailwind/react";
 import { projectsTableData } from "@/data";
-import {KpiTable} from "@/components/table/KpiTable";
+import { KpiTable } from "@/components/table/KpiTable";
 
 export function ListKpi() {
     const options = [
@@ -15,9 +15,11 @@ export function ListKpi() {
         { value: "option2", label: "Option 2" },
         { value: "option3", label: "Option 3" },
     ];
-    const tableData= projectsTableData;
+    const tableData = projectsTableData;
     const handleSearch = () => {};
-    const handleDelete = () => {};
+    const handleDelete = () => {
+        document.getElementById("delete").click();
+    };
     return (
         <>
             <Card className="mx-0 mb-6 mt-8 p-8 pb-0 border border-blue-gray-100">
@@ -38,14 +40,14 @@ export function ListKpi() {
                             />
                         </div>
                     </div>
-                    <div className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]">
-                        <i
-                            className="fas fa-trash text-[#1E5EFF]"
-                            onClick={handleDelete}
-                        />
+                    <div
+                        onClick={handleDelete}
+                        className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
+                    >
+                        <i className="fas fa-trash text-[#1E5EFF]" />
                     </div>
                 </div>
-                <KpiTable tableData={tableData}  />
+                <KpiTable tableData={tableData} />
             </Card>
         </>
     );

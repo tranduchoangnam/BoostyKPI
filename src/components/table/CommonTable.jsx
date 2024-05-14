@@ -57,11 +57,11 @@ export function CommonTable({
         <Card className=" xl:col-span-2 shadow-none overflow-auto min-h-[540px] relative">
             <div id="delete" onClick={() => handleDelete()}></div>
             <CardBody className="px-0 pt-0 h-full">
-                <table className="w-full min-w-[640px] table-auto">
+                <table className="w-full min-w-[640px]" cellSpacing={0}>
                     <thead>
                         <tr>
                             {type === "checkbox" && (
-                                <td className=" px-0 w-[48px] flex justify-center border-b border-blue-gray-50">
+                                <td className=" px-0 flex justify-center border-b border-blue-gray-50">
                                     <Checkbox
                                         className="hover:before:bg-[#1E5EFF]"
                                         color="blue"
@@ -88,10 +88,10 @@ export function CommonTable({
                             }`;
 
                             return (
-                                <tr key={page + "-" + key}>
+                                <tr key={page + "-" + key} >
                                     {type === "checkbox" && (
                                         <td
-                                            className={`py-3 px-0 w-[48px] flex justify-center ${
+                                            className={`py-3 px-0  flex justify-center ${
                                                 key === visibleData.length - 1
                                                     ? ""
                                                     : "border-b border-blue-gray-50"

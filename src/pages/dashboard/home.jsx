@@ -58,11 +58,13 @@ export function Home() {
                     />
                 ))}
             </div>
-            <div className="mb-6 grid grid-cols-1 gap-y-12 gap-x-6 md:grid-cols-3 xl:grid-cols-3">
+            <div className="mb-6 grid grid-flow-row-dense grid-cols-2 gap-y-12 gap-x-6 md:grid-cols-7 xl:grid-cols-7">
                 {statisticsChartsData.map((props, index) => (
-                    <div className={index === 0 ? "col-span-2" : "col-span-1"}>
+                    <div
+                        key={props.title}
+                        className={index === 0 ? "col-span-2 md:col-span-5" : "col-span-1 md:col-span-2"}
+                    >
                         <StatisticsChart
-                            key={props.title}
                             {...props}
                             footer={
                                 <Typography
@@ -79,9 +81,8 @@ export function Home() {
                         />
                     </div>
                 ))}
-            </div>
-            <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
-                <Card className="overflow-hidden xl:col-span-2 shadow-sm">
+          
+                <Card className="overflow-hidden col-span-2 md:col-span-5 shadow-sm">
                     <CardHeader
                         floated={false}
                         shadow={false}
@@ -137,10 +138,12 @@ export function Home() {
                                         "Deadline",
                                         "Priority",
                                         "Completion",
-                                    ].map((el,index) => (
+                                    ].map((el, index) => (
                                         <th
                                             key={el}
-                                            className={`border-b border-blue-gray-50 py-3 px-6 text-left ${index===2&&"text-center"}`}
+                                            className={`border-b border-blue-gray-50 py-3 px-6 text-left ${
+                                                index === 2 && "text-center"
+                                            }`}
                                         >
                                             <Typography
                                                 variant="small"
@@ -191,7 +194,12 @@ export function Home() {
                                                         {deadline}
                                                     </Typography>
                                                 </td>
-                                                <td className={className+" flex justify-center"}>
+                                                <td
+                                                    className={
+                                                        className +
+                                                        " flex justify-center"
+                                                    }
+                                                >
                                                     <PriorityButton
                                                         priority={priority}
                                                     />
@@ -225,7 +233,7 @@ export function Home() {
                         </table>
                     </CardBody>
                 </Card>
-                <Card className="shadow-sm">
+                <Card className="shadow-sm col-span-1 md:col-span-2">
                     <CardHeader
                         floated={false}
                         shadow={false}
