@@ -1,9 +1,6 @@
 import { DropdownButton } from "@/components/buttons/DropdownButton";
 import {
-    Typography,
     Card,
-    CardBody,
-    Progress,
     Input,
 } from "@material-tailwind/react";
 import { projectsTableData } from "@/data";
