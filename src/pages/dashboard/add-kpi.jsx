@@ -17,7 +17,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { TagsCard } from "@/components/cards/tags-card";
-
+import { Header } from "@/components/layout";
 export function AddKpi() {
     const [kpi, setKpi] = useState({
         id: "",
@@ -43,8 +43,14 @@ export function AddKpi() {
     };
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="mx-0 mb-6 mt-8 py-6 px-4 pb-0 border border-blue-gray-100 md:col-span-2 col-span-1">
+            <Header
+                name={{ page: "Add KPI", primary: "Save", secondary: "Cancel" }}
+                onPrimary={() => {}}
+                onSecondary={() => {}}
+                back={true}
+            />
+            <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-4">
+                <Card className="mx-0 mb-6 py-6 px-4 pb-0 shadow-none border rounded-lg md:col-span-2 col-span-1">
                     <>
                         <div className="flex justify-between">
                             <Typography className="text-[16px] text-[#131523] font-bold">
@@ -63,7 +69,7 @@ export function AddKpi() {
                     </>
                 </Card>
                 <div>
-                    <Card className="mx-0 mb-6 mt-8 py-6 px-6 border border-blue-gray-100 gap-4">
+                    <Card className="mx-0 mb-6 py-6 px-6 shadow-none border rounded-lg gap-4">
                         <div className="flex items-center justify-between">
                             <Typography className="text-[16px] text-[#131523] font-bold">
                                 Overview

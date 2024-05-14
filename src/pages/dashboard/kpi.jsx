@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { TagsCard } from "@/components/cards/tags-card";
 import { CommonButton } from "@/components/buttons/CommonButton";
-
+import { Header } from "@/components/layout/Header";
 export function DetailKpi() {
     const { id } = useParams();
     const [kpi, setKpi] = useState();
@@ -42,12 +42,18 @@ export function DetailKpi() {
         <>
             {kpi && (
                 <>
-                    <CommonButton type="primary" onClick={() => console.log("Save")}>
-                        <p>Add KPI</p>
-                    </CommonButton>
-                    <p>Add KPI</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <Card className="mx-0 mb-6 mt-8 py-6 px-4 pb-0 border border-blue-gray-100 md:col-span-2 col-span-1">
+                    <Header
+                        name={{
+                            page: "Detail KPI",
+                            primary: "Save",
+                            secondary: "Cancel",
+                        }}
+                        onPrimary={() => {}}
+                        onSecondary={() => {}}
+                        back={true}
+                    />
+                    <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-4">
+                        <Card className="mx-0 mb-6 py-6 px-4 pb-0 border border-blue-gray-100 md:col-span-2 col-span-1">
                             <>
                                 <div className="flex justify-between">
                                     <div className="">
@@ -55,7 +61,7 @@ export function DetailKpi() {
                                             {kpi.name}
                                         </Typography>
                                         <Typography className="text-[16px] text-[#131523] font-bold">
-                                            Task
+                                            Tasks
                                         </Typography>
                                     </div>
                                     <div>
@@ -71,7 +77,7 @@ export function DetailKpi() {
                             </>
                         </Card>
                         <div>
-                            <Card className="mx-0 mb-6 mt-8 py-6 px-6 border border-blue-gray-100 gap-4">
+                            <Card className="mx-0 mb-6 py-6 px-6 border border-blue-gray-100 gap-4">
                                 <div className="flex items-center justify-between">
                                     <Typography className="text-[16px] text-[#131523] font-bold">
                                         Overview

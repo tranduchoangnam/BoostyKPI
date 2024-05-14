@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { projectsTableData } from "@/data";
 import { KpiTable } from "@/components/table/KpiTable";
-
+import { Header } from "@/components/layout";
 export function ListKpi() {
     const options = [
         { value: "option1", label: "Option 1" },
@@ -22,7 +22,13 @@ export function ListKpi() {
     };
     return (
         <>
-            <Card className="mx-0 mb-6 mt-8 p-8 pb-0 border border-blue-gray-100">
+            <Header
+                name={{ page: "List KPI", secondary: "Import", primary: "Save" }}
+                onPrimary={() => {}}
+                onSecondary={() => {}}
+                back={true}
+            />
+            <Card className="mx-0 mb-6 mt-4 p-8 pb-0 border border-blue-gray-100">
                 <div className="flex items-start justify-between mb-8">
                     <div className="flex gap-8 flex-wrap">
                         <div className="w-[180px]">

@@ -91,7 +91,7 @@ export function TaskTable({ tableData }) {
         >
             <Typography
                 variant="small"
-                className={`text-[11px]  text-left uppercase text-blue-gray-400 ${
+                className={`text-[14px] font-medium text-left capitalize text-[#5A607F] ${
                     [1, 2, 3, 4, 5].includes(index) && "!text-center"
                 }`}
             >
@@ -107,7 +107,7 @@ export function TaskTable({ tableData }) {
                     <Typography
                         variant="small"
                         color="blue-gray"
-                        className="font-bold"
+                        className="font-bold text-[14px]"
                     >
                         {ele.name}
                     </Typography>
@@ -117,7 +117,7 @@ export function TaskTable({ tableData }) {
             <td className={className + " text-center !px-2"}>
                 <Typography
                     variant="small"
-                    className="text-xs text-center font-medium text-blue-gray-600"
+                    className="text-[14px] text-center font-medium text-blue-gray-600"
                 >
                     {ele.start_date}
                 </Typography>
@@ -125,7 +125,7 @@ export function TaskTable({ tableData }) {
             <td className={className + " text-center !px-2"}>
                 <Typography
                     variant="small"
-                    className="text-xs text-center font-medium text-blue-gray-600"
+                    className="text-[14px] text-center font-medium text-blue-gray-600"
                 >
                     {ele.end_date}
                 </Typography>

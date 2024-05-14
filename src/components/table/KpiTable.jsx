@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export function KpiTable({ tableData }) {
     const naviagate=useNavigate();
-    const tableHead=["Name","Deadline","Subtasks","Priority","Completion"];
+    const tableHead=["Name","Plan","Subtasks","Priority","Completion"];
     const tableHeadJsx = tableHead.map((el, index) => (
         <th
             key={el}
@@ -15,7 +15,7 @@ export function KpiTable({ tableData }) {
         >
             <Typography
                 variant="small"
-                className={`text-[11px]  text-left uppercase text-blue-gray-400 ${
+                className={`text-[14px] font-medium text-left capitalize text-[#5A607F] ${
                     [1, 2, 3, 4, 5].includes(index) && "!text-center"
                 }`}
             >
@@ -41,15 +41,15 @@ export function KpiTable({ tableData }) {
             <td className={className + " text-center !px-2"}>
                 <Typography
                     variant="small"
-                    className="text-xs font-medium text-blue-gray-600"
+                    className="text-[14px] font-medium text-blue-gray-600"
                 >
-                    {ele.deadline}
+                    {ele.plan[0]} - {ele.plan[1]}
                 </Typography>
             </td>
             <td className={className}>
                 <Typography
                     variant="small"
-                    className="text-xs text-center font-medium text-blue-gray-600"
+                    className="text-[14px] text-center font-medium text-blue-gray-600"
                 >
                     {ele.subtasks.length}
                 </Typography>

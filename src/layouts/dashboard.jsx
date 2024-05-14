@@ -18,14 +18,10 @@ export function Dashboard() {
   return (
     <div className="min-h-screen bg-[#F5F6FA] font-['Inter']">
       <ToastContainer />
-      <Sidenav
-        brandImg={
-          sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
-        }
-      />
-      <div className="p-4 xl:ml-80">
-        <DashboardNavbar />
-        <Configurator />
+      <DashboardNavbar />
+      <Sidenav/>
+      <div className="p-4 md:px-8 mt-[68px] xl:ml-72">
+        {/* <Configurator />
         <IconButton
           size="lg"
           color="white"
@@ -34,7 +30,7 @@ export function Dashboard() {
           onClick={() => setOpenConfigurator(dispatch, true)}
         >
           <Cog6ToothIcon className="h-5 w-5" />
-        </IconButton>
+        </IconButton> */}
         <Outlet />
         <div className="text-blue-gray-600">
           <Footer />

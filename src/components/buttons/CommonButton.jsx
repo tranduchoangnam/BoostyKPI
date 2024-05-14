@@ -6,10 +6,14 @@ export function CommonButton({ type, onClick, children }) {
             className={`${
                 type === "primary"
                     ? "bg-[#1E5EFF] text-white"
-                    : "bg-white text-[#1E5EFF]"
-            } flex items-center gap-3 "}`}
+                    : "bg-white text-[#1E5EFF] border"
+            } flex items-center gap-3"}`}
             style={{
                 borderRadius: "4px",
+                fontSize: "16px",
+                fontWeight: 400,
+                boxShadow: "none",
+                textTransform: "capitalize",
             }}
         >
             {children}
