@@ -14,7 +14,9 @@
     "@emotion/styled": "^11.11.5",
     "@heroicons/react": "2.0.18",
     "@material-tailwind/react": "2.1.4",
+    "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.17",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-date-pickers": "^7.4.0",
     "antd": "^5.17.0",
     "apexcharts": "3.44.0",
@@ -27,6 +29,7 @@
     "react-dom": "18.2.0",
     "react-router-dom": "6.17.0",
     "react-toastify": "^10.0.5",
+    "styled-components": "^6.1.11",
     "use-react-countries": "^2.0.1",
     "uuid": "^9.0.1"
   },

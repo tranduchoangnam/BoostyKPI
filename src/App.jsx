@@ -5,6 +5,7 @@ import { Home, ListKpi, DetailKpi, AddKpi, Tables, Notifications } from "@/pages
 import { SignIn, SignUp } from "@/pages/auth";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Settings from "./pages/dashboard/settings";
 
 function App() {
     return (
@@ -19,7 +20,7 @@ function App() {
                         </Route>
                         <Route path="add-kpi" element={<AddKpi />} />
                         <Route path="calendar" element={<Notifications />} />
-                        <Route path="settings" element={<Notifications />} />
+                        <Route path="settings" element={<Settings />} />
                     </Route>
                     <Route path="/auth" element={<Auth />}>
                         <Route path="sign-in" element={<SignIn />} />
