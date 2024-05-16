@@ -76,11 +76,14 @@ export function Sidenav() {
         },
     ];
 
+    const handleItemClick = () => {
+        setOpenSidenav(dispatch, false);
+    };
+
     return (
         <aside
-            className={`${sidenavTypes[sidenavType]} ${
-                openSidenav ? "translate-x-0" : "-translate-x-80"
-            } fixed inset-0 z-50 mt-[68px] h-[calc(100vh-68px)] w-72 !bg-[#F5F6FA] transition-transform duration-300 xl:translate-x-0 border-r-2`}
+            className={`${sidenavTypes[sidenavType]} ${openSidenav ? "translate-x-0" : "-translate-x-80"
+                } fixed inset-0 z-50 mt-[68px] h-[calc(100vh-68px)] w-72 !bg-[#F5F6FA] transition-transform duration-300 xl:translate-x-0 border-r-2`}
         >
             <div className="m-4">
                 {routes.map(({ title, pages }, key) => (
@@ -102,15 +105,14 @@ export function Sidenav() {
                         )}
                         {pages.map(({ icon, name, path }) => (
                             <li key={name}>
-                                <NavLink to={`${path}`}>
+                                <NavLink to={`${path}`} onClick={handleItemClick}>
                                     {({ isActive }) => (
                                         <Button
                                             variant={!isActive && "text"}
-                                            className={`flex items-center rounded-[4px] gap-4 px-4 capitalize ${
-                                                isActive
+                                            className={`flex items-center rounded-[4px] gap-4 px-4 capitalize ${isActive
                                                     ? "bg-[#1E5EFF]"
                                                     : "text-[#7E84A3]"
-                                            }`}
+                                                }`}
                                             fullWidth
                                         >
                                             {icon}
