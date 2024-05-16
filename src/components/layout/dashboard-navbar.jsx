@@ -26,7 +26,10 @@ import {
     setOpenSidenav,
 } from "@/context";
 import { useAuth } from "@/context/AuthProvider";
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
+    ArrowLeftIcon,
+    ArrowLeftOnRectangleIcon,
+} from "@heroicons/react/24/outline";
 export function DashboardNavbar() {
     const [controller, dispatch] = useMaterialTailwindController();
     const { fixedNavbar, openSidenav } = controller;
@@ -151,25 +154,83 @@ export function DashboardNavbar() {
                             </MenuItem>
                         </MenuList>
                     </Menu>
-                    <div onClick={handleUserClick}>
-                        <Button
-                            variant="text"
-                            color="blue-gray"
-                            className="hidden items-center gap-1 px-4 xl:flex normal-case"
-                        >
-                            <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-                            {auth.user
-                                ? auth.user.first_name + " " + auth.user.last_name
-                                : "Sign In"}
-                        </Button>
-                        <IconButton
-                            variant="text"
-                            color="blue-gray"
-                            className="grid xl:hidden"
-                        >
-                            <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-                        </IconButton>
-                    </div>
+                    <Menu>
+                        <MenuHandler>
+                            <div>
+                                <Button
+                                    variant="text"
+                                    color="blue-gray"
+                                    className="hidden items-center gap-2 px-4 xl:flex normal-case"
+                                >
+                                    {auth.user ? (
+                                        <div className="rounded-full p-2 bg-[#123454]">
+                                            <img
+                                                src={auth.user.photo}
+                                                className="h-5 w-5 text-blue-gray-500"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+                                    )}
+                                    {auth.user
+                                        ? auth.user.first_name +
+                                          " " +
+                                          auth.user.last_name
+                                        : "Sign In"}
+                                </Button>
+                                <IconButton
+                                    variant="text"
+                                    color="blue-gray"
+                                    className="grid xl:hidden"
+                                >
+                                    {auth.user ? (
+                                        <img
+                                            src={auth.user.photo}
+                                            className="h-5 w-5 text-blue-gray-500"
+                                        />
+                                    ) : (
+                                        <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
+                                    )}
+                                </IconButton>
+                            </div>
+                        </MenuHandler>
+                        <MenuList className="w-max border-0">
+                            <MenuItem
+                                className="flex items-center gap-4"
+                                onClick={() => navigate("/settings")}
+                            >
+                                <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-tr from-blue-gray-800 to-blue-gray-900">
+                                    <UserCircleIcon className="h-4 w-4 text-white" />
+                                </div>
+                                <div>
+                                    <Typography
+                                        variant="h6"
+                                        color="blue-gray"
+                                        className="mb-1 font-bold"
+                                    >
+                                        Profile Setting
+                                    </Typography>
+                                </div>
+                            </MenuItem>
+                            <MenuItem
+                                className="flex items-center gap-4"
+                                onClick={() => auth.logOut()}
+                            >
+                                <div className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-tr from-blue-gray-800 to-blue-gray-900">
+                                    <ArrowLeftOnRectangleIcon className="h-4 w-4 text-white" />
+                                </div>
+                                <div>
+                                    <Typography
+                                        variant="h6"
+                                        color="blue-gray"
+                                        className="mb-1 font-bold"
+                                    >
+                                        Log out
+                                    </Typography>
+                                </div>
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
                 </div>
             </div>
         </Navbar>

@@ -1,8 +1,4 @@
-import {
-    Typography,
-    Card,
-    Switch,
-} from "@material-tailwind/react";
+import { Typography, Card, Switch } from "@material-tailwind/react";
 import { Header } from "@/components/layout";
 import { Box, Button, Divider, Grid, IconButton } from "@mui/material";
 import { useState } from "react";
@@ -10,12 +6,22 @@ import { ClearIcon } from "@mui/x-date-pickers";
 import { DropdownButton } from "@/components/buttons";
 export function Settings() {
     const [selectedFileName, setSelectedFileName] = useState("");
-    const [userInfo, setUserInfo] = useState({ file: '', firstName: "", lastName: "", email: "", phone: "" });
-
+    const [userInfo, setUserInfo] = useState({
+        file: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+    });
+    const [settings, setSettings] = useState({
+        notification: false,
+        language: "",
+        timezone: "",
+    });
     const handleSave = () => {
         console.log(userInfo);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
-    }
+    };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -47,22 +53,22 @@ export function Settings() {
     const timezoneOptions = [
         { value: "GMT + 7", label: "GMT + 7" },
         { value: "GMT + 0", label: "GMT + 0" },
-    ]
+    ];
 
     return (
         <>
             <Header
-                name={{ page: "Settings", secondary: "Cancel", primary: "Save" }}
+                name={{
+                    page: "Settings",
+                    secondary: "Cancel",
+                    primary: "Save",
+                }}
                 onPrimary={handleSave}
-                onSecondary={() => { }}
+                onSecondary={() => {}}
                 back={true}
             />
             <Card className="mx-0 mb-6 mt-4 p-8 pb-0 border border-blue-gray-100">
-                <Typography
-                    variant="h5"
-                    color="blue-gray"
-                    lassName="mb-1"
-                >
+                <Typography variant="h5" color="blue-gray" lassName="mb-1">
                     Profile Details
                 </Typography>
                 <Typography
@@ -80,31 +86,56 @@ export function Settings() {
                     >
                         Profile Image
                     </Typography>
-                    <input type="file" id="fileInput" style={{ display: "none" }} onChange={handleFileChange} />
+                    <input
+                        type="file"
+                        id="fileInput"
+                        style={{ display: "none" }}
+                        onChange={handleFileChange}
+                    />
                     {/* <img src={URL.createObjectURL(file)} /> */}
                     <div
                         style={{
-                            border: '2px dashed #ccc',
-                            borderRadius: '5px',
-                            padding: '20px',
-                            textAlign: 'center',
+                            border: "2px dashed #ccc",
+                            borderRadius: "5px",
+                            padding: "20px",
+                            textAlign: "center",
                         }}
                         onDragOver={(e) => {
                             e.preventDefault();
                         }}
                         onDrop={handleDrop}
                     >
-                        <Box sx={{ py: 3, display: 'grid', alignItems: 'center', justifyItems: 'center', gap: 1 }}>
-                            <Button variant="outlined" onClick={() => document.getElementById("fileInput").click()}>Add File</Button>
-                            <Typography
-                                variant="small"
-                                color="blue-gray-600"
+                        <Box
+                            sx={{
+                                py: 3,
+                                display: "grid",
+                                alignItems: "center",
+                                justifyItems: "center",
+                                gap: 1,
+                            }}
+                        >
+                            <Button
+                                variant="outlined"
+                                onClick={() =>
+                                    document.getElementById("fileInput").click()
+                                }
                             >
+                                Add File
+                            </Button>
+                            <Typography variant="small" color="blue-gray-600">
                                 Or drag and drop files
                             </Typography>
                             {selectedFileName && (
-                                <div style={{ display: "flex", alignItems: "center" }}>
-                                    <Typography variant="small" color="blue-gray-600">
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Typography
+                                        variant="small"
+                                        color="blue-gray-600"
+                                    >
                                         {selectedFileName}
                                     </Typography>
                                     <IconButton onClick={handleClearFile}>
@@ -116,7 +147,7 @@ export function Settings() {
                     </div>
                 </Box>
                 <Box sx={{ mt: 3 }}>
-                    <Grid container spacing={3} >
+                    <Grid container spacing={3}>
                         <Grid item xs={12} md={6}>
                             <Box>
                                 <Typography
@@ -126,7 +157,13 @@ export function Settings() {
                                 >
                                     First Name
                                 </Typography>
-                                <input type="text" name="firstName" value={userInfo?.firstName} className="w-full border border-blue-gray-200 p-2 rounded" onChange={handleChange} />
+                                <input
+                                    type="text"
+                                    name="firstName"
+                                    value={userInfo?.firstName}
+                                    className="w-full border border-blue-gray-200 p-2 rounded"
+                                    onChange={handleChange}
+                                />
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -138,7 +175,13 @@ export function Settings() {
                                 >
                                     Last Name
                                 </Typography>
-                                <input type="text" name="lastName" value={userInfo?.lastName} className="w-full border border-blue-gray-200 p-2 rounded" onChange={handleChange} />
+                                <input
+                                    type="text"
+                                    name="lastName"
+                                    value={userInfo?.lastName}
+                                    className="w-full border border-blue-gray-200 p-2 rounded"
+                                    onChange={handleChange}
+                                />
                             </Box>
                         </Grid>
                     </Grid>
@@ -152,7 +195,13 @@ export function Settings() {
                                 >
                                     Email Address
                                 </Typography>
-                                <input type="email" name="email" value={userInfo?.email} className="w-full border border-blue-gray-200 p-2 rounded" onChange={handleChange} />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    value={userInfo?.email}
+                                    className="w-full border border-blue-gray-200 p-2 rounded"
+                                    onChange={handleChange}
+                                />
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -164,7 +213,13 @@ export function Settings() {
                                 >
                                     Phone Number
                                 </Typography>
-                                <input type="tel" name="phone" value={userInfo?.phone} className="w-full border border-blue-gray-200 p-2 rounded" onChange={handleChange} />
+                                <input
+                                    type="tel"
+                                    name="phone"
+                                    value={userInfo?.phone}
+                                    className="w-full border border-blue-gray-200 p-2 rounded"
+                                    onChange={handleChange}
+                                />
                             </Box>
                         </Grid>
                     </Grid>
@@ -172,35 +227,46 @@ export function Settings() {
                 <Divider sx={{ mt: 5 }} />
                 <Grid container spacing={3} sx={{ mt: 1 }}>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "start",
+                                gap: 4
+                            }}
+                        >
                             <Typography
                                 variant="h5"
                                 color="blue-gray"
-                                className="mb-1"
+                                className="flex text-center py-0"
+
                             >
                                 Notification
                             </Typography>
                             <Switch
                                 id="custom-switch-component"
                                 className="h-full w-full checked:bg-[#1E5EFF]"
+                                checked={settings.notification}
+                                onChange={(e) =>
+                                    setSettings({
+                                        ...settings,
+                                        notification: e.target.checked,
+                                    })
+                                }
                                 containerProps={{
                                     className: "w-11 h-6",
                                 }}
                                 circleProps={{
-                                    className: "before:hidden left-0.5 border-none",
+                                    className:
+                                        "before:hidden left-0.5 border-none",
                                 }}
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={6}>
-                    </Grid>
+                    <Grid item xs={12} md={6}></Grid>
                 </Grid>
                 <Box sx={{ mt: 3, mb: 5 }}>
-                    <Typography
-                        variant="h5"
-                        color="blue-gray"
-                        lassName="mb-1"
-                    >
+                    <Typography variant="h5" color="blue-gray" lassName="mb-1">
                         Regional Settings
                     </Typography>
                     <Typography
@@ -212,10 +278,30 @@ export function Settings() {
                     </Typography>
                     <Grid container spacing={3} sx={{ mt: 1 }}>
                         <Grid item xs={12} md={6}>
-                            <DropdownButton name="Language" options={languageOptions} />
+                            <DropdownButton
+                                name="Language"
+                                options={languageOptions}
+                                value={settings.language}
+                                onChosen={(e) =>
+                                    setSettings({
+                                        ...settings,
+                                        language: e,
+                                    })
+                                }
+                            />
                         </Grid>
                         <Grid item xs={12} md={6}>
-                            <DropdownButton name="Timezone" options={timezoneOptions} />
+                            <DropdownButton
+                                name="Timezone"
+                                options={timezoneOptions}
+                                value={settings.timezone}
+                                onChosen={(e) =>
+                                    setSettings({
+                                        ...settings,
+                                        timezone: e,
+                                    })
+                                }
+                            />
                         </Grid>
                     </Grid>
                 </Box>
