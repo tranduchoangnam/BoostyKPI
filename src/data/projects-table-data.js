@@ -75,7 +75,7 @@ export const projectsTableData = [
                 },
             },
         ],
-        tags: ["AI", "Machine Learning"],
+        tags: ["Machine Learning"],
         priority: "Medium",
         completion: 40,
     },
