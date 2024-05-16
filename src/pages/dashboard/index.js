@@ -4,4 +4,5 @@ export * from "@/pages/dashboard/tables";
 export * from "@/pages/dashboard/notifications";
 export * from "@/pages/dashboard/add-kpi";
 export * from "@/pages/dashboard/kpi";
+export * from "@/pages/dashboard/calendar"
 export * from "@/pages/dashboard/settings"
