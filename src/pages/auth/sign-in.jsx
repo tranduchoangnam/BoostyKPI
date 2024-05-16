@@ -8,6 +8,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export function SignIn() {
     const [checkBox, setCheckBox] = useState(false);
@@ -18,6 +20,7 @@ export function SignIn() {
     });
     const auth = useAuth();
     const navigate = useNavigate();
+    
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -25,15 +28,47 @@ export function SignIn() {
             [name]: value,
         });
     };
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        
+        // Validate email and password
+        if (!formData.email) {
+            toast.error("Email is required.");
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        
+        if (!formData.password) {
+            toast.error("Password is required.");
+            return;
+        }
+        
         if (checkBox) {
             setFormData({ ...formData, remember_me: true });
         }
-        await auth.loginAction(formData);
+        
+        try {
+            await auth.loginAction(formData);
+            navigate('/'); // Navigate to the desired page after successful login
+        } catch (error) {
+            toast.error("Failed to sign in. Please check your credentials.");
+        }
     };
+
     return (
         <section className="flex gap-4 justify-center">
+            <ToastContainer />
             <div className="w-[540px] my-16 py-12 px-16 bg-[#FFF]">
                 <div className="text-center">
                     <Typography className="font-bold mb-4 text-[32px] font-['Inter']">
@@ -88,7 +123,7 @@ export function SignIn() {
                             onChange={handleChange}
                             type="password"
                             size="lg"
-                            placeholder="Enter you password..."
+                            placeholder="Enter your password..."
                             className=" !border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
@@ -120,7 +155,6 @@ export function SignIn() {
 
                     <div className="flex items-center justify-center gap-2 mt-6">
                         <Link
-                            to="/auth/forgot-password"
                             className="text-[#1E5EFF] font-small text-[14px]"
                         >
                             Forgot your password?
