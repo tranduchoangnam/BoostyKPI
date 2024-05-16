@@ -1,11 +1,10 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Dashboard, Auth } from "@/layouts";
 import AuthProvider from "@/context/AuthProvider";
-import { Home, ListKpi, DetailKpi, AddKpi, Tables, Notifications } from "@/pages/dashboard";
+import { Home, ListKpi, DetailKpi, AddKpi, Tables, Notifications, Settings } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import Settings from "./pages/dashboard/settings";
 
 function App() {
     return (
