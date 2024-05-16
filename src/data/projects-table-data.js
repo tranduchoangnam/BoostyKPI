@@ -2,13 +2,13 @@ export const projectsTableData = [
     {
         id: "1",
         name: "AI Course",
-        plan: ["2024-05-15T10:00", "2024-05-15T16:00"],
+        plan: ["2024-01-05T10:00", "2024-04-16T16:00"],
         subtasks: [
             {
                 id: "5",
                 name: "Python Basics",
-                start_date: "2024-05-15T11:00",
-                end_date: "2024-05-15T14:00",
+                start_date: "2024-01-05T11:00",
+                end_date: "2024-03-20T14:00",
                 priority: "High",
                 status: "Completed",
                 reminder: {
@@ -22,8 +22,23 @@ export const projectsTableData = [
             {
                 id: "9",
                 name: "Machine Learning Basics",
-                start_date: "2024-05-15T12:00",
-                end_date: "2024-05-15T15:30",
+                start_date: "2024-01-14T12:00",
+                end_date: "2024-04-03T15:30",
+                priority: "Medium",
+                status: "In Progress",
+                reminder: {
+                    status: true,
+                    before_start: 0,
+                    repeat: "Daily",
+                    custom_time: "2024-05-18T14:00",
+                    custom_date: "2024-05-18T14:00",
+                },
+            },
+            {
+                id: "19",
+                name: "Deep Learning Basics",
+                start_date: "2024-01-20T12:00",
+                end_date: "2024-04-16T15:30",
                 priority: "Medium",
                 status: "In Progress",
                 reminder: {
