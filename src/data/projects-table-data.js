@@ -10,7 +10,7 @@ export const projectsTableData = [
                 start_date: "2024-01-05T11:00",
                 end_date: "2024-03-20T14:00",
                 priority: "High",
-                status: "Completed",
+                status: "Done",
                 reminder: {
                     status: true,
                     before_start: 0,
@@ -57,15 +57,15 @@ export const projectsTableData = [
     {
         id: "2",
         name: "GPA 4.0",
-        plan: ["2024-05-20T09:00", "2024-06-05T17:00"],
+        plan: ["2024-01-22T09:00", "2024-05-02T17:00"],
         subtasks: [
             {
                 id: "1",
                 name: "Python Basics",
-                start_date: "2024-05-21T10:00",
-                end_date: "2024-05-21T12:00",
+                start_date: "2024-01-25T10:00",
+                end_date: "2024-02-25T12:00",
                 priority: "High",
-                status: "Completed",
+                status: "Done",
                 reminder: {
                     status: true,
                     before_start: "00:30:00",
@@ -82,15 +82,15 @@ export const projectsTableData = [
     {
         id: "3",
         name: "Backend Certification",
-        plan: ["2024-05-22T11:00", "2024-06-10T15:00"],
+        plan: ["2024-02-22T11:00", "2024-05-10T15:00"],
         subtasks: [
             {
                 id: "2",
                 name: "Python Basics",
-                start_date: "2024-05-23T09:00",
-                end_date: "2024-05-23T11:00",
+                start_date: "2024-02-23T09:00",
+                end_date: "2024-03-23T11:00",
                 priority: "High",
-                status: "Completed",
+                status: "Done",
                 reminder: {
                     status: true,
                     before_start: "00:30:00",
@@ -115,7 +115,7 @@ export const projectsTableData = [
                 start_date: "2024-05-26T14:00",
                 end_date: "2024-05-26T16:00",
                 priority: "High",
-                status: "Completed",
+                status: "Done",
                 reminder: {
                     status: true,
                     before_start: "00:30:00",
@@ -140,7 +140,7 @@ export const projectsTableData = [
                 start_date: "2024-06-02T10:00",
                 end_date: "2024-06-02T12:00",
                 priority: "High",
-                status: "Completed",
+                status: "Done",
                 reminder: {
                     status: true,
                     before_start: "00:30:00",
