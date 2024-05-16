@@ -105,7 +105,7 @@ export function SignUp() {
                             color="blue-gray"
                             className="-mb-4 font-medium font-['Inter']"
                         >
-                            Email
+                            Username
                         </Typography>
                         <Input
                             id="email"
@@ -194,7 +194,6 @@ export function SignUp() {
                             By creating an account, you agree to our{" "}
                         </Typography>
                         <Link
-                            to="/terms-of-service"
                             className="text-[#1E5EFF] font-small text-[14px]"
                         >
                             Terms of Service

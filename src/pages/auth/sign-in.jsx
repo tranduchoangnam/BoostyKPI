@@ -155,7 +155,6 @@ export function SignIn() {
 
                     <div className="flex items-center justify-center gap-2 mt-6">
                         <Link
-                            to="/auth/forgot-password"
                             className="text-[#1E5EFF] font-small text-[14px]"
                         >
                             Forgot your password?
