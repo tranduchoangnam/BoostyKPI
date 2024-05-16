@@ -26,6 +26,7 @@ import {
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { PriorityButton } from "@/components/buttons/PriorityButton";
 import { Header } from "@/components/layout";
+import dayjs from "dayjs";
 export function Home() {
     return (
         <>
@@ -168,7 +169,7 @@ export function Home() {
                                         (
                                             {
                                                 name,
-                                                deadline,
+                                                plan,
                                                 priority,
                                                 completion,
                                             },
@@ -200,7 +201,7 @@ export function Home() {
                                                             variant="small"
                                                             className="text-xs font-medium text-blue-gray-600"
                                                         >
-                                                            {deadline}
+                                                            {dayjs(plan[1]).format("DD MMM YYYY")}
                                                         </Typography>
                                                     </td>
                                                     <td
