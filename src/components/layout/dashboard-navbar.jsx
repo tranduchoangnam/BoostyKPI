@@ -158,7 +158,9 @@ export function DashboardNavbar() {
                             className="hidden items-center gap-1 px-4 xl:flex normal-case"
                         >
                             <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
-                            {auth.user ? auth.user.username : "Sign In"}
+                            {auth.user
+                                ? auth.user.first_name + " " + auth.user.last_name
+                                : "Sign In"}
                         </Button>
                         <IconButton
                             variant="text"

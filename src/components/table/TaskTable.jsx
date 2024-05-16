@@ -12,8 +12,7 @@ import { DatePicker, Select } from "antd";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from 'uuid';
 
-export function TaskTable({ tableData }) {
-    const [data, setData] = useState(tableData);
+export function TaskTable({ tableData, setTableData }) {
     const [addRowJsx, setAddRowJsx] = useState();
     const [task, setTask] = useState({
         name: null,
@@ -52,7 +51,7 @@ export function TaskTable({ tableData }) {
             }
         if (!ok) return;
 
-        setData([...data, formattedTask]);
+        setTableData([...tableData, formattedTask]);
         setTask({
             id: null,
             name: null,
@@ -249,14 +248,13 @@ export function TaskTable({ tableData }) {
     useEffect(() => {
         setAddRowJsx(addRowJsxData);
     }, [task]);
-    useEffect(() => {
-        setData(tableData);
-    }, [tableData]);
+ 
     return (
         <>
             <CommonTable
                 tableHeadJsx={tableHeadJsx}
-                tableData={data}
+                setTableData={setTableData}
+                tableData={tableData}
                 rowJsx={rowJsx}
                 type="checkbox"
                 addRowJsx={addRowJsx}

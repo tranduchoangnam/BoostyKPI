@@ -4,7 +4,7 @@ import { CommonTable } from "./CommonTable";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function KpiTable({ tableData }) {
+export function KpiTable({ tableData,setTableData }) {
     const naviagate=useNavigate();
     const tableHead=["Name","Plan","Subtasks","Priority","Completion"];
     const tableHeadJsx = tableHead.map((el, index) => (
@@ -78,6 +78,7 @@ export function KpiTable({ tableData }) {
     return (
         <CommonTable
             tableHeadJsx={tableHeadJsx}
+            setTableData={setTableData}
             tableData={tableData}
             rowJsx={rowJsx}
             type="checkbox"
