@@ -6,17 +6,40 @@ import {
 import { projectsTableData } from "@/data";
 import { KpiTable } from "@/components/table/KpiTable";
 import { Header } from "@/components/layout";
+import { useEffect, useState } from "react";
 export function ListKpi() {
+    const [filter, setFilter] = useState("all");
+    const [search, setSearch] = useState("");
+    const [tableData,setTableData]=useState(projectsTableData);
     const options = [
-        { value: "option1", label: "Option 1" },
-        { value: "option2", label: "Option 2" },
-        { value: "option3", label: "Option 3" },
+        { value: "all", label: "All" },
+        { value: "completed", label: "Completed" },
+        { value: "incompleted", label: "Incompleted" },
     ];
-    const tableData = projectsTableData;
-    const handleSearch = () => {};
+    const handleSearch = (e) => {
+        setSearch(e.target.value);
+    };
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
+    useEffect(() => {
+        let prettyData=projectsTableData;
+        if (filter === "all") {
+            prettyData = projectsTableData;
+        }
+        else 
+        prettyData=prettyData.filter((data) => {
+            if (filter==="completed"&&data.completion===100) return true;
+            if (filter==="incompleted"&&data.completion!==100) return true;
+            return false;
+        });
+        prettyData=prettyData.filter((data) => {
+            if (search === "") return true;
+            if (data.name.toLowerCase().includes(search.toLowerCase())) return true;
+            return false;
+        })
+        setTableData(prettyData);
+    }, [filter,search]);
     return (
         <>
             <Header
@@ -29,15 +52,15 @@ export function ListKpi() {
                 <div className="flex items-start justify-between mb-8">
                     <div className="flex gap-8 flex-wrap">
                         <div className="w-[180px]">
-                            <DropdownButton name="Filter" options={options} />
+                            <DropdownButton name="Filter" options={options} onChosen={setFilter} />
                         </div>
                         <div className="sm:w-[350px] w-full">
                             <Input
                                 label="Search KPI..."
+                                onChange={handleSearch}
                                 icon={
                                     <i
                                         className="fas fa-search cursor-pointer"
-                                        onClick={handleSearch}
                                     />
                                 }
                             />
