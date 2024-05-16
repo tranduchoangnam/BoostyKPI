@@ -65,12 +65,12 @@ export function Sidenav() {
                 {
                     icon: <ServerStackIcon {...icon} />,
                     name: "sign in",
-                    path: "/sign-in",
+                    path: "/auth/sign-in",
                 },
                 {
                     icon: <RectangleStackIcon {...icon} />,
                     name: "sign up",
-                    path: "/sign-up",
+                    path: "auth/sign-up",
                 },
             ],
         },

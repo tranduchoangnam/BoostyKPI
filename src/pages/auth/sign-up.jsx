@@ -8,15 +8,19 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export function SignUp() {
     const [checkBox, setCheckBox] = useState(false);
     const [formData, setFormData] = useState({
         email: "",
         password: "",
+        confirm_password: "",
     });
     const auth = useAuth();
     const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -24,16 +28,58 @@ export function SignUp() {
             [name]: value,
         });
     };
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!checkBox) {
-            alert("Please agree to the terms and conditions");
+
+        // Validate email
+        if (!formData.email) {
+            toast.error("Email is required.");
             return;
         }
-        await auth.loginAction(formData);
+
+        if (!validateEmail(formData.email)) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        // Validate passwords
+        if (!formData.password) {
+            toast.error("Password is required.");
+            return;
+        }
+
+        if (formData.password !== formData.confirm_password) {
+            toast.error("Passwords do not match.");
+            return;
+        }
+
+        // Validate terms and conditions checkbox
+        if (!checkBox) {
+            toast.error("Please agree to the terms and conditions.");
+            return;
+        }
+
+        // Proceed with form submission
+        try {
+            await auth.loginAction(formData);
+            toast.success("Account created successfully!", {
+                autoClose: 500, // Close after 3 seconds
+                onClose: () => navigate('/auth/sign-in') // Navigate to the desired page after successful signup
+            });
+        } catch (error) {
+            toast.error("Failed to create an account. Please try again.");
+        }
     };
+
     return (
         <section className="flex gap-4 justify-center">
+            <ToastContainer />
             <div className="w-[540px] my-16 py-12 px-16 bg-[#FFF]">
                 <div className="text-center">
                     <Typography className="font-bold mb-4 text-[32px] font-['Inter']">
@@ -59,7 +105,7 @@ export function SignUp() {
                             color="blue-gray"
                             className="-mb-4 font-medium font-['Inter']"
                         >
-                            Username
+                            Email
                         </Typography>
                         <Input
                             id="email"
@@ -67,7 +113,7 @@ export function SignUp() {
                             value={formData.email}
                             onChange={handleChange}
                             size="lg"
-                            placeholder="Enter your username..."
+                            placeholder="Enter your email..."
                             className=" !border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
@@ -88,7 +134,7 @@ export function SignUp() {
                             onChange={handleChange}
                             type="password"
                             size="lg"
-                            placeholder="Enter you password..."
+                            placeholder="Enter your password..."
                             className=" !border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
@@ -104,12 +150,12 @@ export function SignUp() {
                         </Typography>
                         <Input
                             id="confirm-password"
-                            name="confirm-password"
+                            name="confirm_password"
                             value={formData.confirm_password}
                             onChange={handleChange}
                             type="password"
                             size="lg"
-                            placeholder="Enter you password..."
+                            placeholder="Confirm your password..."
                             className=" !border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
@@ -117,6 +163,20 @@ export function SignUp() {
                             }}
                         />
                     </div>
+                    <Checkbox
+                        value={checkBox}
+                        onChange={(e) => setCheckBox(e.target.checked)}
+                        label={
+                            <Typography
+                                variant="small"
+                                color="#5A607F"
+                                className="flex items-center justify-start font-medium font-['Inter']"
+                            >
+                                I agree to the terms and conditions
+                            </Typography>
+                        }
+                        containerProps={{ className: "-ml-2.5" }}
+                    />
                     <Button
                         className="mt-6 bg-[#1E5EFF] !rounded-[4px] text-[16px] font-medium font-['Inter']"
                         fullWidth
@@ -131,13 +191,13 @@ export function SignUp() {
                             color="#5A607F"
                             className="flex items-center justify-center font-['Inter']"
                         >
-                            By creating account, you agree to our{" "}
+                            By creating an account, you agree to our{" "}
                         </Typography>
                         <Link
-                            to="/auth/forgot-password"
+                            to="/terms-of-service"
                             className="text-[#1E5EFF] font-small text-[14px]"
                         >
-                            Term of Service
+                            Terms of Service
                         </Link>
                     </div>
                     <div className="w-full bg-[#D7DBEC] h-[1px] mt-6"></div>
