@@ -12,11 +12,17 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { TagsCard } from "@/components/cards/tags-card";
 import { Header } from "@/components/layout";
+import {useAuth} from "@/context/AuthProvider";
 export function DetailKpi() {
+    const [tableData, setTableData] = useState([]);
     const { id } = useParams();
     const [kpi, setKpi] = useState();
-    const [rangeDate, setRangeDate] = useState();
+    const [rangeDate, setRangeDate] = useState({
+        value: [],
+        dateString: [],
+    });
     const { RangePicker } = DatePicker;
+    const auth = useAuth();
     // const disabledDate = (current, { from }) => {
     //     if (from) {
     //         return Math.abs(current.diff(from, "days")) >= 7;
@@ -26,8 +32,17 @@ export function DetailKpi() {
     // };
 
     useEffect(() => {
-        setKpi(projectsTableData.find((el) => el.id === id));
+        setKpi(auth.kpi.find((el) => el.id === id));
     }, []);
+    useEffect(() => {
+        if (kpi) {
+            setTableData(kpi.subtasks);
+            setRangeDate({
+                value: [],
+                dateString: [kpi.plan[0], kpi.plan[1]],
+            });
+        }
+    }, [kpi]);
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
@@ -66,7 +81,7 @@ export function DetailKpi() {
                                         </div>
                                     </div>
                                 </div>
-                                <TaskTable tableData={kpi.subtasks} />
+                                <TaskTable tableData={tableData} setTableData={setTableData}/>
                             </>
                         </Card>
                         <div>
@@ -112,9 +127,12 @@ export function DetailKpi() {
                                     <div className="absolute z-0 flex align-center justify-center right-0 top-0 w-full h-full">
                                         <RangePicker
                                             id="range-picker"
-                                            value={rangeDate}
+                                            value={rangeDate.value}
                                             onChange={(date, dateString) =>
-                                                setRangeDate(date)
+                                                setRangeDate({
+                                                    value: date,
+                                                    dateString,
+                                                })
                                             }
                                             className="border-none w-full h-full bg-transparent focus:border-none"
                                         />

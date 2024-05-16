@@ -14,6 +14,10 @@ import { TaskTable } from "@/components/table/TaskTable";
 import { useEffect, useState } from "react";
 import { TagsCard } from "@/components/cards/tags-card";
 import { Header } from "@/components/layout";
+import { useAuth } from "@/context/AuthProvider";
+import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
+
 export function AddKpi() {
     const [kpi, setKpi] = useState({
         id: "",
@@ -24,8 +28,13 @@ export function AddKpi() {
         completion: 0,
         subtasks: [],
     });
-    const [rangeDate, setRangeDate] = useState();
+    const [rangeDate, setRangeDate] = useState({
+        value: [],
+        dateString: [],
+    });
+    const [tableData, setTableData] = useState([]);
     const { RangePicker } = DatePicker;
+    const auth = useAuth();
     // const disabledDate = (current, { from }) => {
     //     if (from) {
     //         return Math.abs(current.diff(from, "days")) >= 7;
@@ -33,7 +42,35 @@ export function AddKpi() {
 
     //     return false;
     // };
-
+    const handleSave = () => {
+        try {
+            let ok = true;
+            Object.keys(kpi).forEach((key) => {
+                if (!kpi[key]&&!["id","plan","subtasks","completion"].includes(key)) {ok = false;
+                    console.log(key);
+                }
+            });
+            if(!rangeDate) ok=false;
+            if(!tableData) ok=false;
+            if (!ok) {
+                toast.error("Please fill all the fields");
+                return;
+            }
+            auth.setKpi([
+                ...auth.kpi,
+                {
+                    ...kpi,
+                    plan: [rangeDate.dateString[0], rangeDate.dateString[1]],
+                    subtasks: tableData,
+                    completion: 0,
+                    id: uuidv4(),
+                },
+            ]);
+            toast.success("KPI created successfully");
+        } catch (e) {
+            toast.error("Cannot create KPI");
+        }
+    };
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
@@ -41,7 +78,9 @@ export function AddKpi() {
         <>
             <Header
                 name={{ page: "Add KPI", primary: "Save", secondary: "Cancel" }}
-                onPrimary={() => {}}
+                onPrimary={() => {
+                    handleSave();
+                }}
                 onSecondary={() => {}}
                 back={true}
             />
@@ -61,7 +100,7 @@ export function AddKpi() {
                                 </div>
                             </div>
                         </div>
-                        <TaskTable tableData={kpi.subtasks} />
+                        <TaskTable tableData={tableData} setTableData={setTableData} />
                     </>
                 </Card>
                 <div>
@@ -77,7 +116,13 @@ export function AddKpi() {
                         <Input
                             type="text"
                             label="Name"
-                            defaultValue={kpi.name || "Enter KPI name..."}
+                            value={kpi.name}
+                            onChange={(e) => {
+                                setKpi({
+                                    ...kpi,
+                                    name: e.target.value,
+                                });
+                            }}
                         />
                         <div className="flex">
                             <Select
@@ -104,9 +149,12 @@ export function AddKpi() {
                             <div className="absolute z-0 flex align-center justify-center right-0 top-0 w-full h-full">
                                 <RangePicker
                                     id="range-picker"
-                                    value={rangeDate}
+                                    value={rangeDate.value}
                                     onChange={(date, dateString) =>
-                                        setRangeDate(date)
+                                        setRangeDate({
+                                            value: date,
+                                            dateString,
+                                        })
                                     }
                                     className="border-none w-full h-full bg-transparent focus:border-none"
                                 />

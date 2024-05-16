@@ -7,25 +7,24 @@ import {
 } from "@material-tailwind/react";
 import { Pagination } from "@/components/table/Pagination";
 import { useState, useMemo, useEffect } from "react";
-
 export function CommonTable({
     tableData,
+    setTableData,
     tableHeadJsx,
     rowJsx,
     type,
     addRowJsx,
 }) {
-    const [data, setData] = useState(tableData);
     const [page, setPage] = useState(1);
     const [checkedList, setCheckedList] = useState([]);
     const rowsPerPage = 6;
     const totalPage = useMemo(() => {
-        return Math.max(Math.ceil(data.length / rowsPerPage),1);
-    }, [data, rowsPerPage]);
+        return Math.max(Math.ceil(tableData.length / rowsPerPage),1);
+    }, [tableData, rowsPerPage]);
 
     const visibleData = useMemo(() => {
-        return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
-    }, [page, rowsPerPage, data]);
+        return tableData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+    }, [page, rowsPerPage, tableData]);
 
     const handleCheck = (check, index) => {
         if (index === 0) {
@@ -41,7 +40,7 @@ export function CommonTable({
         }
     };
     const handleDelete = () => {
-        setData((prevData) =>
+        setTableData((prevData) =>
             prevData.filter((ele) => !checkedList.includes(ele.id)),
         );
     };
@@ -49,10 +48,7 @@ export function CommonTable({
     useEffect(() => {
         setCheckedList([]);
     }, [page, rowsPerPage, totalPage]);
-
-    useEffect(() => {
-        setData(tableData);
-    }, [tableData]);
+ 
     return (
         <Card className=" xl:col-span-2 shadow-none overflow-auto min-h-[540px] relative">
             <div id="delete" onClick={() => handleDelete()}></div>
