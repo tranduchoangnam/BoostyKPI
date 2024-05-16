@@ -4,6 +4,7 @@ import { KpiTable } from "@/components/table/KpiTable";
 import { Header } from "@/components/layout";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
+import { toast } from "react-toastify";
 export function ListKpi() {
     const auth = useAuth();
     const [filter, setFilter] = useState("all");
@@ -20,8 +21,16 @@ export function ListKpi() {
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
+    const handleSave=()=>{
+        try{
+            auth.setKpi(tableData);
+            toast.success("KPIs saved successfully");
+        }
+        catch(e){
+            toast.error("An error occurred");
+        }
+    };
     useEffect(() => {
-        console.log(JSON.stringify(auth.kpi));
         let prettyData = auth.kpi;
         if (filter === "all") {
             prettyData = auth.kpi;
@@ -52,7 +61,7 @@ export function ListKpi() {
                     secondary: "Import",
                     primary: "Save",
                 }}
-                onPrimary={() => {}}
+                onPrimary={() => {handleSave();}}
                 onSecondary={() => {}}
                 back={true}
             />

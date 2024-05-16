@@ -46,12 +46,14 @@ export function AddKpi() {
         try {
             let ok = true;
             Object.keys(kpi).forEach((key) => {
-                if (!kpi[key]&&!["id","plan","subtasks","completion"].includes(key)) {ok = false;
-                    console.log(key);
-                }
+                if (
+                    !kpi[key] &&
+                    !["id", "plan", "subtasks", "completion"].includes(key)
+                )
+                    ok = false;
             });
-            if(!rangeDate) ok=false;
-            if(!tableData) ok=false;
+            if (!rangeDate) ok = false;
+            if (!tableData) ok = false;
             if (!ok) {
                 toast.error("Please fill all the fields");
                 return;
@@ -100,7 +102,10 @@ export function AddKpi() {
                                 </div>
                             </div>
                         </div>
-                        <TaskTable tableData={tableData} setTableData={setTableData} />
+                        <TaskTable
+                            tableData={tableData}
+                            setTableData={setTableData}
+                        />
                     </>
                 </Card>
                 <div>
