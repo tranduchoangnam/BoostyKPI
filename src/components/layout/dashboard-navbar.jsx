@@ -59,17 +59,13 @@ export function DashboardNavbar() {
         >
             <div className="flex h-full justify-between gap-6">
                 <div className="flex items-center h-full">
-                    <IconButton
-                        variant="text"
-                        color="blue-gray"
-                        className="grid"
+                    <div
+                        className="flex items-center cursor-pointer"
                         onClick={() => setOpenSidenav(dispatch, !openSidenav)}
                     >
-                        <Bars3Icon
-                            strokeWidth={3}
-                            className="h-6 w-6 text-blue-gray-500"
-                        />
-                    </IconButton>
+                        <img className="h-8 w-8" src="/img/logo.png" />
+                        <p className="pt-2 text-[#062D5F] font-bold text-[16px]">oosty</p>
+                    </div>
                 </div>
                 <div className="flex items-center h-full">
                     <Menu>
