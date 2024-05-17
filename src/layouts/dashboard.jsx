@@ -19,7 +19,7 @@ export function Dashboard() {
     <div className="min-h-screen bg-[#F5F6FA] font-['Inter']">
       <ToastContainer />
       <DashboardNavbar />
-      <Sidenav/>
+      <Sidenav />
       <div className="p-4 md:px-8 mt-[68px] xl:ml-72">
         {/* <Configurator />
         <IconButton
@@ -33,7 +33,7 @@ export function Dashboard() {
         </IconButton> */}
         <Outlet />
         <div className="text-blue-gray-600">
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </div>
