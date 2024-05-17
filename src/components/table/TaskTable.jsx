@@ -73,6 +73,7 @@ export function TaskTable({ tableData, setTableData }) {
                 custom_date: null,
             },
         });
+        toast.success("Task added successfully");
     };
     const tableHead = [
         "Task Name",

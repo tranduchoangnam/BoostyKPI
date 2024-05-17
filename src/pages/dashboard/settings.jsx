@@ -4,6 +4,7 @@ import { Box, Button, Divider, Grid, IconButton } from "@mui/material";
 import { useState } from "react";
 import { ClearIcon } from "@mui/x-date-pickers";
 import { DropdownButton } from "@/components/buttons";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export function Settings() {
@@ -61,6 +62,7 @@ export function Settings() {
         { value: "GMT + 7", label: "GMT + 7" },
         { value: "GMT + 0", label: "GMT + 0" },
     ];
+    const navigate = useNavigate();
 
     return (
         <>
@@ -71,7 +73,9 @@ export function Settings() {
                     primary: "Save",
                 }}
                 onPrimary={handleSave}
-                onSecondary={() => { }}
+                onSecondary={() => {
+                    navigate("/");
+                }}
                 back={true}
             />
             <Card className="mx-0 mb-6 mt-4 p-8 pb-0 border border-blue-gray-100">

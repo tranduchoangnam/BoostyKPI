@@ -3,12 +3,8 @@ import PropTypes from "prop-types";
 import { Typography, Button, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-export function DeleteModal ({ onClose}) {
+export function DeleteModal ({handleDelete, handleClose}) {
     const [isOpen, setIsOpen] = useState(true);
-
-    const handleClose = () => {
-        setIsOpen(false);
-    };
 
     return (
         <>
@@ -39,7 +35,7 @@ export function DeleteModal ({ onClose}) {
                                 variant="contained"
                                 color="error"
                                 className="w-[99px] h-10 rounded bg-red-500 text-white"
-                                onClick={() => onClose(false)}
+                                onClick={() => handleDelete(false)}
                             >
                                 Delete
                             </Button>
@@ -59,7 +55,8 @@ export function DeleteModal ({ onClose}) {
 };
 
 DeleteModal.propTypes = {
-    onClose: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
 };
 
 export default DeleteModal;

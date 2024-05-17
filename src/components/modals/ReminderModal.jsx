@@ -101,6 +101,7 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                                 custom_time: reminderData.custom_time||"",
                                 custom_date: reminderData.custom_date||"",
                             });
+                            onClose(false)
                             toast.success("Reminder saved successfully");
                         }}
                     >
