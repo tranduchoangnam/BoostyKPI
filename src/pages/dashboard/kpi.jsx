@@ -33,7 +33,7 @@ export function DetailKpi() {
 
     useEffect(() => {
         setKpi(auth.kpi.find((el) => el.id === id));
-    }, []);
+    }, [auth.kpi]);
     useEffect(() => {
         if (kpi) {
             setTableData(kpi.subtasks);
