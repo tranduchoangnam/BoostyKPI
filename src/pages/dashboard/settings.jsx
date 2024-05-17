@@ -67,12 +67,12 @@ export function Settings() {
 
     useEffect(() => {
         setUserInfo({
-            firstName: auth.user.first_name || "",
-            lastName: auth.user.last_name || "",
-            email: auth.user.email || "",
-            phone: auth.user.phone || "",
+            firstName: auth.user?auth.user.first_name: "",
+            lastName: auth.user?auth.user.last_name: "",
+            email: auth.user?auth.user.email: "",
+            phone: auth.user?auth.user.phone: "",
         });
-    });
+    },[auth.user]);
     return (
         <>
             <Header
