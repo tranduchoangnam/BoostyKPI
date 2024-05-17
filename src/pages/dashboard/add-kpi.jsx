@@ -17,6 +17,8 @@ import { Header } from "@/components/layout";
 import { useAuth } from "@/context/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
+import { DeleteModal } from "@/components/modals";
+import { useNavigate } from "react-router-dom";
 
 export function AddKpi() {
     const [kpi, setKpi] = useState({
@@ -34,6 +36,8 @@ export function AddKpi() {
     });
     const [tableData, setTableData] = useState([]);
     const { RangePicker } = DatePicker;
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const navigate = useNavigate();
     const auth = useAuth();
     // const disabledDate = (current, { from }) => {
     //     if (from) {
@@ -75,6 +79,8 @@ export function AddKpi() {
     };
     const handleDelete = () => {
         document.getElementById("delete").click();
+        setShowDeleteModal(false);
+        toast.success("KPI deleted successfully");
     };
     return (
         <>
@@ -83,7 +89,9 @@ export function AddKpi() {
                 onPrimary={() => {
                     handleSave();
                 }}
-                onSecondary={() => {}}
+                onSecondary={() => {
+                    navigate("/");
+                }}
                 back={true}
             />
             <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-4">
@@ -95,7 +103,13 @@ export function AddKpi() {
                             </Typography>
                             <div>
                                 <div
-                                    onClick={() => handleDelete()}
+                                    onClick={() => {
+                                        if(tableData.length === 0) {
+                                            toast.error("Please choose tasks first");
+                                            return;
+                                        }
+                                        setShowDeleteModal(true);
+                                    }}
                                     className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
                                 >
                                     <i className="fas fa-trash text-[#1E5EFF]" />
@@ -187,6 +201,16 @@ export function AddKpi() {
                     />
                 </div>
             </div>
+            {showDeleteModal && (
+                <DeleteModal
+                    handleDelete={() => {
+                        handleDelete();
+                    }}
+                    handleClose={() => {
+                        setShowDeleteModal(false);
+                    }}
+                />
+            )}
         </>
     );
 }
