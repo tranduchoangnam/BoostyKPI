@@ -4,8 +4,11 @@ import { Box, Button, Divider, Grid, IconButton } from "@mui/material";
 import { useState } from "react";
 import { ClearIcon } from "@mui/x-date-pickers";
 import { DropdownButton } from "@/components/buttons";
+import { toast } from "react-toastify";
+
 export function Settings() {
     const [selectedFileName, setSelectedFileName] = useState("");
+    const [file, setFile] = useState(null);
     const [userInfo, setUserInfo] = useState({
         file: "",
         firstName: "",
@@ -21,12 +24,14 @@ export function Settings() {
     const handleSave = () => {
         console.log(userInfo);
         localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        toast.success("Profile details saved successfully");
     };
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setSelectedFileName(file.name);
         setUserInfo({ ...userInfo, file: file });
+        setFile(file);
     };
 
     const handleChange = (e) => {
@@ -42,9 +47,11 @@ export function Settings() {
         const file = e.dataTransfer.files[0];
         setSelectedFileName(file.name);
         setUserInfo({ ...userInfo, file: file });
+        setFile(file);
     };
     const handleClearFile = () => {
         setSelectedFileName("");
+        setFile(null);
     };
     const languageOptions = [
         { value: "English", label: "English" },
@@ -64,7 +71,7 @@ export function Settings() {
                     primary: "Save",
                 }}
                 onPrimary={handleSave}
-                onSecondary={() => {}}
+                onSecondary={() => { }}
                 back={true}
             />
             <Card className="mx-0 mb-6 mt-4 p-8 pb-0 border border-blue-gray-100">
@@ -92,7 +99,6 @@ export function Settings() {
                         style={{ display: "none" }}
                         onChange={handleFileChange}
                     />
-                    {/* <img src={URL.createObjectURL(file)} /> */}
                     <div
                         style={{
                             border: "2px dashed #ccc",
@@ -143,6 +149,15 @@ export function Settings() {
                                     </IconButton>
                                 </div>
                             )}
+                            <div>
+                                {file && (
+                                    <img
+                                        style={{ maxWidth: "250px", height: "auto" }}
+                                        src={URL.createObjectURL(file)}
+                                        alt="Selected Image"
+                                    />
+                                )}
+                            </div>
                         </Box>
                     </div>
                 </Box>
@@ -231,7 +246,7 @@ export function Settings() {
                             sx={{
                                 display: "flex",
                                 alignItems: "center",
-                                justifyContent: "start",
+                                justifyContent: "space-between",
                                 gap: 4
                             }}
                         >
