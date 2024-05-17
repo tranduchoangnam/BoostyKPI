@@ -67,7 +67,6 @@ export function SignUp() {
 
         // Proceed with form submission
         try {
-            await auth.loginAction(formData);
             toast.success("Account created successfully!", {
                 autoClose: 500, // Close after 3 seconds
                 onClose: () => navigate('/auth/sign-in') // Navigate to the desired page after successful signup

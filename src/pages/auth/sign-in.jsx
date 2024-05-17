@@ -60,7 +60,7 @@ export function SignIn() {
         
         try {
             await auth.loginAction(formData);
-            navigate('/'); // Navigate to the desired page after successful login
+            // navigate('/'); // Navigate to the desired page after successful login
         } catch (error) {
             toast.error("Failed to sign in. Please check your credentials.");
         }
