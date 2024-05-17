@@ -64,7 +64,7 @@ export function DashboardNavbar() {
                         onClick={() => setOpenSidenav(dispatch, !openSidenav)}
                     >
                         <img className="h-8 w-8" src="/img/logo.png" />
-                        <p className="pt-2 text-[#062D5F] font-bold text-[16px]">oosty</p>
+                        <p className="pt-2 text-[#062D5F] font-bold text-[16px]">oostyKPI</p>
                     </div>
                 </div>
                 <div className="flex items-center h-full">
