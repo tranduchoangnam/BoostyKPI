@@ -64,11 +64,11 @@ const dailySalesChart = {
     series: [
         {
             name: "Yesterday",
-            data: [2, 0, 0, 0, 1, 2, 4, 5, 6],
+            data: [2, 0, 0, 0, 1, 2, 4, 5, 6, 12],
         },
         {
             name: "Today",
-            data: [1, 0, 0, 1, 2, 3, 5, 7, 8],
+            data: [1, 0, 0, 1, 2, 3, 5, 7, 8, 13,],
         },
     ],
     options: {
@@ -246,7 +246,7 @@ export const statisticsChartsData = [
                 <div className="grid grid-cols-2 pb-6 mb-6 border-b-2">
                     <div className="pr-6">
                         <Typography className="text-[20px] font-bold text-[#131523]">
-                            {dailySalesChart.series[1].data.reduce(
+                            {dailySalesChart.series[0].data.reduce(
                                 (a, b) => a + b,
                                 0,
                             )}
