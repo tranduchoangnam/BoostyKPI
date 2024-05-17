@@ -8,6 +8,7 @@ export const users = [
         photo: "https://api.dicebear.com/8.x/pixel-art/svg?seed=user@example.com",
         isNotified: true,
         kpis: ["1", "2", "3", "4", "5"],
+        phone: "09123456789",
         accessToken: "access-token-8f3ae836da744329a6f93bf20594b5cc",
     },
     {
@@ -19,6 +20,8 @@ export const users = [
         photo: "https://api.dicebear.com/8.x/pixel-art/svg?seed=user2@example.com",
         isNotified: true,
         kpis: ["1", "2", "3", "4", "5"],
+        phone: "09123456789",
+
         accessToken: "access-token-4adfae836da744329a6f93bf20594b5cc",
     },
     {
@@ -30,6 +33,8 @@ export const users = [
         photo: "https://api.dicebear.com/8.x/pixel-art/svg?seed=user3@example.com",
         isNotified: true,
         kpis: ["1", "2", "3", "4", "5"],
+        phone: "09123456789",
+
         accessToken: "access-token-3f3ae836da744329a6f93asdf594b5cc",
     },
     {
@@ -41,6 +46,8 @@ export const users = [
         photo: "https://api.dicebear.com/8.x/pixel-art/svg?seed=user4@example.com",
         isNotified: true,
         kpis: ["1", "2", "3", "4", "5"],
+        phone: "09123456789",
+
         accessToken: "access-token-2f3ae836da7asdfsadga6f93bf20594b5cc",
     },
     {
@@ -52,6 +59,8 @@ export const users = [
         photo: "https://api.dicebear.com/8.x/pixel-art/svg?seed=user5@example.com",
         isNotified: true,
         kpis: ["1", "2", "3", "4", "5"],
+        phone: "09123456789",
+
         accessToken: "access-token-3f3ae8gssg44329a6f93bf20594b5cc",
     },
 ];

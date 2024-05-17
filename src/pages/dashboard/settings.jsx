@@ -1,15 +1,16 @@
 import { Typography, Card, Switch } from "@material-tailwind/react";
 import { Header } from "@/components/layout";
 import { Box, Button, Divider, Grid, IconButton } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClearIcon } from "@mui/x-date-pickers";
 import { DropdownButton } from "@/components/buttons";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
+import { useAuth } from "@/context/AuthProvider";
 export function Settings() {
     const [selectedFileName, setSelectedFileName] = useState("");
     const [file, setFile] = useState(null);
+    const auth = useAuth();
     const [userInfo, setUserInfo] = useState({
         file: "",
         firstName: "",
@@ -64,6 +65,14 @@ export function Settings() {
     ];
     const navigate = useNavigate();
 
+    useEffect(() => {
+        setUserInfo({
+            firstName: auth.user.first_name || "",
+            lastName: auth.user.last_name || "",
+            email: auth.user.email || "",
+            phone: auth.user.phone || "",
+        });
+    });
     return (
         <>
             <Header
@@ -156,7 +165,10 @@ export function Settings() {
                             <div>
                                 {file && (
                                     <img
-                                        style={{ maxWidth: "250px", height: "auto" }}
+                                        style={{
+                                            maxWidth: "250px",
+                                            height: "auto",
+                                        }}
                                         src={URL.createObjectURL(file)}
                                         alt="Selected Image"
                                     />
@@ -251,14 +263,13 @@ export function Settings() {
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "space-between",
-                                gap: 4
+                                gap: 4,
                             }}
                         >
                             <Typography
                                 variant="h5"
                                 color="blue-gray"
                                 className="flex text-center py-0"
-
                             >
                                 Notification
                             </Typography>

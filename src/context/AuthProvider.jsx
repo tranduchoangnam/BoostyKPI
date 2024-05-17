@@ -4,6 +4,7 @@ import axiosInstance from "@/configs/axiosInstance";
 import { getUser } from "@/utils/api/user";
 import { getToken } from "@/utils/api/refresh_token";
 import { projectsTableData, users } from "@/data";
+import {toast} from "react-toastify";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -58,7 +59,7 @@ const AuthProvider = ({ children }) => {
             localStorage.setItem("token", user.accessToken);
             navigate("/");
         } else {
-            alert("Invalid email or password");
+            toast.error("Invalid email or password");
         }
     };
 
