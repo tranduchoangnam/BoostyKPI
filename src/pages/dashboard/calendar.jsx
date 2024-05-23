@@ -196,7 +196,7 @@ export function Calendar() {
             </div>
             <div className="relative mx-0 mb-6 mt-4 bg-white h-[calc(100vh-160px)] overflow-y-auto">
                 {/* Header */}
-                <div className="flex sticky inset-0 z-50 bg-white">
+                <div className="flex sticky inset-0 z-20 bg-white">
                     <div className="w-1/4 ">
                         <div className="flex items-center justify-between px-6 py-2 h-full border-b">
                             <div className="flex items-center gap-2">
@@ -205,12 +205,12 @@ export function Calendar() {
                                     Filter
                                 </Typography>
                             </div>
-                            <div>
+                            <div className="hidden md:block">
                             <Select
                                         label="Duration"
                                         value={type}
                                         onChange={()=>{}}
-                                        className="w-[100px]"
+                                        className="w-[100px] "
                                         containerProps={{
                                             className:
                                                 "!w-[100px] !min-w-[100px]",
@@ -260,7 +260,7 @@ export function Calendar() {
                             {/* Resources */}
                             <div
                                 key={kpi.id}
-                                className="w-1/4 border py-4 px-6"
+                                className="w-1/4 border py-4 px-6 max-h-[183px]"
                                 style={{
                                     minHeight: `${resourceHeight}px`,
                                 }}
@@ -269,8 +269,6 @@ export function Calendar() {
                                     {kpi.name}
                                 </Typography>
                                 <Typography className="text-[14px] text-[#3C98CC] font-bold">
-                                    {dayjs(kpi.plan[0]).format("MMM DD, YYYY")}{" "}
-                                    -{" "}
                                     {dayjs(kpi.plan[1]).format("MMM DD, YYYY")}
                                 </Typography>
                                 <Typography className="text-[14px] text-[#979797] font-medium">
