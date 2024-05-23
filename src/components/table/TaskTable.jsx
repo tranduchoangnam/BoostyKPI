@@ -258,7 +258,6 @@ export function TaskTable({ tableData, setTableData }) {
                 tableData={tableData}
                 rowJsx={rowJsx}
                 type="checkbox"
-                addRowJsx={addRowJsx}
             />
         </>
     );

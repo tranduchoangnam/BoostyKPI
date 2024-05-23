@@ -122,7 +122,7 @@ export function ListKpi() {
                         onClick={handleDelete}
                         className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
                     >
-                        <i className="fas fa-trash text-[#1E5EFF]" />
+                        <i className="fas fa-trash text-[#ff4444]" />
                     </div>
                 </div>
                 <KpiTable tableData={tableData} setTableData={setTableData} />

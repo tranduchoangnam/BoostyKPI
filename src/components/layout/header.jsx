@@ -10,7 +10,7 @@ export function Header({ name, onPrimary, onSecondary, back }) {
                 {back && (
                     <Typography
                         className="text-[14px] text-[#5A607F] flex cursor-pointer"
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate(-1)}
                     >
                         <ArrowLeftIcon className="h-5 w-5 text-blue-gray-500 mr-1" />
                         Back

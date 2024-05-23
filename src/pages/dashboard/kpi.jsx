@@ -14,7 +14,7 @@ import { TagsCard } from "@/components/cards/tags-card";
 import { Header } from "@/components/layout";
 import { useAuth } from "@/context/AuthProvider";
 import { ProgressChart } from "@/components/charts";
-import { GoalAddModal } from "@/components/modals";
+import { TargetAddModal } from "@/components/modals";
 import dayjs from "dayjs";
 export function DetailKpi() {
     const [toggleModal, setToggleModal] = useState(false);
@@ -52,6 +52,13 @@ export function DetailKpi() {
             });
         }
     }, [kpi]);
+    const handleSubmit = () => {
+        //TODO: Update kpi
+        toast.success("Target added successfully");
+        setTimeout(() => {
+            setToggleModal(false);
+        }, 500);
+    };
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
@@ -59,11 +66,12 @@ export function DetailKpi() {
         <>
             {kpi && (
                 <>
-                    <GoalAddModal
+                    <TargetAddModal
                         open={toggleModal}
                         setOpen={setToggleModal}
                         form={form}
                         setForm={setForm}
+                        onSubmit={() => handleSubmit()}
                     />
                     <Header
                         name={{
@@ -72,7 +80,7 @@ export function DetailKpi() {
                             secondary: "Cancel",
                         }}
                         onPrimary={() => {
-                            setToggleModal(true);
+                            toast.success("Goal updated successfully");
                         }}
                         onSecondary={() => {}}
                         back={true}
@@ -187,12 +195,18 @@ export function DetailKpi() {
                                             Targets
                                         </Typography>
                                     </div>
-                                    <div>
+                                    <div className="flex gap-4">
+                                        <div
+                                            onClick={() => setToggleModal(true)}
+                                            className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
+                                        >
+                                            <i className="fas fa-plus text-[#1E5EFF]" />
+                                        </div>
                                         <div
                                             onClick={() => handleDelete()}
                                             className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
                                         >
-                                            <i className="fas fa-trash text-[#1E5EFF]" />
+                                            <i className="fas fa-trash text-[#ff4444]" />
                                         </div>
                                     </div>
                                 </div>
