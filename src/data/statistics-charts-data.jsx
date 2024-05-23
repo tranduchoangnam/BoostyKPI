@@ -5,7 +5,7 @@ const websiteViewsChart = {
     type: "donut",
     series: [32, 8],
     options: {
-        colors: ["#4FD99F", "#FF6C7F"],
+        colors: ["#1E5EFF", "#81BDED"],
         plotOptions: {
             pie: {
                 startAngle: 0,
@@ -64,11 +64,11 @@ const dailySalesChart = {
     series: [
         {
             name: "Yesterday",
-            data: [2, 1, 2, 3, 4, 4, 4, 5, 7],
+            data: [1, 1, 3, 3, 4, 4, 4, 5, 7],
         },
         {
             name: "Today",
-            data: [3, 2, 1, 2, 3, 5, 7, 8, 9],
+            data: [1, 2, 2, 3, 3, 5, 7, 8, 9],
         },
     ],
     options: {

@@ -12,8 +12,17 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { TagsCard } from "@/components/cards/tags-card";
 import { Header } from "@/components/layout";
-import {useAuth} from "@/context/AuthProvider";
+import { useAuth } from "@/context/AuthProvider";
+import { ProgressChart } from "@/components/charts";
+import { GoalAddModal } from "@/components/modals";
+import dayjs from "dayjs";
 export function DetailKpi() {
+    const [toggleModal, setToggleModal] = useState(false);
+    const [form, setForm] = useState({
+        name: "",
+        deadline: "",
+        description: "",
+    });
     const [tableData, setTableData] = useState([]);
     const { id } = useParams();
     const [kpi, setKpi] = useState();
@@ -50,26 +59,132 @@ export function DetailKpi() {
         <>
             {kpi && (
                 <>
+                    <GoalAddModal
+                        open={toggleModal}
+                        setOpen={setToggleModal}
+                        form={form}
+                        setForm={setForm}
+                    />
                     <Header
                         name={{
                             page: "Detail KPI",
                             primary: "Save",
                             secondary: "Cancel",
                         }}
-                        onPrimary={() => {}}
+                        onPrimary={() => {
+                            setToggleModal(true);
+                        }}
                         onSecondary={() => {}}
                         back={true}
                     />
-                    <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-4">
-                        <Card className="mx-0 mb-6 py-6 px-4 pb-0 border border-blue-gray-100 md:col-span-2 col-span-1">
-                            <>
-                                <div className="flex justify-between">
-                                    <div className="">
+                    <div className="flex flex-col gap-4">
+                        <Card className="mx-0 mb-6 py-6 px-6 shadow-none">
+                            <div className="flex flex-wrap justify-center">
+                                <div className="flex  items-center lg:justify-start justify-center grow min-w-[320px]">
+                                    <div className="w-[200px] flex justify-center items-center">
+                                        <ProgressChart value={kpi.completion} />
+                                    </div>
+                                    <div className="flex flex-col">
                                         <Typography className="text-[24px] text-[#131523] font-bold">
                                             {kpi.name}
                                         </Typography>
+                                        <Typography className="text-[18px] text-[#131523]">
+                                            {kpi.description}
+                                        </Typography>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col justify-center gap-4 py-4">
+                                    {/* <div className="max-w-[320px]">
+                                        <Input
+                                            type="text"
+                                            label="Name"
+                                            defaultValue={
+                                                kpi.name || "Enter KPI name..."
+                                            }
+                                        />
+                                    </div> */}
+                                    <div className="flex gap-4 relative">
+                                        <div>
+                                            <Select
+                                                label="Priority"
+                                                value={kpi.priority}
+                                                onChange={(e) =>
+                                                    setKpi({
+                                                        ...kpi,
+                                                        priority: e,
+                                                    })
+                                                }
+                                                defaultValue={kpi.priority}
+                                                className="w-[100px]"
+                                                containerProps={{
+                                                    className:
+                                                        "!w-[100px] !min-w-[100px]",
+                                                }}
+                                            >
+                                                <Option value={"High"}>
+                                                    High
+                                                </Option>
+                                                <Option value={"Medium"}>
+                                                    Medium
+                                                </Option>
+                                                <Option value={"Low"}>
+                                                    Low
+                                                </Option>
+                                            </Select>
+                                        </div>
+                                        <div>
+                                            <div className="relative flex w-full max-h-[40px]">
+                                                <div className="absolute z-0 flex align-center justify-center right-0 top-0 w-full h-full">
+                                                    <RangePicker
+                                                        id="range-picker"
+                                                        value={rangeDate.value}
+                                                        onChange={(
+                                                            date,
+                                                            dateString,
+                                                        ) =>
+                                                            setRangeDate({
+                                                                value: date,
+                                                                dateString,
+                                                            })
+                                                        }
+                                                        className="border-none w-full h-full bg-transparent focus:border-none"
+                                                    />
+                                                </div>
+                                                <Input
+                                                    label="Plan"
+                                                    defaultValue=" "
+                                                    onClick={() =>
+                                                        document
+                                                            .getElementById(
+                                                                "range-picker",
+                                                            )
+                                                            .click()
+                                                    }
+                                                    className="relative z-10"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="max-w-[320px]">
+                                        <TagsCard
+                                            tags={kpi.tags}
+                                            onSetTags={(tags) => {
+                                                setKpi({
+                                                    ...kpi,
+                                                    tags,
+                                                });
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+                        <Card className="mx-0 mb-6 py-6 px-4 pb-0 shadow-none">
+                            <>
+                                <div className="flex justify-between">
+                                    <div className="">
                                         <Typography className="text-[16px] text-[#131523] font-bold">
-                                            Tasks
+                                            Targets
                                         </Typography>
                                     </div>
                                     <div>
@@ -81,84 +196,12 @@ export function DetailKpi() {
                                         </div>
                                     </div>
                                 </div>
-                                <TaskTable tableData={tableData} setTableData={setTableData}/>
+                                <TaskTable
+                                    tableData={tableData}
+                                    setTableData={setTableData}
+                                />
                             </>
                         </Card>
-                        <div>
-                            <Card className="mx-0 mb-6 py-6 px-6 border border-blue-gray-100 gap-4">
-                                <div className="flex items-center justify-between">
-                                    <Typography className="text-[16px] text-[#131523] font-bold">
-                                        Overview
-                                    </Typography>
-                                    <Typography className="text-[14px] text-[#F0142F]">
-                                        Delete
-                                    </Typography>
-                                </div>
-                                <Input
-                                    type="text"
-                                    label="Name"
-                                    defaultValue={
-                                        kpi.name || "Enter KPI name..."
-                                    }
-                                />
-                                <div className="flex">
-                                    <Select
-                                        label="Priority"
-                                        value={kpi.priority}
-                                        onChange={(e) =>
-                                            setKpi({
-                                                ...kpi,
-                                                priority: e,
-                                            })
-                                        }
-                                        defaultValue={kpi.priority}
-                                        className="w-[100px]"
-                                        containerProps={{
-                                            className:
-                                                "!w-[100px] !min-w-[100px]",
-                                        }}
-                                    >
-                                        <Option value={"High"}>High</Option>
-                                        <Option value={"Medium"}>Medium</Option>
-                                        <Option value={"Low"}>Low</Option>
-                                    </Select>
-                                </div>
-                                <div className="relative flex w-full max-w-[24rem]">
-                                    <div className="absolute z-0 flex align-center justify-center right-0 top-0 w-full h-full">
-                                        <RangePicker
-                                            id="range-picker"
-                                            value={rangeDate.value}
-                                            onChange={(date, dateString) =>
-                                                setRangeDate({
-                                                    value: date,
-                                                    dateString,
-                                                })
-                                            }
-                                            className="border-none w-full h-full bg-transparent focus:border-none"
-                                        />
-                                    </div>
-                                    <Input
-                                        label="Plan"
-                                        defaultValue=" "
-                                        onClick={() =>
-                                            document
-                                                .getElementById("range-picker")
-                                                .click()
-                                        }
-                                        className="relative z-10"
-                                    />
-                                </div>
-                            </Card>
-                            <TagsCard
-                                tags={kpi.tags}
-                                onSetTags={(tags) => {
-                                    setKpi({
-                                        ...kpi,
-                                        tags,
-                                    });
-                                }}
-                            />
-                        </div>
                     </div>
                 </>
             )}

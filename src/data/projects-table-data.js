@@ -2,6 +2,7 @@ export const projectsTableData = [
     {
         id: "1",
         name: "AI Course",
+        description: "This is a course for AI beginners.",
         plan: ["2024-01-05T10:00", "2024-04-16T16:00"],
         subtasks: [
             {
@@ -57,6 +58,7 @@ export const projectsTableData = [
     {
         id: "2",
         name: "GPA 4.0",
+        description: "Get a GPA of 4.0 in the next semester.",
         plan: ["2024-01-22T09:00", "2024-05-02T17:00"],
         subtasks: [
             {
@@ -82,6 +84,7 @@ export const projectsTableData = [
     {
         id: "3",
         name: "Backend Certification",
+        description: "Get a backend certification from Coursera.",
         plan: ["2024-02-22T11:00", "2024-05-10T15:00"],
         subtasks: [
             {
@@ -107,6 +110,7 @@ export const projectsTableData = [
     {
         id: "4",
         name: "JLPT N2",
+        description: "Get a JLPT N2 certification.",
         plan: ["2024-05-25T08:00", "2024-06-20T18:00"],
         subtasks: [
             {
@@ -132,6 +136,7 @@ export const projectsTableData = [
     {
         id: "5",
         name: "Business Certification",
+        description: "Get a business certification from Coursera.",
         plan: ["2024-06-01T09:00", "2024-06-30T17:00"],
         subtasks: [
             {

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export function KpiTable({ tableData,setTableData }) {
     const naviagate=useNavigate();
-    const tableHead=["Name","Plan","Subtasks","Priority","Completion"];
+    const tableHead=["Name","Plan","Targets","Priority","Completion"];
     const tableHeadJsx = tableHead.map((el, index) => (
         <th
             key={el}

@@ -39,13 +39,8 @@ export function Sidenav() {
                 },
                 {
                     icon: <ChartBarIcon {...icon} />,
-                    name: "KPIs",
+                    name: "Goals",
                     path: "/kpi",
-                },
-                {
-                    icon: <DocumentPlusIcon {...icon} />,
-                    name: "Add KPI",
-                    path: "/add-kpi",
                 },
                 {
                     icon: <CalendarDaysIcon {...icon} />,

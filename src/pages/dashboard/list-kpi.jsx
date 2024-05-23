@@ -5,8 +5,18 @@ import { Header } from "@/components/layout";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
 import { toast } from "react-toastify";
+import { CommonButton } from "@/components/buttons";
+import { GoalAddModal } from "@/components/modals";
+import { v4 as uuidv4 } from "uuid";
+import dayjs from "dayjs";
 export function ListKpi() {
     const auth = useAuth();
+    const [toggleModal, setToggleModal] = useState(false);
+    const [form, setForm] = useState({
+        name: "",
+        deadline: "",
+        description: "",
+    });
     const [filter, setFilter] = useState("all");
     const [search, setSearch] = useState("");
     const [tableData, setTableData] = useState([]);
@@ -21,14 +31,27 @@ export function ListKpi() {
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
-    const handleSave=()=>{
-        try{
-            auth.setKpi(tableData);
-            toast.success("KPIs saved successfully");
-        }
-        catch(e){
-            toast.error("An error occurred");
-        }
+    const handleAdd = () => {
+        setToggleModal(true);
+    };
+    const handleSubmit = () => {
+        auth.setKpi([
+            ...auth.kpi,
+            {
+                name: form.name,
+                description: form.description,
+                priority: "Low",
+                tags: [],
+                plan: [new Date().toDateString(), dayjs(form.deadline).toDate().toDateString()],
+                subtasks: [],
+                completion: 0,
+                id: uuidv4(),
+            },
+        ]);
+        setTimeout(() => {
+            toast.success("Goal Added Successfully");
+            setToggleModal(false);
+        }, 500);
     };
     useEffect(() => {
         let prettyData = auth.kpi;
@@ -53,21 +76,31 @@ export function ListKpi() {
     useEffect(() => {
         setTableData(auth.kpi);
     }, [auth.kpi]);
+
     return (
         <>
+            <GoalAddModal
+                open={toggleModal}
+                setOpen={setToggleModal}
+                form={form}
+                setForm={setForm}
+                onSubmit={() => handleSubmit()}
+            />
             <Header
                 name={{
-                    page: "List KPI",
+                    page: "Goals",
                     secondary: "Import",
-                    primary: "Save",
+                    primary: "Add Goal",
                 }}
-                onPrimary={() => {handleSave();}}
+                onPrimary={() => {
+                    handleAdd();
+                }}
                 onSecondary={() => {}}
                 back={true}
             />
             <Card className="mx-0 mb-6 mt-4 p-8 pb-0 border border-blue-gray-100">
                 <div className="flex items-start justify-between mb-8">
-                    <div className="flex gap-8 flex-wrap">
+                    <div className="flex gap-8 flex-wrap items-center">
                         <div className="w-[180px]">
                             <DropdownButton
                                 name="Filter"

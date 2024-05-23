@@ -17,8 +17,8 @@ export function StatisticsChart({
     children,
 }) {
     return (
-        <Card className="shadow-sm relative h-full">
-            <CardHeader
+        <Card className="shadow-none relative h-full">
+            {title&&<CardHeader
                 variant="gradient"
                 color={color}
                 floated={false}
@@ -35,17 +35,17 @@ export function StatisticsChart({
                     {description}
                 </Typography>
                 {children && children.header}
-            </CardHeader>
+            </CardHeader>}
             <CardBody
                 className={`px-0 pt-8 pb-0 relative grow ${
-                    chart.type === "donut" && "!pt-4"
+                    chart.type === "donut" && "!pt-0"
                 }`}
             >
                 <div className="px-6">{children && children.body}</div>
                 <div className="relative">
                     {chart.type === "donut" && (
                         <div className="absolute flex flex-col items-center justify-center left-0 top-0 w-full h-full">
-                            <Typography className="text-[#5AC68B] text-[40px] leading-[50px]">
+                            <Typography className="text-[#1E5EFF] text-[40px] leading-[50px]">
                                 32
                             </Typography>
                             <Typography className="text-[#7DA2B2] text-[15px] leading-[18px]">

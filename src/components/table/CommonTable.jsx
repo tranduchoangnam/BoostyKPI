@@ -23,7 +23,8 @@ export function CommonTable({
     }, [tableData, rowsPerPage]);
 
     const visibleData = useMemo(() => {
-        return tableData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+        const reverseData = tableData.toReversed();
+        return reverseData.slice((page - 1) * rowsPerPage, page * rowsPerPage);
     }, [page, rowsPerPage, tableData]);
 
     const handleCheck = (check, index) => {
@@ -84,7 +85,7 @@ export function CommonTable({
                             }`;
 
                             return (
-                                <tr key={page + "-" + key} >
+                                <tr key={page + "-" + ele.id} >
                                     {type === "checkbox" && (
                                         <td
                                             className={`py-3 px-0  flex justify-center ${

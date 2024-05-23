@@ -32,37 +32,6 @@ export function Home() {
         <>
             <Header name={{ page: "Dashboard" }} />
             <div className="mt-4">
-                <div className="mb-12 grid gap-y-6 grid-cols-2 xl:gap-x-1 xl:grid-cols-4 gap-x-4">
-                    {statisticsCardsData.map(
-                        ({ icon, title, footer, ...rest }) => (
-                            <StatisticsCard
-                                key={title}
-                                {...rest}
-                                title={title}
-                                icon={React.createElement(icon, {
-                                    className: "w-6 h-6 text-[#1E5EFF]",
-                                })}
-                                footer={
-                                    <>
-                                        <Typography className="font-normal text-blue-gray-600">
-                                            <strong className={footer.color}>
-                                                {footer.value}
-                                            </strong>
-                                            &nbsp;
-                                        </Typography>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray-600"
-                                            className="aboslute"
-                                        >
-                                            {footer.label}
-                                        </Typography>
-                                    </>
-                                }
-                            />
-                        ),
-                    )}
-                </div>
                 <div className="mb-6 grid grid-flow-row-dense grid-cols-2 gap-y-12 gap-x-6 md:grid-cols-7 xl:grid-cols-7">
                     {statisticsChartsData.map((props, index) => (
                         <div
@@ -145,7 +114,6 @@ export function Home() {
                                         {[
                                             "Name",
                                             "Deadline",
-                                            "Priority",
                                             "Completion",
                                         ].map((el, index) => (
                                             <th
@@ -170,7 +138,6 @@ export function Home() {
                                             {
                                                 name,
                                                 plan,
-                                                priority,
                                                 completion,
                                             },
                                             key,
@@ -203,16 +170,6 @@ export function Home() {
                                                         >
                                                             {dayjs(plan[1]).format("DD MMM YYYY")}
                                                         </Typography>
-                                                    </td>
-                                                    <td
-                                                        className={
-                                                            className +
-                                                            " flex justify-center"
-                                                        }
-                                                    >
-                                                        <PriorityButton
-                                                            priority={priority}
-                                                        />
                                                     </td>
                                                     <td className={className}>
                                                         <div className="w-10/12">
