@@ -39,7 +39,7 @@ export function Home() {
                             className={
                                 index === 0
                                     ? "col-span-2 md:col-span-5"
-                                    : "col-span-1 md:col-span-2"
+                                    : "col-span-2"
                             }
                         >
                             <StatisticsChart
@@ -202,7 +202,7 @@ export function Home() {
                             </table>
                         </CardBody>
                     </Card>
-                    <Card className="shadow-sm col-span-1 md:col-span-2">
+                    <Card className="shadow-sm col-span-2">
                         <CardHeader
                             floated={false}
                             shadow={false}
