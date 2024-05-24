@@ -15,6 +15,7 @@ import { Header } from "@/components/layout";
 import { useAuth } from "@/context/AuthProvider";
 import { ProgressChart } from "@/components/charts";
 import { TargetAddModal } from "@/components/modals";
+import { toast } from "react-toastify";
 import dayjs from "dayjs";
 export function DetailKpi() {
     const [toggleModal, setToggleModal] = useState(false);
@@ -22,6 +23,7 @@ export function DetailKpi() {
         name: "",
         deadline: "",
         description: "",
+        measure: {},
     });
     const [tableData, setTableData] = useState([]);
     const { id } = useParams();
@@ -146,6 +148,7 @@ export function DetailKpi() {
                                                     <RangePicker
                                                         id="range-picker"
                                                         value={rangeDate.value}
+                                                        showTime
                                                         onChange={(
                                                             date,
                                                             dateString,

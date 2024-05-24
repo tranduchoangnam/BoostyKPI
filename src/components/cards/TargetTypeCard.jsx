@@ -7,9 +7,15 @@ import {
     RadioGroup,
     TextField,
     Input,
+    InputAdornment,
+    OutlinedInput,
+    InputLabel,
+    FormControl,
+    Select,
+    MenuItem,
 } from "@mui/material";
+import { TargetNumberInput, TasksInput } from "@/components/inputs";
 import { styled } from "@mui/system";
-
 const StyledFormControlLabel = styled(FormControlLabel)(
     ({ theme, selected }) => ({
         position: "relative",
@@ -71,6 +77,8 @@ const Option = ({ value, label, description, selected, onChange }) => (
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
+                    width: "100%",
+                    height: "100%",
                 }}
             >
                 <Typography variant="h6">{label}</Typography>
@@ -82,15 +90,56 @@ const Option = ({ value, label, description, selected, onChange }) => (
     />
 );
 
-const TargetTypeCard = () => {
+export const TargetTypeCard = () => {
     const [selectedValue, setSelectedValue] = useState("Number");
-
+    const [input, setInput] = useState({
+        number: {
+            value: {
+                start: 0,
+                target: 1,
+            },
+            unit: "VND",
+        },
+        boolean: {
+            value: false,
+        },
+        currency: {
+            value: {
+                start: 0,
+                target: 1,
+            },
+            unit: "VND",
+        },
+        tasks: [
+            {   
+                id: 0,
+                name: "New task",
+                status: "In Progress",
+            },
+        ],
+    });
     const handleChange = (event) => {
         setSelectedValue(event.target.value);
     };
 
+    const handleInputChange = (e) => {
+        setInput({
+            ...input,
+            [selectedValue.toLowerCase()]: {
+                ...input[selectedValue.toLowerCase()],
+                ...e,
+            },
+        });
+    };
+    const handleTasksChange = (tasks) => {
+        setInput({
+            ...input,
+            tasks,
+        });
+    };
+
     return (
-        <div>
+        <>
             <RadioGroup
                 row
                 value={selectedValue}
@@ -102,39 +151,70 @@ const TargetTypeCard = () => {
                         md: "repeat(4, 1fr)",
                         xs: "repeat(2, 1fr)",
                     },
+                    justifyContent: "center",
+                    alignItems: "center",
                 }}
             >
-                <Option
-                    value="Number"
-                    label="Number"
-                    description="Any number like 1 or 2"
-                    selected={selectedValue === "Number"}
-                />
-                <Option
-                    value="TrueFalse"
-                    label="True/False"
-                    description="Done or not done"
-                    selected={selectedValue === "TrueFalse"}
-                />
-                <Option
-                    value="Currency"
-                    label="Currency"
-                    description="Show me the money"
-                    selected={selectedValue === "Currency"}
-                />
-                <Option
-                    value="Tasks"
-                    label="Tasks"
-                    description="Track progress of tasks"
-                    selected={selectedValue === "Tasks"}
-                />
+                <div className="flex justify-center items-center">
+                    <Option
+                        value="Number"
+                        label="Number"
+                        description="Any number like 1 or 2"
+                        selected={selectedValue === "Number"}
+                    />
+                </div>
+                <div className="flex justify-center items-center">
+                    <Option
+                        value="TrueFalse"
+                        label="True/False"
+                        description="Done or not done"
+                        selected={selectedValue === "TrueFalse"}
+                    />
+                </div>
+                <div className="flex justify-center items-center">
+                    <Option
+                        value="Currency"
+                        label="Currency"
+                        description="Show me the money"
+                        selected={selectedValue === "Currency"}
+                    />
+                </div>
+                <div className="flex justify-center items-center">
+                    <Option
+                        value="Tasks"
+                        label="Tasks"
+                        description="Track progress of tasks"
+                        selected={selectedValue === "Tasks"}
+                    />
+                </div>
             </RadioGroup>
-            <div className="flex justify-center gap-8 mt-8">
-            <TextField id="target-type" defaultValue={0} label="Start" placeholder="Enter your target type" />
-            <TextField id="target-type2" defaultValue={0} label="Target" placeholder="Enter your target type" />
+            <div className="grid grid-cols-2 justify-center md:gap-16 gap-4 mt-8 w-full">
+                {(selectedValue === "Number" ||
+                    selectedValue === "Currency") && (
+                    <>
+                        <TargetNumberInput
+                            input={input}
+                            handleInputChange={handleInputChange}
+                            targetType={selectedValue.toLowerCase()}
+                            inputType="Start"
+                        />
+                        <TargetNumberInput
+                            input={input}
+                            handleInputChange={handleInputChange}
+                            targetType={selectedValue.toLowerCase()}
+                            inputType="Target"
+                        />
+                    </>
+                )}
             </div>
-        </div>
+            <div className="flex justify-center items-center w-full">
+                {selectedValue === "Tasks" && (
+                    <TasksInput
+                        tasks={input.tasks}
+                        setTasks={handleTasksChange}
+                    />
+                )}
+            </div>
+        </>
     );
 };
-
-export default TargetTypeCard;

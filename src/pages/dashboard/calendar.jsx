@@ -206,27 +206,26 @@ export function Calendar() {
                                 </Typography>
                             </div>
                             <div className="hidden md:block">
-                            <Select
-                                        label="Duration"
-                                        value={type}
-                                        onChange={()=>{}}
-                                        className="w-[100px] "
-                                        containerProps={{
-                                            className:
-                                                "!w-[100px] !min-w-[100px]",
-                                        }}
-                                    >
-                                        <Option value={"year"}>Year</Option>
-                                        <Option value={"month"}>Month</Option>
-                                        <Option value={"week"}>Week</Option>
-                                    </Select>
+                                <Select
+                                    label="Duration"
+                                    value={type}
+                                    onChange={() => {}}
+                                    className="w-[100px] "
+                                    containerProps={{
+                                        className: "!w-[100px] !min-w-[100px]",
+                                    }}
+                                >
+                                    <Option value={"year"}>Year</Option>
+                                    <Option value={"month"}>Month</Option>
+                                    <Option value={"week"}>Week</Option>
+                                </Select>
                             </div>
                         </div>
                     </div>
-                    <div className="w-3/4 relative h-[50px] overflow-hidden">
+                    <div className="w-3/4 relative h-[60px] overflow-hidden">
                         <div
                             id="timelineScroll"
-                            className="grid grid-flow-col pb-[17px] overflow-x-scroll"
+                            className="grid grid-flow-col overflow-x-scroll h-full"
                             style={{
                                 gridAutoColumns: `${slotWidth}px`,
                             }}
@@ -234,7 +233,7 @@ export function Calendar() {
                             {slotTemplate[type].slotLabels.map((label) => (
                                 <div
                                     key={label}
-                                    className="border h-[50px] grid grid-cols-4 px-2 py-1 "
+                                    className="border h-full grid grid-cols-4 px-2 py-1"
                                 >
                                     <div className="col-span-4">
                                         <Typography className="font-bold text-[14px]">
@@ -365,7 +364,7 @@ export function Calendar() {
                     ))}
                     <div
                         id="timeline-wrapper"
-                        className="absolute inset-0 left-1/4 top-0 pb-24 z-10 h-full w-3/4 overflow-x-auto"
+                        className="absolute inset-0 z-20 left-1/4 top-[-60px] pb-24 h-[calc(100%+60px)] w-3/4 overflow-x-auto"
                     >
                         <div style={{ width: `${slotWidth * 12}px` }}></div>
                     </div>

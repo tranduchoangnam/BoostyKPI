@@ -238,7 +238,7 @@ export const statisticsChartsData = [
         color: "white",
         title: "Statistic",
         description: "",
-        footer: "campaign sent 2 days ago",
+        footer: "2 days ago",
         chart: websiteViewsChart,
         children: {
             header: <></>,

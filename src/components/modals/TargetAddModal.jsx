@@ -12,8 +12,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import TargetTypeCard from "@/components/cards/TargetTypeCard";
-
+import { TargetTypeCard } from "@/components/cards";
 export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [index, setIndex] = useState(0);
@@ -53,9 +52,13 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
     }, [open]);
     return (
         <CommonModal open={open} setOpen={setOpen}>
-            <div className="flex flex-col gap-4 items-center">
-                <RocketLaunchIcon className="h-24 w-24 text-blue-gray-400" />
-                <Typography id="target-name" variant="h4" className="text-center">
+            <div className="flex flex-col gap-4 items-center w-full">
+                <RocketLaunchIcon className="h-24 w-24 text-[#1E5EFF]" />
+                <Typography
+                    id="target-name"
+                    variant="h4"
+                    className="text-center"
+                >
                     Add a new target
                 </Typography>
                 <Typography
@@ -83,7 +86,7 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                         }
                     }}
                 />
-                <PencilSquareIcon className="h-24 w-24 text-blue-gray-400" />
+                <PencilSquareIcon className="h-24 w-24 text-[#1E5EFF]" />
                 <Typography variant="h4" className="text-center">
                     Describe your target
                 </Typography>
@@ -96,22 +99,25 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                 <TextField
                     variant="standard"
                     id="target-scroll-1"
+                    placeholder="Enter some description"
                     value={form.description || ""}
                     onChange={(e) =>
                         setForm({ ...form, description: e.target.value })
                     }
-                    sx={{ marginBottom: "120px" }}
+                    sx={{ marginBottom: "120px", textAlign: "center" }}
                     onKeyDown={(e) => {
                         if (e.key === "Enter") {
                             setIndex(2);
                             setTimeout(() => {
-                                document.getElementById("target-scroll-1").blur();
+                                document
+                                    .getElementById("target-scroll-1")
+                                    .blur();
                                 setOpenDatePicker(true);
                             }, 500);
                         }
                     }}
                 />
-                <CalendarDaysIcon className="h-24 w-24 text-blue-gray-400" />
+                <CalendarDaysIcon className="h-24 w-24 text-[#1E5EFF]" />
                 <Typography
                     id="target-scroll-2"
                     variant="h4"
@@ -140,7 +146,7 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                         }}
                     />
                 </Box>
-                <PuzzlePieceIcon className="h-24 w-24 text-blue-gray-400" />
+                <PuzzlePieceIcon className="h-24 w-24 text-[#1E5EFF]" />
                 <Typography
                     id="target-scroll-3"
                     variant="h4"
@@ -154,19 +160,33 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                 >
                     Which type of target you want to add?
                 </Typography>
-                <div className="mb-[100px]">
-                <TargetTypeCard />
+                <div className="mb-[100px] w-full">
+                    <TargetTypeCard />
                 </div>
-                <Button
-                    id="target-scroll-4"
-                    variant="contained"
-                    sx={{
-                        backgroundColor: "#1E5EFF",
-                    }}
-                    onClick={() => onSubmit()}
-                >
-                    Add Target
-                </Button>
+                <div className="flex gap-8">
+                    <Button
+                        id="target-scroll-4"
+                        variant="outlined"
+                        onClick={() => setOpen(false)}
+                        sx={{
+                            width: "148px",
+                        }}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        id="target-scroll-4"
+                        variant="contained"
+                        size="large"
+                        sx={{
+                            backgroundColor: "#1E5EFF",
+                            width: "148px",
+                        }}
+                        onClick={() => onSubmit()}
+                    >
+                        Add Target
+                    </Button>
+                </div>
             </div>
         </CommonModal>
     );

@@ -98,9 +98,9 @@ export function ListKpi() {
                 onSecondary={() => {}}
                 back={true}
             />
-            <Card className="mx-0 mb-6 mt-4 p-8 pb-0 border border-blue-gray-100">
+            <Card className="mx-0 mb-6 mt-4 md:p-8 p-4 pb-0 border border-blue-gray-100">
                 <div className="flex items-start justify-between mb-8">
-                    <div className="flex gap-8 flex-wrap items-center">
+                    <div className="flex md:gap-8 gap-4 flex-wrap items-center">
                         <div className="w-[180px]">
                             <DropdownButton
                                 name="Filter"
