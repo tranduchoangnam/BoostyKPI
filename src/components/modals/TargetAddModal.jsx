@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TargetTypeCard } from "@/components/cards";
+import { CustomizedSlider } from "@/components/inputs";
 export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [index, setIndex] = useState(0);
@@ -52,7 +53,7 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
     }, [open]);
     return (
         <CommonModal open={open} setOpen={setOpen}>
-            <div className="flex flex-col gap-4 items-center w-full">
+            <div className="flex flex-col gap-4 pt-24 items-center w-full">
                 <RocketLaunchIcon className="h-24 w-24 text-[#1E5EFF]" />
                 <Typography
                     id="target-name"
@@ -78,39 +79,15 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     onKeyDown={(e) => {
                         if (e.key === "Enter") {
+                            console.log("enter");
                             if (!form.name) {
                                 setErrors({ name: "Target name is required" });
                                 return;
                             }
                             setIndex(1);
-                        }
-                    }}
-                />
-                <PencilSquareIcon className="h-24 w-24 text-[#1E5EFF]" />
-                <Typography variant="h4" className="text-center">
-                    Describe your target
-                </Typography>
-                <Typography
-                    variant="body1"
-                    className="text-center text-blue-gray-400"
-                >
-                    This is optional.
-                </Typography>
-                <TextField
-                    variant="standard"
-                    id="target-scroll-1"
-                    placeholder="Enter some description"
-                    value={form.description || ""}
-                    onChange={(e) =>
-                        setForm({ ...form, description: e.target.value })
-                    }
-                    sx={{ marginBottom: "120px", textAlign: "center" }}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            setIndex(2);
                             setTimeout(() => {
                                 document
-                                    .getElementById("target-scroll-1")
+                                    .getElementById("target-scroll-0")
                                     .blur();
                                 setOpenDatePicker(true);
                             }, 500);
@@ -118,14 +95,11 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                     }}
                 />
                 <CalendarDaysIcon className="h-24 w-24 text-[#1E5EFF]" />
-                <Typography
-                    id="target-scroll-2"
-                    variant="h4"
-                    className="text-center"
-                >
+                <Typography variant="h4" className="text-center">
                     Is there any deadline?
                 </Typography>
                 <Typography
+                    id="target-scroll-1"
                     variant="body1"
                     className="text-center text-blue-gray-400"
                 >
@@ -133,17 +107,36 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                 </Typography>
                 <Box sx={{ marginBottom: "120px" }}>
                     <DatePicker
-                        id="target-scroll-2"
                         open={openDatePicker}
                         onOpen={() => setOpenDatePicker(true)}
                         onClose={() => {
                             setOpenDatePicker(false);
-                            setIndex(3);
+                            setIndex(2);
                         }}
                         value={form.deadline || null}
                         onChange={(newValue) => {
                             setForm({ ...form, deadline: newValue });
                         }}
+                    />
+                </Box>
+                <PencilSquareIcon className="h-24 w-24 text-[#1E5EFF]" />
+                <Typography variant="h4" className="text-center">
+                    Rate your target's weight
+                </Typography>
+                <Typography
+                    variant="body1"
+                    className="text-center text-blue-gray-400"
+                    id="target-scroll-2"
+                >
+                    Only 20% left to reach your goal. Keep pushing!
+                </Typography>
+                <Box sx={{ marginBottom: "120px", marginTop: "48px" }}>
+                    <CustomizedSlider
+                        weight={form.weight}
+                        setWeight={(e) => {
+                            setForm({ ...form, weight: e });
+                        }}
+                        total={20}
                     />
                 </Box>
                 <PuzzlePieceIcon className="h-24 w-24 text-[#1E5EFF]" />

@@ -28,7 +28,7 @@ export function AddKpi() {
         plan: [],
         tags: [],
         completion: 0,
-        subtasks: [],
+        tasks: [],
     });
     const [rangeDate, setRangeDate] = useState({
         value: [],

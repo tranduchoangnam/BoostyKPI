@@ -51,7 +51,7 @@ export function KpiTable({ tableData,setTableData }) {
                     variant="small"
                     className="text-[14px] text-center font-medium text-blue-gray-600"
                 >
-                    {ele.subtasks.length}
+                    {ele.targets.length}
                 </Typography>
             </td>
             <td className={className + " text-center"}>

@@ -41,10 +41,11 @@ export const TasksInput = ({ tasks, setTasks }) => {
             <div className="w-full px-8">
                 <Button
                     size="small"
-                    variant="outlined"
+                    variant="contained"
                     sx={{
                         marginBottom: "16px",
-                        marginLeft: "16px"
+                        marginLeft: "16px",
+                        backgroundColor: "#1E5EFF",
                     }}
                     onClick={() => handleAddTask()}
                 >
@@ -75,10 +76,23 @@ export const TasksInput = ({ tasks, setTasks }) => {
                                     }}
                                     onChange={(e) => handleChange(e, task.id)}
                                 />
-                                <div className="flex items-center justify-end gap-2">
-                                    <StatusButton status={task.status} />
-                                    <XMarkIcon
-                                        className="h-6 w-6"
+                                <div className="flex items-center justify-end md:gap-4 gap-2">
+                                    <StatusButton
+                                        status={task.status}
+                                        setStatus={(e) =>
+                                            handleChange(
+                                                {
+                                                    target: {
+                                                        name: "status",
+                                                        value: e,
+                                                    },
+                                                },
+                                                task.id,
+                                            )
+                                        }
+                                    />
+                                    <i
+                                        className="fas fa-trash text-[#ff4444] cursor-pointer"
                                         onClick={() =>
                                             handleDeleteTask(task.id)
                                         }

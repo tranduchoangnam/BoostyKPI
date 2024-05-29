@@ -7,7 +7,7 @@ export function ReminderButton({ reminder, onSetReminder }) {
     return (
         <>  
             {toggle && <ReminderModal reminder={reminderData} onSetReminder={setReminderData} onClose={setToggle}/>}
-            <CalendarIcon className={`h-5 w-5 cursor-pointer ${reminderData.status?"text-[#1E5EFF]":"text-[#7E84A3]"}`} onClick={()=>setToggle(!toggle)} />
+            <CalendarIcon className={`h-5 w-5 cursor-pointer ${reminderData?.status?"text-[#1E5EFF]":"text-[#7E84A3]"}`} onClick={()=>setToggle(!toggle)} />
         </>
     );
 }

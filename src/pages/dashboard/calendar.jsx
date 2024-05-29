@@ -34,7 +34,7 @@ export function Calendar() {
                 },
             });
 
-            kpi.subtasks.map((subtask) => {
+            kpi.targets.map((subtask) => {
                 events.push({
                     title: subtask.name,
                     start: new Date(subtask.start_date),
@@ -271,7 +271,7 @@ export function Calendar() {
                                     {dayjs(kpi.plan[1]).format("MMM DD, YYYY")}
                                 </Typography>
                                 <Typography className="text-[14px] text-[#979797] font-medium">
-                                    {kpi.subtasks.length} subtasks
+                                    {kpi.targets.length} targets
                                 </Typography>
                             </div>
 
@@ -330,7 +330,7 @@ export function Calendar() {
                                     >
                                         <KpiCard kpi={kpi} />
                                     </div>
-                                    {kpi.subtasks.map(
+                                    {kpi.targets.map(
                                         (subtask, subtask_index) => (
                                             <div
                                                 className="absolute z-10 flex flex-col gap-2 py-2"

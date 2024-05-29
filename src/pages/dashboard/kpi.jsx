@@ -17,8 +17,11 @@ import { ProgressChart } from "@/components/charts";
 import { TargetAddModal } from "@/components/modals";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import { v4 as uuidv4 } from "uuid";
+import { SuccessModal } from "@/components/modals";
 export function DetailKpi() {
     const [toggleModal, setToggleModal] = useState(false);
+    const [completed, setCompleted] = useState(false);
     const [form, setForm] = useState({
         name: "",
         deadline: "",
@@ -47,15 +50,51 @@ export function DetailKpi() {
     }, [auth.kpi]);
     useEffect(() => {
         if (kpi) {
-            setTableData(kpi.subtasks);
+            setTableData(kpi.targets);
+        }
+    }, [kpi?.targets]);
+    useEffect(() => {
+        if (kpi) {
             setRangeDate({
                 value: [],
                 dateString: [kpi.plan[0], kpi.plan[1]],
             });
         }
-    }, [kpi]);
+    }, [kpi?.plan]);
+    useEffect(() => {
+        if (kpi) {
+            setKpi({
+                ...kpi,
+                completion: tableData.reduce((acc, el) => {
+                    return acc + (el.status === "Done" ? el.weight : 0);
+                }, 0),
+            });
+        }
+    }, [tableData]);
+    useEffect(() => {
+        if (kpi?.completion === 100) {
+            setCompleted(true);
+        }
+    }, [kpi?.completion]);
     const handleSubmit = () => {
-        //TODO: Update kpi
+        auth.setKpi(
+            auth.kpi.map((el) =>
+                el.id === kpi.id
+                    ? {
+                          ...el,
+                          targets: [
+                              ...tableData,
+                              {
+                                  ...form,
+                                  status: "In Progress",
+                                  id: uuidv4(),
+                              },
+                          ],
+                      }
+                    : el,
+            ),
+        );
+        console.log(JSON.stringify(form));
         toast.success("Target added successfully");
         setTimeout(() => {
             setToggleModal(false);
@@ -66,6 +105,12 @@ export function DetailKpi() {
     };
     return (
         <>
+            <SuccessModal
+                name={kpi?.name}
+                open={completed}
+                setOpen={setCompleted}
+            />
+
             {kpi && (
                 <>
                     <TargetAddModal
@@ -75,6 +120,7 @@ export function DetailKpi() {
                         setForm={setForm}
                         onSubmit={() => handleSubmit()}
                     />
+
                     <Header
                         name={{
                             page: "Detail KPI",
@@ -92,7 +138,9 @@ export function DetailKpi() {
                             <div className="flex flex-wrap justify-center">
                                 <div className="flex  items-center lg:justify-start justify-center grow min-w-[320px]">
                                     <div className="w-[200px] flex justify-center items-center">
-                                        <ProgressChart value={kpi.completion} />
+                                        <ProgressChart
+                                            value={kpi.completion ?? 0}
+                                        />
                                     </div>
                                     <div className="flex flex-col">
                                         <Typography className="text-[24px] text-[#131523] font-bold">
@@ -190,9 +238,9 @@ export function DetailKpi() {
                                 </div>
                             </div>
                         </Card>
-                        <Card className="mx-0 mb-6 py-6 px-4 pb-0 shadow-none">
+                        <Card className="mx-0 mb-6 py-6 md:px-6 px-3 pb-0 shadow-none">
                             <>
-                                <div className="flex justify-between">
+                                <div className="flex justify-between mb-2">
                                     <div className="">
                                         <Typography className="text-[16px] text-[#131523] font-bold">
                                             Targets

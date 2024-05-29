@@ -13,9 +13,12 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                     <Switch
                         id="custom-switch-component"
                         ripple={false}
-                        checked={reminderData.status}
+                        checked={reminderData.status || false}
                         onChange={(e) =>
-                            setReminderData({ ...reminderData, status: e.target.checked })
+                            setReminderData({
+                                ...reminderData,
+                                status: e.target.checked,
+                            })
                         }
                         className="h-full w-full checked:bg-[#1E5EFF]"
                         containerProps={{
@@ -29,7 +32,7 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                 <div className="grid grid-cols-2 my-6 gap-4">
                     <Select
                         label="Before Start"
-                        value={reminderData.before_start}
+                        value={reminderData.before_start || null}
                         onChange={(e) =>
                             setReminderData({
                                 ...reminderData,
@@ -44,7 +47,7 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                     </Select>
                     <Select
                         label="Repeat"
-                        value={reminderData.repeat}
+                        value={reminderData.repeat || "None"}
                         onChange={(e) =>
                             setReminderData({
                                 ...reminderData,
@@ -60,7 +63,7 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
 
                     <MobileTimePicker
                         label="Custome time"
-                        value={dayjs(reminderData.custom_time)}
+                        value={dayjs(reminderData.custom_time) || null}
                         onChange={(date) =>
                             setReminderData({
                                 ...reminderData,
@@ -73,9 +76,11 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                         type="date"
                         label="Custom Date"
                         placeholder="Select time"
-                        value={dayjs(reminderData.custom_date).format(
-                            "YYYY-MM-DD",
-                        )}
+                        value={
+                            dayjs(reminderData.custom_date).format(
+                                "YYYY-MM-DD",
+                            ) || null
+                        }
                         onChange={(e) =>
                             setReminderData({
                                 ...reminderData,
@@ -95,13 +100,13 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                         className="bg-[#1E5EFF] text-white px-8 py-2 rounded-[4px]"
                         onClick={() => {
                             onSetReminder({
-                                status: reminderData.status||false,
-                                before_start: reminderData.before_start||0,
-                                repeat: reminderData.repeat||"None",
-                                custom_time: reminderData.custom_time||"",
-                                custom_date: reminderData.custom_date||"",
+                                status: reminderData.status || false,
+                                before_start: reminderData.before_start || 0,
+                                repeat: reminderData.repeat || "None",
+                                custom_time: reminderData.custom_time || "",
+                                custom_date: reminderData.custom_date || "",
                             });
-                            onClose(false)
+                            onClose(false);
                             toast.success("Reminder saved successfully");
                         }}
                     >

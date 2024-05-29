@@ -43,7 +43,7 @@ export function ListKpi() {
                 priority: "Low",
                 tags: [],
                 plan: [new Date().toDateString(), dayjs(form.deadline).toDate().toDateString()],
-                subtasks: [],
+                targets: [],
                 completion: 0,
                 id: uuidv4(),
             },
