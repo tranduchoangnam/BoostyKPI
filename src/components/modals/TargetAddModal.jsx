@@ -10,11 +10,18 @@ import {
     FireIcon,
     PuzzlePieceIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TargetTypeCard } from "@/components/cards";
 import { CustomizedSlider } from "@/components/inputs";
-export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
+export const TargetAddModal = ({
+    open,
+    setOpen,
+    form,
+    setForm,
+    onSubmit,
+    weightLeft,
+}) => {
     const [openDatePicker, setOpenDatePicker] = useState(false);
     const [index, setIndex] = useState(0);
     const [errors, setErrors] = useState({
@@ -51,6 +58,18 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
             }
         }, 300);
     }, [open]);
+    const handleSubmit = () => {
+        if (!form.name) {
+            setErrors({ name: "Target name is required" });
+            const e = document.getElementById(`target-scroll-0`);
+            e.scrollIntoView({ behavior: "smooth", block: "center" });
+            setTimeout(() => {
+                e.focus();
+            }, 500);
+            return;
+        }
+        onSubmit();
+    };
     return (
         <CommonModal open={open} setOpen={setOpen}>
             <div className="flex flex-col gap-4 pt-24 items-center w-full">
@@ -76,6 +95,7 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                     value={form.name || ""}
                     error={errors ? errors.name.length > 0 : false}
                     helperText={errors.name || ""}
+                    autoComplete="off"
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
                     onKeyDown={(e) => {
                         if (e.key === "Enter") {
@@ -128,15 +148,16 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                     className="text-center text-blue-gray-400"
                     id="target-scroll-2"
                 >
-                    Only 20% left to reach your goal. Keep pushing!
+                    Only {weightLeft}% left to reach your goal. Keep pushing!
                 </Typography>
                 <Box sx={{ marginBottom: "120px", marginTop: "48px" }}>
                     <CustomizedSlider
                         weight={form.weight}
                         setWeight={(e) => {
-                            setForm({ ...form, weight: e });
+                            if(!e) e = 0;
+                            setForm({ ...form, weight: e});
                         }}
-                        total={20}
+                        total={weightLeft}
                     />
                 </Box>
                 <PuzzlePieceIcon className="h-24 w-24 text-[#1E5EFF]" />
@@ -183,7 +204,7 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                             backgroundColor: "#1E5EFF",
                             width: "148px",
                         }}
-                        onClick={() => onSubmit()}
+                        onClick={() => handleSubmit()}
                     >
                         Add Target
                     </Button>

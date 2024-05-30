@@ -53,7 +53,7 @@ export function StatisticsChart({
                             </Typography>
                         </div>
                     )}
-                    <div className={chart.type !== "donut" && "px-1"}>
+                    <div className={chart.type !== "donut" && "px-1 w-full"}>
                         <Chart {...chart} />
                     </div>
                 </div>

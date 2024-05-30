@@ -9,7 +9,7 @@ import { DatePicker } from "antd";
 import { projectsTableData } from "@/data";
 import { TaskTable } from "@/components/table/TaskTable";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { TagsCard } from "@/components/cards/tags-card";
 import { Header } from "@/components/layout";
 import { useAuth } from "@/context/AuthProvider";
@@ -19,14 +19,13 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { v4 as uuidv4 } from "uuid";
 import { SuccessModal } from "@/components/modals";
+import { useNavigate } from "react-router-dom";
 export function DetailKpi() {
     const [toggleModal, setToggleModal] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [form, setForm] = useState({
         name: "",
-        deadline: "",
-        description: "",
-        measure: {},
+        weight: 0,
     });
     const [tableData, setTableData] = useState([]);
     const { id } = useParams();
@@ -37,6 +36,7 @@ export function DetailKpi() {
     });
     const { RangePicker } = DatePicker;
     const auth = useAuth();
+    const navigate =useNavigate();
     // const disabledDate = (current, { from }) => {
     //     if (from) {
     //         return Math.abs(current.diff(from, "days")) >= 7;
@@ -44,6 +44,15 @@ export function DetailKpi() {
 
     //     return false;
     // };
+    const weightLeft = useMemo(() => {
+        if (!tableData.length) return 100;
+        return (
+            100 -
+            tableData.reduce((acc, target) => {
+                return acc + (target.weight? target.weight : 0);
+            }, 0)
+        );
+    }, [tableData]);
 
     useEffect(() => {
         setKpi(auth.kpi.find((el) => el.id === id));
@@ -76,7 +85,7 @@ export function DetailKpi() {
             setCompleted(true);
         }
     }, [kpi?.completion]);
-    const handleSubmit = () => {
+    const handleSubmit = (event) => {
         auth.setKpi(
             auth.kpi.map((el) =>
                 el.id === kpi.id
@@ -100,6 +109,13 @@ export function DetailKpi() {
             setToggleModal(false);
         }, 500);
     };
+    const handleAdd = () => {
+        if (weightLeft <= 0) {
+            toast.error("Oops! Full of weight. Try to delete target.");
+            return;
+        }
+        setToggleModal(true);
+    };
     const handleDelete = () => {
         document.getElementById("delete").click();
     };
@@ -118,7 +134,8 @@ export function DetailKpi() {
                         setOpen={setToggleModal}
                         form={form}
                         setForm={setForm}
-                        onSubmit={() => handleSubmit()}
+                        onSubmit={handleSubmit}
+                        weightLeft={weightLeft}
                     />
 
                     <Header
@@ -130,7 +147,9 @@ export function DetailKpi() {
                         onPrimary={() => {
                             toast.success("Goal updated successfully");
                         }}
-                        onSecondary={() => {}}
+                        onSecondary={() => {
+                            navigate("/kpi");
+                        }}
                         back={true}
                     />
                     <div className="flex flex-col gap-4">
@@ -139,7 +158,7 @@ export function DetailKpi() {
                                 <div className="flex  items-center lg:justify-start justify-center grow min-w-[320px]">
                                     <div className="w-[200px] flex justify-center items-center">
                                         <ProgressChart
-                                            value={kpi.completion ?? 0}
+                                            value={kpi.completion || 0}
                                         />
                                     </div>
                                     <div className="flex flex-col">
@@ -248,7 +267,7 @@ export function DetailKpi() {
                                     </div>
                                     <div className="flex gap-4">
                                         <div
-                                            onClick={() => setToggleModal(true)}
+                                            onClick={() => handleAdd()}
                                             className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
                                         >
                                             <i className="fas fa-plus text-[#1E5EFF]" />

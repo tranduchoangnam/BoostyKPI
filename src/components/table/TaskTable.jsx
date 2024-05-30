@@ -7,13 +7,12 @@ import {
 import { Input } from "@material-tailwind/react";
 import { CommonTable } from "./CommonTable";
 import { useEffect, useState } from "react";
-import { PlusIcon } from "@heroicons/react/24/solid";
+import { PlusIcon, MinusIcon } from "@heroicons/react/24/solid";
 import { DatePicker, Select } from "antd";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 export function TaskTable({ tableData, setTableData }) {
-
     const tableHead = [
         "Task Name",
         "Metric",
@@ -78,7 +77,11 @@ export function TaskTable({ tableData, setTableData }) {
                     variant="small"
                     className="text-[14px] text-center font-medium capitalize text-blue-gray-600"
                 >
-                    {dayjs(ele.end_date).format("DD-MM-YYYY") ?? "-"}
+                    {ele.end_date ? (
+                        dayjs(ele.end_date).format("DD-MM-YYYY")
+                    ) : (
+                        <MinusIcon className="h-5 w-5 text-blue-gray-400 mx-auto" />
+                    )}
                 </Typography>
             </td>
 
@@ -94,7 +97,11 @@ export function TaskTable({ tableData, setTableData }) {
                             : "text-red-400"))
                 }
             >
-                {ele.weight ? ele.weight + "%" : "-"}
+                {ele.weight ? (
+                    ele.weight + "%"
+                ) : (
+                    <MinusIcon className="h-5 w-5 text-blue-gray-400 mx-auto" />
+                )}
             </td>
             <td className={className + " text-center !px-2"}>
                 <StatusButton

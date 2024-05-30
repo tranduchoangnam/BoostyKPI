@@ -17,7 +17,7 @@ export function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#F5F6FA] font-['Inter']">
-      <ToastContainer />
+      <ToastContainer limti={3}/>
       <DashboardNavbar />
       <Sidenav />
       <div className="p-4 md:px-8 mt-[68px] xl:ml-72">
