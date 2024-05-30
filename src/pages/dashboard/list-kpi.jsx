@@ -125,7 +125,7 @@ export function ListKpi() {
                         <i className="fas fa-trash text-[#ff4444]" />
                     </div>
                 </div>
-                <KpiTable tableData={tableData} setTableData={setTableData} />
+                <KpiTable tableData={tableData} setTableData={setTableData} type="checkbox"/>
             </Card>
         </>
     );

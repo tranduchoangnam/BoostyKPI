@@ -7,8 +7,9 @@ import { CommonButton } from "@/components/buttons";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { KpiCard, TaskCard } from "@/components/calendar";
+import { useAuth } from "@/context/AuthProvider";
 export function Calendar() {
-    const [data, setData] = useState(projectsTableData);
+    const [data, setData] = useState([]);
     const [date, setDate] = useState(new Date());
     const [type, setType] = useState("year");
     const [slotWidth, setSlotWidth] = useState(170);
@@ -16,6 +17,11 @@ export function Calendar() {
     const [resourceHeight, setResourceHeight] = useState(197);
     const [events, setEvents] = useState([]);
     const [resources, setResources] = useState([]);
+    const auth = useAuth();
+    useEffect(() => {
+        setData(auth.kpi);
+        multiScroll();
+    }, [auth.kpi]);
     useEffect(() => {
         let events = [];
         let resources = [];
@@ -173,9 +179,6 @@ export function Calendar() {
             subtaskIndex * (eventHeight.task + 8)
         );
     };
-    useEffect(() => {
-        multiScroll();
-    }, []);
     return (
         <div>
             <div className="relative">
@@ -225,7 +228,7 @@ export function Calendar() {
                     <div className="w-3/4 relative h-[60px] overflow-hidden">
                         <div
                             id="timelineScroll"
-                            className="grid grid-flow-col overflow-x-scroll h-full"
+                            className="grid grid-flow-col overflow-x-scroll h- pb-[17px]"
                             style={{
                                 gridAutoColumns: `${slotWidth}px`,
                             }}
@@ -233,7 +236,7 @@ export function Calendar() {
                             {slotTemplate[type].slotLabels.map((label) => (
                                 <div
                                     key={label}
-                                    className="border h-full grid grid-cols-4 px-2 py-1"
+                                    className="border h-full grid grid-cols-4 px-2 py-1 pb-[17px]"
                                 >
                                     <div className="col-span-4">
                                         <Typography className="font-bold text-[14px]">
@@ -255,10 +258,9 @@ export function Calendar() {
                 {/* Content */}
                 <div id="timelineContent" className="relative">
                     {data.map((kpi, index) => (
-                        <div key={index} className="flex relative">
+                        <div key={kpi.id} className="flex relative">
                             {/* Resources */}
                             <div
-                                key={kpi.id}
                                 className="w-1/4 border py-4 px-6 max-h-[183px]"
                                 style={{
                                     minHeight: `${resourceHeight}px`,
@@ -292,7 +294,7 @@ export function Calendar() {
                                     {slotTemplate[type].slotLabels.map(
                                         (label) => (
                                             <div
-                                                key={label}
+                                                key={label.id}
                                                 className="h-[120px]  grid grid-cols-4"
                                                 style={{
                                                     height: `${resourceHeight}px`,
@@ -306,6 +308,7 @@ export function Calendar() {
                                                         subLabelindex,
                                                     ) => (
                                                         <div
+                                                            key={subLabelindex}
                                                             className={`col-span-1 ${
                                                                 subLabelindex ===
                                                                 0
@@ -333,10 +336,10 @@ export function Calendar() {
                                     {kpi.targets.map(
                                         (subtask, subtask_index) => (
                                             <div
+                                                subtask={"target"+subtask.id}
                                                 className="absolute z-10 flex flex-col gap-2 py-2"
                                                 style={{
                                                     top:
-                                                        index * resourceHeight +
                                                         eventHeight.kpi +
                                                         8 +
                                                         subtask_index *

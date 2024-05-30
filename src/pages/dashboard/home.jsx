@@ -27,7 +27,9 @@ import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { PriorityButton } from "@/components/buttons/PriorityButton";
 import { Header } from "@/components/layout";
 import dayjs from "dayjs";
+import { useAuth } from "@/context/AuthProvider";
 export function Home() {
+    const auth = useAuth();
     return (
         <>
             <Header name={{ page: "Dashboard" }} />
@@ -111,93 +113,109 @@ export function Home() {
                             <table className="w-full min-w-[640px] table-auto">
                                 <thead>
                                     <tr>
-                                        {[
-                                            "Name",
-                                            "Deadline",
-                                            "Completion",
-                                        ].map((el, index) => (
-                                            <th
-                                                key={el}
-                                                className={`border-b border-blue-gray-50 py-3 px-6 text-left ${
-                                                    index === 2 && "text-center"
-                                                }`}
-                                            >
-                                                <Typography
-                                                    variant="small"
-                                                    className="text-[11px] font-medium uppercase text-blue-gray-400"
+                                        {["Name", "Deadline", "Completion"].map(
+                                            (el, index) => (
+                                                <th
+                                                    key={el}
+                                                    className={`border-b border-blue-gray-50 py-3 px-6 text-left ${
+                                                        index === 2 &&
+                                                        "text-center"
+                                                    }`}
                                                 >
-                                                    {el}
-                                                </Typography>
-                                            </th>
-                                        ))}
+                                                    <Typography
+                                                        variant="small"
+                                                        className="text-[11px] font-medium uppercase text-blue-gray-400"
+                                                    >
+                                                        {el}
+                                                    </Typography>
+                                                </th>
+                                            ),
+                                        )}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {projectsTableData.map(
-                                        (
-                                            {
-                                                name,
-                                                plan,
-                                                completion,
-                                            },
-                                            key,
-                                        ) => {
-                                            const className = `py-3 px-5 ${
-                                                key ===
-                                                projectsTableData.length - 1
-                                                    ? ""
-                                                    : "border-b border-blue-gray-50"
-                                            }`;
+                                    {auth.kpi &&
+                                        auth.kpi
+                                            .slice(0, 5)
+                                            .map(
+                                                (
+                                                    { name, plan, completion },
+                                                    key,
+                                                ) => {
+                                                    const className = `py-3 px-5 ${
+                                                        key === 5
+                                                            ? ""
+                                                            : "border-b border-blue-gray-50"
+                                                    }`;
 
-                                            return (
-                                                <tr key={key}>
-                                                    <td className={className}>
-                                                        <div className="flex items-center gap-4">
-                                                            <Typography
-                                                                variant="small"
-                                                                color="blue-gray"
-                                                                className="font-bold"
+                                                    return (
+                                                        <tr key={key}>
+                                                            <td
+                                                                className={
+                                                                    className
+                                                                }
                                                             >
-                                                                {name}
-                                                            </Typography>
-                                                        </div>
-                                                    </td>
+                                                                <div className="flex items-center gap-4">
+                                                                    <Typography
+                                                                        variant="small"
+                                                                        color="blue-gray"
+                                                                        className="font-bold"
+                                                                    >
+                                                                        {name}
+                                                                    </Typography>
+                                                                </div>
+                                                            </td>
 
-                                                    <td className={className}>
-                                                        <Typography
-                                                            variant="small"
-                                                            className="text-xs font-medium text-blue-gray-600"
-                                                        >
-                                                            {dayjs(plan[1]).format("DD MMM YYYY")}
-                                                        </Typography>
-                                                    </td>
-                                                    <td className={className}>
-                                                        <div className="w-10/12">
-                                                            <Typography
-                                                                variant="small"
-                                                                className="mb-1 block text-xs font-medium text-blue-gray-600"
+                                                            <td
+                                                                className={
+                                                                    className
+                                                                }
                                                             >
-                                                                {completion}%
-                                                            </Typography>
-                                                            <Progress
-                                                                value={
-                                                                    completion
+                                                                <Typography
+                                                                    variant="small"
+                                                                    className="text-xs font-medium text-blue-gray-600"
+                                                                >
+                                                                    {dayjs(
+                                                                        plan[1],
+                                                                    ).format(
+                                                                        "DD MMM YYYY",
+                                                                    )}
+                                                                </Typography>
+                                                            </td>
+                                                            <td
+                                                                className={
+                                                                    className
                                                                 }
-                                                                variant="gradient"
-                                                                color={
-                                                                    completion ===
-                                                                    100
-                                                                        ? "green"
-                                                                        : "blue"
-                                                                }
-                                                                className="h-1"
-                                                            />
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        },
-                                    )}
+                                                            >
+                                                                <div className="w-10/12">
+                                                                    <Typography
+                                                                        variant="small"
+                                                                        className="mb-1 block text-xs font-medium text-blue-gray-600"
+                                                                    >
+                                                                        {
+                                                                            completion
+                                                                        }
+                                                                        %
+                                                                    </Typography>
+                                                                    <Progress
+                                                                        value={
+                                                                            completion
+                                                                        }
+                                                                        variant="gradient"
+                                                                        color={
+                                                                            completion ===
+                                                                            100
+                                                                                ? "green"
+                                                                                : "blue"
+                                                                        }
+                                                                        className="h-1"
+                                                                    />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                },
+                                            )}
                                 </tbody>
                             </table>
                         </CardBody>
