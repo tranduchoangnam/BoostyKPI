@@ -26,7 +26,6 @@ const StyledFormControlLabel = styled(FormControlLabel)(
         textAlign: "center",
         borderBottom: "none",
         width: "140px",
-        textAlign: "center",
         display: "flex",
         flexDirection: "column",
         "& .MuiTypography-h6": {
@@ -195,21 +194,21 @@ export const TargetTypeCard = ({ form, setForm }) => {
             <div className="grid grid-cols-2 justify-center md:gap-16 gap-4 mt-8 w-full">
                 {(selectedValue === "Number" ||
                     selectedValue === "Currency") && (
-                    <>
-                        <TargetNumberInput
-                            input={input}
-                            handleInputChange={handleInputChange}
-                            targetType={selectedValue.toLowerCase()}
-                            inputType="Start"
-                        />
-                        <TargetNumberInput
-                            input={input}
-                            handleInputChange={handleInputChange}
-                            targetType={selectedValue.toLowerCase()}
-                            inputType="Target"
-                        />
-                    </>
-                )}
+                        <>
+                            <TargetNumberInput
+                                input={input}
+                                handleInputChange={handleInputChange}
+                                targetType={selectedValue.toLowerCase()}
+                                inputType="Start"
+                            />
+                            <TargetNumberInput
+                                input={input}
+                                handleInputChange={handleInputChange}
+                                targetType={selectedValue.toLowerCase()}
+                                inputType="Target"
+                            />
+                        </>
+                    )}
             </div>
             <div className="flex justify-center items-center w-full">
                 {selectedValue === "Tasks" && (
