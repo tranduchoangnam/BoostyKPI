@@ -30,6 +30,7 @@ export function DetailKpi() {
     const [tableData, setTableData] = useState([]);
     const { id } = useParams();
     const [kpi, setKpi] = useState();
+    const [initCompletion, setInitCompletion] = useState(0);
     const [rangeDate, setRangeDate] = useState({
         value: [],
         dateString: [],
@@ -56,6 +57,7 @@ export function DetailKpi() {
 
     useEffect(() => {
         setKpi(auth.kpi.find((el) => el.id === id));
+        setInitCompletion(auth.kpi.find((el) => el.id === id).completion);
     }, [auth.kpi]);
     useEffect(() => {
         if (kpi) {
@@ -81,7 +83,7 @@ export function DetailKpi() {
         }
     }, [tableData]);
     useEffect(() => {
-        if (kpi?.completion === 100) {
+        if (kpi?.completion === 100&&initCompletion!==100) {
             setCompleted(true);
         }
     }, [kpi?.completion]);
