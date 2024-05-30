@@ -154,7 +154,15 @@ export const TargetAddModal = ({ open, setOpen, form, setForm, onSubmit }) => {
                     Which type of target you want to add?
                 </Typography>
                 <div className="mb-[100px] w-full">
-                    <TargetTypeCard />
+                    <TargetTypeCard
+                        form={form}
+                        setForm={(type) => {
+                            setForm({
+                                ...form,
+                                type: type,
+                            });
+                        }}
+                    />
                 </div>
                 <div className="flex gap-8">
                     <Button

@@ -12,13 +12,15 @@ export const projectsTableData = [
                 end_date: "2024-03-20T14:00",
                 priority: "High",
                 status: "Done",
-                tasks: [
-                    {
-                        id: 0,
-                        name: "New task",
-                        status: "In Progress",
-                    },
-                ],
+                type: {
+                    tasks: [
+                        {
+                            id: 0,
+                            name: "New task",
+                            status: "In Progress",
+                        },
+                    ],
+                },
                 weight: 20,
                 reminder: {
                     status: true,
@@ -35,12 +37,14 @@ export const projectsTableData = [
                 end_date: "2024-04-03T15:30",
                 priority: "Medium",
                 status: "In Progress",
-                number: {
-                    value: {
-                        start: 0,
-                        target: 1,
+                type: {
+                    number: {
+                        value: {
+                            start: 0,
+                            target: 1,
+                        },
+                        unit: "VND",
                     },
-                    unit: "VND",
                 },
                 weight: 10,
                 reminder: {
@@ -59,12 +63,14 @@ export const projectsTableData = [
                 priority: "Medium",
                 status: "In Progress",
                 weight: 10,
-                currency: {
-                    value: {
-                        start: 0,
-                        target: 1,
+                type: {
+                    currency: {
+                        value: {
+                            start: 0,
+                            target: 1,
+                        },
+                        unit: "VND",
                     },
-                    unit: "VND",
                 },
                 reminder: {
                     status: true,
@@ -81,7 +87,9 @@ export const projectsTableData = [
                 end_date: "2024-04-16T15:30",
                 priority: "Medium",
                 status: "In Progress",
-                boolean: true,
+                type: {
+                    boolean: true,
+                },
                 weight: 60,
                 reminder: {
                     status: true,

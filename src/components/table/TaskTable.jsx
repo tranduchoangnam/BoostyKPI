@@ -13,22 +13,6 @@ import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
 export function TaskTable({ tableData, setTableData }) {
-    const [task, setTask] = useState({
-        name: null,
-        end_date: {
-            value: null,
-            dateString: null,
-        },
-        priority: null,
-        status: null,
-        reminder: {
-            status: false,
-            before_start: null,
-            repeat: null,
-            custom_time: null,
-            custom_date: null,
-        },
-    });
 
     const tableHead = [
         "Task Name",
@@ -70,23 +54,23 @@ export function TaskTable({ tableData, setTableData }) {
             </td>
             <td className={className + " text-center !px-2"}>
                 <Typography className="text-[16px] font-medium capitalize">
-                    {ele.tasks &&
-                        ele.tasks.length +
+                    {ele.type?.tasks &&
+                        ele.type?.tasks.length +
                             " Task" +
-                            (ele.tasks.length > 1 ? "s" : "")}
-                    {ele.number &&
-                        ele.number.value.start +
+                            (ele.type?.tasks.length > 1 ? "s" : "")}
+                    {ele.type?.number &&
+                        ele.type?.number.value.start +
                             " - " +
-                            ele.number.value.target}
-                    {JSON.stringify(ele.boolean) || ""}
-                    {ele.currency &&
-                        ele.currency.value.start +
+                            ele.type?.number.value.target}
+                    {JSON.stringify(ele.type?.boolean) || ""}
+                    {ele.type?.currency &&
+                        ele.type?.currency.value.start +
                             " - " +
-                            ele.currency.value.target}
+                            ele.type?.currency.value.target}
                 </Typography>
                 <Typography className="text-[14px] text-center font-bold">
-                    {ele.number && ele.number.unit}
-                    {ele.currency && ele.currency.unit}
+                    {ele.type?.number && ele.type?.number.unit}
+                    {ele.type?.currency && ele.type?.currency.unit}
                 </Typography>
             </td>
             <td className={className + " text-center !px-2"}>

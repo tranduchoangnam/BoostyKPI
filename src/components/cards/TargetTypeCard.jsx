@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Typography,
@@ -90,7 +90,7 @@ const Option = ({ value, label, description, selected, onChange }) => (
     />
 );
 
-export const TargetTypeCard = () => {
+export const TargetTypeCard = ({ form, setForm }) => {
     const [selectedValue, setSelectedValue] = useState("Number");
     const [input, setInput] = useState({
         number: {
@@ -100,9 +100,7 @@ export const TargetTypeCard = () => {
             },
             unit: "VND",
         },
-        boolean: {
-            value: false,
-        },
+        boolean: false,
         currency: {
             value: {
                 start: 0,
@@ -111,7 +109,7 @@ export const TargetTypeCard = () => {
             unit: "VND",
         },
         tasks: [
-            {   
+            {
                 id: 0,
                 name: "New task",
                 status: "In Progress",
@@ -137,7 +135,13 @@ export const TargetTypeCard = () => {
             tasks,
         });
     };
+    useEffect(() => {
+        setForm({
+            [selectedValue.toLowerCase()]: input[selectedValue.toLowerCase()],
+        });
 
+        console.log(JSON.stringify(form));
+    }, [input, selectedValue]);
     return (
         <>
             <RadioGroup
@@ -165,10 +169,10 @@ export const TargetTypeCard = () => {
                 </div>
                 <div className="flex justify-center items-center">
                     <Option
-                        value="TrueFalse"
+                        value="Boolean"
                         label="True/False"
                         description="Done or not done"
-                        selected={selectedValue === "TrueFalse"}
+                        selected={selectedValue === "Boolean"}
                     />
                 </div>
                 <div className="flex justify-center items-center">
