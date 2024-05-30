@@ -20,7 +20,6 @@ export function Calendar() {
     const auth = useAuth();
     useEffect(() => {
         setData(auth.kpi);
-        multiScroll();
     }, [auth.kpi]);
     useEffect(() => {
         let events = [];
@@ -54,6 +53,7 @@ export function Calendar() {
         });
         setEvents(events);
         setResources(resources);
+        multiScroll();
     }, [data]);
 
     const slotTemplate = {
@@ -336,7 +336,7 @@ export function Calendar() {
                                     {kpi.targets.map(
                                         (subtask, subtask_index) => (
                                             <div
-                                                subtask={"target"+subtask.id}
+                                                subtask={"target" + subtask.id}
                                                 className="absolute z-10 flex flex-col gap-2 py-2"
                                                 style={{
                                                     top:
