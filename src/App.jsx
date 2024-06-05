@@ -5,6 +5,7 @@ import { Home, ListKpi, DetailKpi, AddKpi, Tables, Notifications, Calendar, Sett
 import { SignIn, SignUp } from "@/pages/auth";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import LandingPage from "./pages/dashboard/landing-page";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                         <Route path="sign-in" element={<SignIn />} />
                         <Route path="sign-up" element={<SignUp />} />
                     </Route>
+                    <Route path="landing-page" element={<LandingPage />} />
                 </Routes>
             </AuthProvider>
         </LocalizationProvider>
