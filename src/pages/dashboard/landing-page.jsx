@@ -37,7 +37,9 @@ export default function LandingPage() {
                                 alignItems: { md: 'flex-start', xs: 'center' },
                                 textAlign: { md: 'left', xs: 'center' },
                                 my: { md: 0, xs: 2 }
-                            }}>
+                            }}
+                            data-aos="fade-up"
+                        >
                             <Typography component={'span'} sx={{ color: '#131523', fontSize: '38px', fontWeight: 700 }}>
                                 Easily {''}
                                 <Box component={'span'} sx={{ background: 'linear-gradient(90.27deg, #336DFF 0.27%, #608DFF 104.59%)', backgroundClip: 'text', fontSize: '38px', fontWeight: 700, color: 'transparent' }}>
@@ -58,13 +60,17 @@ export default function LandingPage() {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ mr: { md: 7 }, p: { xs: 3, md: 0 } }}>
+                        <Box sx={{ mr: { md: 7 }, p: { xs: 3, md: 0 } }}
+                            data-aos="flip-right"
+                        >
                             <img src="/img/Dashboard.png" alt="kpi-banner" />
                         </Box>
                     </Grid>
                 </Grid>
             </Box>
-            <Box sx={{ mx: { md: 7, xs: 3 }, py: { md: 8, xs: 6 } }} data-aos="fade-up">
+            <Box sx={{ mx: { md: 7, xs: 3 }, py: { md: 10, xs: 8 } }}
+                data-aos="fade-up"
+            >
                 <Typography sx={{ color: '#131523', fontSize: '32px', fontWeight: 700, textAlign: 'center', }}>
                     Features
                 </Typography>
@@ -134,7 +140,7 @@ export default function LandingPage() {
                                 textAlign: { md: 'left', xs: 'center' },
                                 my: { md: 0, xs: 2 }
                             }}
-                            data-aos="fade-left"
+                            data-aos="fade-up"
                         >
                             <Typography component={'span'} sx={{ color: '#131523', fontSize: '38px', fontWeight: 700 }}>
                                 Easy {''}
@@ -149,7 +155,9 @@ export default function LandingPage() {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ ml: { md: 7 }, p: { xs: 3, md: 0 } }} data-aos='fade-right'>
+                        <Box sx={{ ml: { md: 7 }, p: { xs: 3, md: 0 } }}
+                            data-aos='flip-left'
+                        >
                             <img src="/img/Goal.png" alt="kpi-banner" />
                         </Box>
                     </Grid>
@@ -166,7 +174,7 @@ export default function LandingPage() {
                                 textAlign: { md: 'left', xs: 'center' },
                                 my: { md: 0, xs: 2 }
                             }}
-                            data-aos="fade-left"
+                            data-aos="fade-up"
                         >
                             <Typography component={'span'} sx={{ color: '#131523', fontSize: '38px', fontWeight: 700 }}>
                                 Easy {''}
@@ -202,7 +210,8 @@ export default function LandingPage() {
                                 textAlign: { md: 'left', xs: 'center' },
                                 my: { md: 0, xs: 2 }
                             }}
-                            data-aos="fade-right">
+                            data-aos="fade-up"
+                        >
                             <Typography component={'span'} sx={{ color: '#131523', fontSize: '38px', fontWeight: 700 }}>
                                 Integrated {''}
                                 <Box component={'span'} sx={{ background: 'linear-gradient(90.27deg, #3CCC98 0.27%, #1C9A6D 104.59%)', backgroundClip: 'text', fontSize: '38px', fontWeight: 700, color: 'transparent' }}>
@@ -215,7 +224,9 @@ export default function LandingPage() {
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={6}>
-                        <Box sx={{ mr: { md: 7 }, p: { xs: 3, md: 0 } }} data-aos="fade-left">
+                        <Box sx={{ mr: { md: 7 }, p: { xs: 3, md: 0 } }}
+                            data-aos="flip-right"
+                        >
                             <img src="/img/Calendar.png" alt="calendar-banner" />
                         </Box>
                     </Grid>
@@ -224,6 +235,6 @@ export default function LandingPage() {
             <Box sx={{ py: 1, backgroundColor: '#ffffff', boxShadow: ' 4px 0px 0px 1px #15223214' }}>
                 <Footer />
             </Box>
-        </Box>
+        </Box >
     )
 }
