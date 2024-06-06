@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
 import { toast, ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import {v4 as uuidv4} from "uuid";
 export function SignUp() {
     const [checkBox, setCheckBox] = useState(false);
     const [formData, setFormData] = useState({
@@ -34,7 +34,7 @@ export function SignUp() {
         return emailRegex.test(email);
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         // Validate email
@@ -67,10 +67,10 @@ export function SignUp() {
 
         // Proceed with form submission
         try {
-            toast.success("Account created successfully!", {
-                autoClose: 500, // Close after 3 seconds
-                onClose: () => navigate('/auth/sign-in') // Navigate to the desired page after successful signup
-            });
+            auth.signUp({
+                email: formData.email,
+                password: formData.password,
+            })
         } catch (error) {
             toast.error("Failed to create an account. Please try again.");
         }

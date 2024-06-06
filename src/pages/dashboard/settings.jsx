@@ -17,6 +17,7 @@ export function Settings() {
         last_name: "",
         email: "",
         phone: "",
+        photo: "",
     });
     const [settings, setSettings] = useState({
         notification: false,
@@ -25,6 +26,17 @@ export function Settings() {
     });
     const handleSave = () => {
         //covert file to base64
+        if (!userInfo.file) {
+            auth.setUser({
+                ...auth.user,
+                first_name: userInfo.first_name,
+                last_name: userInfo.last_name,
+                email: userInfo.email,
+                phone: userInfo.phone,
+            });
+            toast.success("Profile details saved successfully");
+            return;
+        }
         var reader = new FileReader();
         reader.readAsDataURL(userInfo.file);
         reader.onload = function () {
