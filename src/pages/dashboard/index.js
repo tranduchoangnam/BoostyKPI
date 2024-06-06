@@ -6,3 +6,4 @@ export * from "@/pages/dashboard/add-kpi";
 export * from "@/pages/dashboard/kpi";
 export * from "@/pages/dashboard/calendar"
 export * from "@/pages/dashboard/settings"
+export * from "@/pages/dashboard/landing-page"

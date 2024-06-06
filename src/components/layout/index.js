@@ -4,3 +4,4 @@ export * from "@/components/layout/configurator";
 export * from "@/components/layout/footer";
 export * from "@/components/layout/navbar";
 export * from "@/components/layout/header";
+export * from "@/components/layout/landing-navbar";
