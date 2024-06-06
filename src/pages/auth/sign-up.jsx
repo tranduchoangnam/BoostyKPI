@@ -6,10 +6,10 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthProvider";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 export function SignUp() {
     const [checkBox, setCheckBox] = useState(false);
@@ -18,6 +18,8 @@ export function SignUp() {
         password: "",
         confirm_password: "",
     });
+    const [errors, setErrors] = useState({});
+    const [submitted, setSubmitted] = useState(false);
     const auth = useAuth();
     const navigate = useNavigate();
 
@@ -27,6 +29,11 @@ export function SignUp() {
             ...formData,
             [name]: value,
         });
+
+        // Validate the form fields on change after first submission
+        if (submitted) {
+            validateForm();
+        }
     };
 
     const validateEmail = (email) => {
@@ -34,34 +41,41 @@ export function SignUp() {
         return emailRegex.test(email);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const validateForm = () => {
+        const newErrors = {};
 
         // Validate email
         if (!formData.email) {
-            toast.error("Email is required.");
-            return;
-        }
-
-        if (!validateEmail(formData.email)) {
-            toast.error("Please enter a valid email address.");
-            return;
+            newErrors.email = "Email is required.";
+        } else if (!validateEmail(formData.email)) {
+            newErrors.email = "Please enter a valid email address.";
         }
 
         // Validate passwords
         if (!formData.password) {
-            toast.error("Password is required.");
-            return;
+            newErrors.password = "Password is required.";
         }
 
         if (formData.password !== formData.confirm_password) {
-            toast.error("Passwords do not match.");
-            return;
+            newErrors.confirm_password = "Passwords do not match.";
         }
 
         // Validate terms and conditions checkbox
         if (!checkBox) {
-            toast.error("Please agree to the terms and conditions.");
+            newErrors.checkBox = "Please agree to the terms and conditions.";
+        }
+
+        setErrors(newErrors);
+        return newErrors;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+
+        const newErrors = validateForm();
+
+        if (Object.keys(newErrors).length > 0) {
             return;
         }
 
@@ -69,7 +83,7 @@ export function SignUp() {
         try {
             toast.success("Account created successfully!", {
                 autoClose: 500, // Close after 3 seconds
-                onClose: () => navigate('/auth/sign-in') // Navigate to the desired page after successful signup
+                onClose: () => navigate('/auth/sign-in')
             });
         } catch (error) {
             toast.error("Failed to create an account. Please try again.");
@@ -97,14 +111,14 @@ export function SignUp() {
                         </Link>
                     </Typography>
                 </div>
-                <form className="mt-8 mb-2 mx-auto w-full">
+                <form className="mt-8 mb-2 mx-auto w-full" onSubmit={handleSubmit}>
                     <div className="mb-1 flex flex-col gap-6">
                         <Typography
                             variant="small"
                             color="blue-gray"
                             className="-mb-4 font-medium font-['Inter']"
                         >
-                            Username
+                            Email
                         </Typography>
                         <Input
                             id="email"
@@ -113,12 +127,13 @@ export function SignUp() {
                             onChange={handleChange}
                             size="lg"
                             placeholder="Enter your email..."
-                            className=" !border-[#D9E1EC] focus:!border-gray-900"
+                            className="!border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
                                     "before:content-none after:content-none",
                             }}
                         />
+                        {errors.email && <Typography color="red" variant="small">{errors.email}</Typography>}
                         <Typography
                             variant="small"
                             color="blue-gray"
@@ -134,12 +149,13 @@ export function SignUp() {
                             type="password"
                             size="lg"
                             placeholder="Enter your password..."
-                            className=" !border-[#D9E1EC] focus:!border-gray-900"
+                            className="!border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
                                     "before:content-none after:content-none",
                             }}
                         />
+                        {errors.password && <Typography color="red" variant="small">{errors.password}</Typography>}
                         <Typography
                             variant="small"
                             color="blue-gray"
@@ -155,15 +171,16 @@ export function SignUp() {
                             type="password"
                             size="lg"
                             placeholder="Confirm your password..."
-                            className=" !border-[#D9E1EC] focus:!border-gray-900"
+                            className="!border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
                                     "before:content-none after:content-none",
                             }}
                         />
+                        {errors.confirm_password && <Typography color="red" variant="small">{errors.confirm_password}</Typography>}
                     </div>
                     <Checkbox
-                        value={checkBox}
+                        checked={checkBox}
                         onChange={(e) => setCheckBox(e.target.checked)}
                         label={
                             <Typography
@@ -176,10 +193,12 @@ export function SignUp() {
                         }
                         containerProps={{ className: "-ml-2.5" }}
                     />
+                    {errors.checkBox && <Typography color="red" variant="small">{errors.checkBox}</Typography>}
+                    {errors.general && <Typography color="red" variant="small">{errors.general}</Typography>}
                     <Button
                         className="mt-6 bg-[#1E5EFF] !rounded-[4px] text-[16px] font-medium font-['Inter']"
                         fullWidth
-                        onClick={handleSubmit}
+                        type="submit"
                     >
                         Create Account
                     </Button>

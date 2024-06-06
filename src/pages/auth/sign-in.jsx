@@ -8,8 +8,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
-import { toast, ToastContainer } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
 
 export function SignIn() {
     const [checkBox, setCheckBox] = useState(false);
@@ -18,9 +17,13 @@ export function SignIn() {
         password: "",
         remember_me: false,
     });
+    const [errors, setErrors] = useState({
+        email: "",
+        password: "",
+    });
     const auth = useAuth();
     const navigate = useNavigate();
-    
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -36,39 +39,48 @@ export function SignIn() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         // Validate email and password
+        let emailError = "";
+        let passwordError = "";
+
         if (!formData.email) {
-            toast.error("Email is required.");
-            return;
+            emailError = "Email is required.";
+        } else if (!validateEmail(formData.email)) {
+            emailError = "Please enter a valid email address.";
         }
 
-        if (!validateEmail(formData.email)) {
-            toast.error("Please enter a valid email address.");
-            return;
-        }
-
-        
         if (!formData.password) {
-            toast.error("Password is required.");
+            passwordError = "Password is required.";
+        }
+
+        setErrors({
+            email: emailError,
+            password: passwordError,
+        });
+
+        if (emailError || passwordError) {
             return;
         }
-        
+
         if (checkBox) {
             setFormData({ ...formData, remember_me: true });
         }
-        
+
         try {
             await auth.loginAction(formData);
             // navigate('/'); // Navigate to the desired page after successful login
         } catch (error) {
-            toast.error("Failed to sign in. Please check your credentials.");
+            setErrors({
+                ...errors,
+                general: "Failed to sign in. Please check your credentials.",
+            });
         }
     };
 
     return (
         <section className="flex gap-4 justify-center">
-            <ToastContainer />
+            <ToastContainer/>
             <div className="w-[540px] my-16 py-12 px-16 bg-[#FFF]">
                 <div className="text-center">
                     <Typography className="font-bold mb-4 text-[32px] font-['Inter']">
@@ -87,7 +99,7 @@ export function SignIn() {
                         </Link>
                     </Typography>
                 </div>
-                <form className="mt-8 mb-2 mx-auto w-full">
+                <form className="mt-8 mb-2 mx-auto w-full" onSubmit={handleSubmit}>
                     <div className="mb-1 flex flex-col gap-6">
                         <Typography
                             variant="small"
@@ -103,12 +115,21 @@ export function SignIn() {
                             onChange={handleChange}
                             size="lg"
                             placeholder="Enter your username..."
-                            className=" !border-[#D9E1EC] focus:!border-gray-900"
+                            className="!border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
                                     "before:content-none after:content-none",
                             }}
                         />
+                        {errors.email && (
+                            <Typography
+                                variant="small"
+                                color="red"
+                                className="mt-1"
+                            >
+                                {errors.email}
+                            </Typography>
+                        )}
                         <Typography
                             variant="small"
                             color="blue-gray"
@@ -124,12 +145,21 @@ export function SignIn() {
                             type="password"
                             size="lg"
                             placeholder="Enter your password..."
-                            className=" !border-[#D9E1EC] focus:!border-gray-900"
+                            className="!border-[#D9E1EC] focus:!border-gray-900"
                             labelProps={{
                                 className:
                                     "before:content-none after:content-none",
                             }}
                         />
+                        {errors.password && (
+                            <Typography
+                                variant="small"
+                                color="red"
+                                className="mt-1"
+                            >
+                                {errors.password}
+                            </Typography>
+                        )}
                     </div>
                     <Checkbox
                         value={checkBox}
@@ -148,13 +178,23 @@ export function SignIn() {
                     <Button
                         className="mt-6 bg-[#1E5EFF] !rounded-[4px] text-[16px] font-medium font-['Inter']"
                         fullWidth
-                        onClick={handleSubmit}
+                        type="submit"
                     >
                         Sign In
                     </Button>
+                    {errors.general && (
+                        <Typography
+                            variant="small"
+                            color="red"
+                            className="mt-4 text-center"
+                        >
+                            {errors.general}
+                        </Typography>
+                    )}
 
                     <div className="flex items-center justify-center gap-2 mt-6">
                         <Link
+                            to="/forgot-password"
                             className="text-[#1E5EFF] font-small text-[14px]"
                         >
                             Forgot your password?
