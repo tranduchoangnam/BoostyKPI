@@ -5,3 +5,4 @@ export * from "@/components/modals/ReminderPopModal";
 export * from "@/components/modals/CommonModal";
 export * from "@/components/modals/GoalAddModal";
 export * from "@/components/modals/TargetAddModal";
+export * from "@/components/modals/ImportModal";
