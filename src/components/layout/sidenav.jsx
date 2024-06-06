@@ -66,7 +66,7 @@ export function Sidenav() {
             className={`${sidenavTypes[sidenavType]} ${openSidenav ? "translate-x-0" : "-translate-x-80"
                 } fixed inset-0 z-50 mt-[68px] h-[calc(100vh-68px)] w-72 !bg-[#F5F6FA] transition-transform duration-300 xl:translate-x-0 border-r-2`}
         >
-            <div className="m-4">
+            <div className="m-4 my-other-step">
                 {routes.map(({ title, pages }, key) => (
                     <ul key={key} className="mb-4 flex flex-col gap-1">
                         {title && (

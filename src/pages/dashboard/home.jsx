@@ -39,9 +39,10 @@ export function Home() {
                         <div
                             key={props.title}
                             className={
-                                index === 0
+                                (index === 0
                                     ? "col-span-2 md:col-span-5"
-                                    : "col-span-2"
+                                    : "col-span-2")
+                                + ` dashboard-${index+1}`
                             }
                         >
                             <StatisticsChart
@@ -62,7 +63,7 @@ export function Home() {
                         </div>
                     ))}
 
-                    <Card className="overflow-hidden col-span-2 md:col-span-5 shadow-sm">
+                    <Card className="dashboard-3 overflow-hidden col-span-2 md:col-span-5 shadow-sm">
                         <CardHeader
                             floated={false}
                             shadow={false}
@@ -220,7 +221,7 @@ export function Home() {
                             </table>
                         </CardBody>
                     </Card>
-                    <Card className="shadow-sm col-span-2">
+                    <Card className="dashboard-4 shadow-sm col-span-2">
                         <CardHeader
                             floated={false}
                             shadow={false}

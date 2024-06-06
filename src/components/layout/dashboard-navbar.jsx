@@ -19,6 +19,7 @@ import {
     ClockIcon,
     CreditCardIcon,
     Bars3Icon,
+    AcademicCapIcon,
 } from "@heroicons/react/24/solid";
 import {
     useMaterialTailwindController,
@@ -30,7 +31,7 @@ import {
     ArrowLeftIcon,
     ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-export function DashboardNavbar() {
+export function DashboardNavbar({ setStepState }) {
     const [controller, dispatch] = useMaterialTailwindController();
     const { fixedNavbar, openSidenav } = controller;
     const { pathname } = useLocation();
@@ -64,10 +65,22 @@ export function DashboardNavbar() {
                         onClick={() => setOpenSidenav(dispatch, !openSidenav)}
                     >
                         <img className="h-8 w-8" src="/img/logo.png" />
-                        <p className="pt-2 text-[#062D5F] font-bold text-[16px]">oostyKPI</p>
+                        <p className="pt-2 text-[#062D5F] font-bold text-[16px]">
+                            oostyKPI
+                        </p>
                     </div>
                 </div>
                 <div className="flex items-center h-full">
+                    <IconButton
+                        variant="text"
+                        color="blue-gray"
+                        className="my-first-step"
+                        onClick={() =>
+                            setStepState({ run: true, stepIndex: 0 })
+                        }
+                    >
+                        <AcademicCapIcon className="h-5 w-5 text-blue-gray-500" />
+                    </IconButton>
                     <Menu>
                         <MenuHandler>
                             <IconButton variant="text" color="blue-gray">

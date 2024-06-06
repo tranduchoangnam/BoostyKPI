@@ -47,7 +47,7 @@ export default function LandingPage() {
                             <Typography sx={{ color: '#5A607F', fontSize: '18px', fontWeight: 400 }}>
                                 BoostyKPI provides a comprehensive and user-friendly solution for tracking your key performance indicators.
                             </Typography>
-                            <Button variant='contained' size='large' sx={{ backgroundColor: "#1E5EFF", maxWidth: '150px' }} onClick={() => auth.logOut()}>
+                            <Button variant='contained' size='large' sx={{ backgroundColor: "#1E5EFF" }} onClick={() => auth.logOut()}>
                                 Get Started
                             </Button>
                         </Box>
