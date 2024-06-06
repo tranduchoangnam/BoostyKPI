@@ -3,15 +3,19 @@ import { PriorityButton } from "@/components/buttons/PriorityButton";
 import { CommonTable } from "./CommonTable";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-export function KpiTable({ tableData,setTableData,type }) {
-    const naviagate=useNavigate();
-    const tableHead=["Name","Plan","Targets","Priority","Completion"];
+export function KpiTable({ tableData, setTableData, type }) {
+    const navigate = useNavigate();
+
+    const tableHead = ["Name", "Plan", "Targets", "Priority", "Completion"];
+
     const tableHeadJsx = tableHead.map((el, index) => (
         <th
             key={el}
-            className={`border-b border-blue-gray-50 px-2
-            } ${[0,1].includes(index) && " !px-0"}`}
+            className={`border-b border-blue-gray-50 px-2 ${
+                [0, 1].includes(index) && " !px-0"
+            }`}
         >
             <Typography
                 variant="small"
@@ -26,16 +30,24 @@ export function KpiTable({ tableData,setTableData,type }) {
 
     const rowJsx = (ele, className) => (
         <>
-            <td className={className+" !pl-0 !px-2 cursor-pointer"} onClick={()=>naviagate(`/kpi/${ele.id}`)}>
-                <div className="flex items-center gap-4">
-                    <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-bold"
-                    >
-                        {ele.name}
-                    </Typography>
-                </div>
+            <td
+                className={className + " !pl-0 !px-2 cursor-pointer"}
+                onClick={() => navigate(`/kpi/${ele.id}`)}
+            >
+                <motion.div
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.95 }}
+                >
+                    <div className="flex items-center gap-4">
+                        <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-bold"
+                        >
+                            {ele.name}
+                        </Typography>
+                    </div>
+                </motion.div>
             </td>
 
             <td className={className + " text-center !px-2"}>
@@ -75,13 +87,21 @@ export function KpiTable({ tableData,setTableData,type }) {
             </td>
         </>
     );
+
     return (
-        <CommonTable
-            tableHeadJsx={tableHeadJsx}
-            setTableData={setTableData}
-            tableData={tableData}
-            rowJsx={rowJsx}
-            type={type}
-        />
+        <motion.div
+            className="transition-all duration-300 ease-in-out"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
+            <CommonTable
+                tableHeadJsx={tableHeadJsx}
+                setTableData={setTableData}
+                tableData={tableData}
+                rowJsx={rowJsx}
+                type={type}
+            />
+        </motion.div>
     );
 }

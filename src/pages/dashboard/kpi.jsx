@@ -18,9 +18,12 @@ import { TargetAddModal } from "@/components/modals";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { v4 as uuidv4 } from "uuid";
-import { SuccessModal } from "@/components/modals";
+import { SuccessModal, DeleteModal } from "@/components/modals";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
 export function DetailKpi() {
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [toggleModal, setToggleModal] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [form, setForm] = useState({
@@ -37,20 +40,14 @@ export function DetailKpi() {
     });
     const { RangePicker } = DatePicker;
     const auth = useAuth();
-    const navigate =useNavigate();
-    // const disabledDate = (current, { from }) => {
-    //     if (from) {
-    //         return Math.abs(current.diff(from, "days")) >= 7;
-    //     }
+    const navigate = useNavigate();
 
-    //     return false;
-    // };
     const weightLeft = useMemo(() => {
         if (!tableData.length) return 100;
         return (
             100 -
             tableData.reduce((acc, target) => {
-                return acc + (target.weight? target.weight : 0);
+                return acc + (target.weight ? target.weight : 0);
             }, 0)
         );
     }, [tableData]);
@@ -58,12 +55,14 @@ export function DetailKpi() {
     useEffect(() => {
         setKpi(auth.kpi.find((el) => el.id === id));
         setInitCompletion(auth.kpi.find((el) => el.id === id).completion);
-    }, [auth.kpi]);
+    }, [auth.kpi, id]);
+
     useEffect(() => {
         if (kpi) {
             setTableData(kpi.targets);
         }
     }, [kpi?.targets]);
+
     useEffect(() => {
         if (kpi) {
             setRangeDate({
@@ -72,6 +71,7 @@ export function DetailKpi() {
             });
         }
     }, [kpi?.plan]);
+
     useEffect(() => {
         if (kpi) {
             setKpi({
@@ -81,12 +81,14 @@ export function DetailKpi() {
                 }, 0),
             });
         }
-    }, [tableData]);
+    }, [tableData, kpi]);
+
     useEffect(() => {
-        if (kpi?.completion === 100&&initCompletion!==100) {
+        if (kpi?.completion === 100 && initCompletion !== 100) {
             setCompleted(true);
         }
-    }, [kpi?.completion]);
+    }, [kpi?.completion, initCompletion]);
+
     const handleSubmit = (event) => {
         auth.setKpi(
             auth.kpi.map((el) =>
@@ -105,12 +107,12 @@ export function DetailKpi() {
                     : el,
             ),
         );
-        console.log(JSON.stringify(form));
         toast.success("Target added successfully");
         setTimeout(() => {
             setToggleModal(false);
         }, 500);
     };
+
     const handleAdd = () => {
         if (weightLeft <= 0) {
             toast.error("Oops! Full of weight. Try to delete target.");
@@ -118,11 +120,22 @@ export function DetailKpi() {
         }
         setToggleModal(true);
     };
+
     const handleDelete = () => {
         document.getElementById("delete").click();
+        console.log("delete");
+        setShowDeleteModal(false);
+        toast.success("Tasks(s) deleted successfully");
     };
+
     return (
         <>
+            {showDeleteModal && (
+                <DeleteModal
+                    handleDelete={handleDelete}
+                    handleClose={() => setShowDeleteModal(false)}
+                />
+            )}
             <SuccessModal
                 name={kpi?.name}
                 open={completed}
@@ -154,10 +167,20 @@ export function DetailKpi() {
                         }}
                         back={true}
                     />
-                    <div className="flex flex-col gap-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="flex flex-col gap-4"
+                    >
                         <Card className="mx-0 mb-6 py-6 px-6 shadow-none">
-                            <div className="flex flex-wrap justify-center">
-                                <div className="flex  items-center lg:justify-start justify-center grow min-w-[320px]">
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.3, duration: 0.5 }}
+                                className="flex flex-wrap justify-center"
+                            >
+                                <div className="flex items-center lg:justify-start justify-center grow min-w-[320px]">
                                     <div className="w-[200px] flex justify-center items-center">
                                         <ProgressChart
                                             value={kpi.completion || 0}
@@ -173,15 +196,6 @@ export function DetailKpi() {
                                     </div>
                                 </div>
                                 <div className="flex flex-col justify-center gap-4 py-4">
-                                    {/* <div className="max-w-[320px]">
-                                        <Input
-                                            type="text"
-                                            label="Name"
-                                            defaultValue={
-                                                kpi.name || "Enter KPI name..."
-                                            }
-                                        />
-                                    </div> */}
                                     <div className="flex gap-4 relative">
                                         <div>
                                             <Select
@@ -257,38 +271,51 @@ export function DetailKpi() {
                                         />
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </Card>
                         <Card className="mx-0 mb-6 py-6 md:px-6 px-3 pb-0 shadow-none">
                             <>
-                                <div className="flex justify-between mb-2">
-                                    <div className="">
+                                <motion.div
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.5, duration: 0.5 }}
+                                    className="flex justify-between mb-2"
+                                >
+                                    <div>
                                         <Typography className="text-[16px] text-[#131523] font-bold">
                                             Targets
                                         </Typography>
                                     </div>
                                     <div className="flex gap-4">
                                         <div
-                                            onClick={() => handleAdd()}
-                                            className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
+                                            onClick={handleAdd}
+                                            className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px] hover:shadow-md transition-shadow duration-300"
                                         >
                                             <i className="fas fa-plus text-[#1E5EFF]" />
                                         </div>
                                         <div
-                                            onClick={() => handleDelete()}
-                                            className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
+                                            onClick={() => {
+                                                if (tableData.length === 0) {
+                                                    toast.error(
+                                                        "Please choose tasks first",
+                                                    );
+                                                    return;
+                                                }
+                                                setShowDeleteModal(true);
+                                            }}
+                                            className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px] hover:shadow-md transition-shadow duration-300"
                                         >
                                             <i className="fas fa-trash text-[#ff4444]" />
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                                 <TaskTable
                                     tableData={tableData}
                                     setTableData={setTableData}
                                 />
                             </>
                         </Card>
-                    </div>
+                    </motion.div>
                 </>
             )}
         </>
