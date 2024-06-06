@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import {useAuth} from "@/context/AuthProvider";
-const AuthGuard = () => {
+const AuthGuard = ({children}) => {
     const auth=useAuth();
-    return auth.user ? <Outlet /> : <Navigate to="/landing-page" />;
+    return auth.user ? children : <Navigate to="/landing-page" />;
 }
 
 export default AuthGuard
