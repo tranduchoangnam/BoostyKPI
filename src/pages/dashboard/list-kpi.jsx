@@ -5,16 +5,18 @@ import { Header } from "@/components/layout";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthProvider";
 import { toast } from "react-toastify";
-import { GoalAddModal, ImportModal } from "@/components/modals";
+import { GoalAddModal, ImportModal, DeleteModal } from "@/components/modals";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
 import { Button } from "@material-tailwind/react";
 import { CommonButton } from "@/components/buttons";
+import { motion } from "framer-motion";
 
 export function ListKpi() {
     const auth = useAuth();
     const [toggleModal, setToggleModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [toggleImportModal, setToggleImportModal] = useState(false);
     const [form, setForm] = useState({
         name: "",
@@ -34,6 +36,9 @@ export function ListKpi() {
     };
     const handleDelete = () => {
         document.getElementById("delete").click();
+        console.log("delete");
+        setShowDeleteModal(false);
+        toast.success("Goal(s) deleted successfully");
     };
     const handleAdd = () => {
         setToggleModal(true);
@@ -43,7 +48,7 @@ export function ListKpi() {
         const reader = new FileReader();
         reader.onload = (event) => {
             const data = new Uint8Array(event.target.result);
-            const workbook = XLSX.read(data, { type: 'array' });
+            const workbook = XLSX.read(data, { type: "array" });
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const json = XLSX.utils.sheet_to_json(sheet);
@@ -51,81 +56,82 @@ export function ListKpi() {
 
             // Convert and add imported goals to auth context
             const newGoals = json.reduce((acc, row) => {
-                const goalIndex = acc.findIndex(g => g.name === row['Goal name']);
+                const goalIndex = acc.findIndex(
+                    (g) => g.name === row["Goal name"],
+                );
                 const target = {
                     id: uuidv4(),
-                    name: row['TargetName'],
-                    start_date: row['Start'],
-                    end_date: row['End'],
-                    priority: 'Medium',
-                    status: row['Status'],
-                    weight: row['Weight'],
+                    name: row["TargetName"],
+                    start_date: row["Start"],
+                    end_date: row["End"],
+                    priority: "Medium",
+                    status: row["Status"],
+                    weight: row["Weight"],
                     type: {},
                     reminder: {
                         status: false,
                         before_start: 0,
                         repeat: null,
                         custom_time: null,
-                        custom_date: null
-                    }
+                        custom_date: null,
+                    },
                 };
 
-                const completionToAdd = row['Status'] === 'Done' ? row['Weight'] : 0;
-    
-                if (row['TargetType'] === 'Currency') {
+                if (row["TargetType"] === "Currency") {
                     target.type.currency = {
                         value: {
-                            start: parseFloat(row['Start']),
-                            target: parseFloat(row['End'])
+                            start: parseFloat(row["Start"]),
+                            target: parseFloat(row["End"]),
                         },
-                        unit: row['Metric (for currency)']
+                        unit: row["Metric (for currency)"],
                     };
-                } else if (row['TargetType'] === 'True/False') {
-                    target.type.boolean = row['True/False (for true false)'] === 'TRUE'
-                } else if (row['TargetType'] === 'Tasks') {
+                } else if (row["TargetType"] === "True/False") {
+                    target.type.boolean =
+                        row["True/False (for true false)"] === "TRUE";
+                } else if (row["TargetType"] === "Tasks") {
                     // Create fake data for tasks using a for loop
-                    const taskCount = parseInt(row['Task number (for tasks)']);
+                    const taskCount = parseInt(row["Task number (for tasks)"]);
                     target.type.tasks = [];
                     for (let i = 1; i <= taskCount; i++) {
                         target.type.tasks.push({
                             id: uuidv4(),
-                            name: `Subtask ${i} for ${row['TargetName']}`,
-                            status: "Pending"
+                            name: `Subtask ${i} for ${row["TargetName"]}`,
+                            status: "Pending",
                         });
                     }
-                } else if (row['TargetType'] === 'Number') {
+                } else if (row["TargetType"] === "Number") {
                     target.type.number = {
                         value: {
-                            start: parseFloat(row['Start']),
-                            target: parseFloat(row['End'])
+                            start: parseFloat(row["Start"]),
+                            target: parseFloat(row["End"]),
                         },
-                        unit: ''
+                        unit: "",
                     };
                 }
-    
+
                 if (goalIndex === -1) {
                     acc.push({
                         id: uuidv4(),
-                        name: row['Goal name'],
-                        description: row['Description'] || '',
-                        plan: [new Date().toISOString(), dayjs(row['Deadline']).toISOString()],
+                        name: row["Goal name"],
+                        description: row["Description"] || "",
+                        plan: [
+                            new Date().toISOString(),
+                            dayjs(row["Deadline"]).toISOString(),
+                        ],
                         targets: [target],
                         tags: [],
-                        priority: 'Medium', // Default priority, adjust as necessary
-                        completion: completionToAdd,
+                        priority: "Medium", // Default priority, adjust as necessary
+                        completion: row["Status"] === "Done" ? 100 : 0,
                     });
                 } else {
                     acc[goalIndex].targets.push(target);
                     // Adjust completion calculation based on the weight of the targets
-                    acc[goalIndex].completion += completionToAdd;
+                    acc[goalIndex].completion += target.weight;
                 }
 
-                
-    
                 return acc;
             }, []);
             auth.setKpi([...auth.kpi, ...newGoals]);
-            console.log('newGoals', newGoals);
             setToggleImportModal(false);
             toast.success("Goals Imported Successfully");
         };
@@ -139,7 +145,10 @@ export function ListKpi() {
                 description: form.description,
                 priority: "Low",
                 tags: [],
-                plan: [new Date().toDateString(), dayjs(form.deadline).toDate().toDateString()],
+                plan: [
+                    new Date().toDateString(),
+                    dayjs(form.deadline).toDate().toDateString(),
+                ],
                 targets: [],
                 completion: 0,
                 id: uuidv4(),
@@ -176,6 +185,12 @@ export function ListKpi() {
 
     return (
         <>
+            {showDeleteModal && (
+                <DeleteModal
+                    handleDelete={handleDelete}
+                    handleClose={() => setShowDeleteModal(false)}
+                />
+            )}
             <GoalAddModal
                 open={toggleModal}
                 setOpen={setToggleModal}
@@ -183,26 +198,31 @@ export function ListKpi() {
                 setForm={setForm}
                 onSubmit={() => handleSubmit()}
             />
-            <ImportModal open={toggleImportModal} setOpen={setToggleImportModal}>
+            <ImportModal
+                open={toggleImportModal}
+                setOpen={setToggleImportModal}
+            >
                 <div className="flex justify-center gap-x-4 mt-4">
-                    <CommonButton 
+                    <CommonButton
                         type="secondary"
-                        href="https://docs.google.com/spreadsheets/d/1r1FHIp5VrpBkXxvlE53Gd-j8SyvrFU6eq7PiNiJIwYI/edit#gid=0" 
+                        href="https://docs.google.com/spreadsheets/d/1r1FHIp5VrpBkXxvlE53Gd-j8SyvrFU6eq7PiNiJIwYI/edit#gid=0"
                         target="_blank"
                     >
                         Get Import Template
                     </CommonButton>
                     <CommonButton
                         type="primary"
-                        onClick={() => {document.getElementById("fileInput").click();}}
+                        onClick={() => {
+                            document.getElementById("fileInput").click();
+                        }}
                     >
                         Import
                     </CommonButton>
-                    <input 
-                        type="file" 
-                        id="fileInput" 
-                        accept=".xlsx, .xls" 
-                        style={{ display: 'none' }} 
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".xlsx, .xls"
+                        style={{ display: "none" }}
                         onChange={handleImport}
                     />
                 </div>
@@ -251,13 +271,29 @@ export function ListKpi() {
                         </div>
                     </div>
                     <div
-                        onClick={handleDelete}
-                        className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px]"
+                        onClick={() => {
+                            if (tableData.length === 0) {
+                                toast.error("Please choose tasks first");
+                                return;
+                            }
+                            setShowDeleteModal(true);
+                        }}
+                        className="flex items-center border cursor-pointer border-[#D7DBEC] p-2 rounded-[4px] hover:shadow-md transition-shadow duration-300"
                     >
                         <i className="fas fa-trash text-[#ff4444]" />
                     </div>
                 </div>
-                <KpiTable tableData={tableData} setTableData={setTableData} type="checkbox"/>
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                >
+                    <KpiTable
+                        tableData={tableData}
+                        setTableData={setTableData}
+                        type="checkbox"
+                    />
+                </motion.div>
             </Card>
         </>
     );
