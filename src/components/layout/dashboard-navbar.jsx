@@ -172,10 +172,10 @@ export function DashboardNavbar({ setStepState }) {
                                     className="hidden items-center gap-2 px-4 xl:flex normal-case"
                                 >
                                     {auth.user ? (
-                                        <div className="rounded-full p-2 bg-[#123454]">
+                                        <div className="rounded-full border border-[#123454]">
                                             <img
                                                 src={auth.user.photo}
-                                                className="h-5 w-5 text-blue-gray-500"
+                                                className="h-7 w-7 rounded-full text-blue-gray-500"
                                             />
                                         </div>
                                     ) : (

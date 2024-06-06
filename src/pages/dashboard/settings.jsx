@@ -12,9 +12,9 @@ export function Settings() {
     const [file, setFile] = useState(null);
     const auth = useAuth();
     const [userInfo, setUserInfo] = useState({
-        file: "",
-        firstName: "",
-        lastName: "",
+        file: null,
+        first_name: "",
+        last_name: "",
         email: "",
         phone: "",
     });
@@ -24,9 +24,23 @@ export function Settings() {
         timezone: "",
     });
     const handleSave = () => {
-        console.log(userInfo);
-        localStorage.setItem("userInfo", JSON.stringify(userInfo));
-        toast.success("Profile details saved successfully");
+        //covert file to base64
+        var reader = new FileReader();
+        reader.readAsDataURL(userInfo.file);
+        reader.onload = function () {
+            auth.setUser({
+                ...auth.user,
+                first_name: userInfo.first_name,
+                last_name: userInfo.last_name,
+                email: userInfo.email,
+                phone: userInfo.phone,
+                photo: reader.result,
+            })
+            toast.success("Profile details saved successfully");
+        };
+        reader.onerror = function (error) {
+            console.log("Error: ", error);
+        };
     };
 
     const handleFileChange = (e) => {
@@ -67,12 +81,12 @@ export function Settings() {
 
     useEffect(() => {
         setUserInfo({
-            firstName: auth.user?auth.user.first_name: "",
-            lastName: auth.user?auth.user.last_name: "",
-            email: auth.user?auth.user.email: "",
-            phone: auth.user?auth.user.phone: "",
+            first_name: auth.user ? auth.user.first_name : "",
+            last_name: auth.user ? auth.user.last_name : "",
+            email: auth.user ? auth.user.email : "",
+            phone: auth.user ? auth.user.phone : "",
         });
-    },[auth.user]);
+    }, [auth.user]);
     return (
         <>
             <Header
@@ -190,8 +204,8 @@ export function Settings() {
                                 </Typography>
                                 <input
                                     type="text"
-                                    name="firstName"
-                                    value={userInfo?.firstName}
+                                    name="first_name"
+                                    value={userInfo?.first_name}
                                     className="w-full border border-blue-gray-200 p-2 rounded"
                                     onChange={handleChange}
                                 />
@@ -208,8 +222,8 @@ export function Settings() {
                                 </Typography>
                                 <input
                                     type="text"
-                                    name="lastName"
-                                    value={userInfo?.lastName}
+                                    name="last_name"
+                                    value={userInfo?.last_name}
                                     className="w-full border border-blue-gray-200 p-2 rounded"
                                     onChange={handleChange}
                                 />
