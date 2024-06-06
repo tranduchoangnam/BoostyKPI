@@ -69,6 +69,8 @@ export function ListKpi() {
                         custom_date: null
                     }
                 };
+
+                const completionToAdd = row['Status'] === 'Done' ? row['Weight'] : 0;
     
                 if (row['TargetType'] === 'Currency') {
                     target.type.currency = {
@@ -110,17 +112,20 @@ export function ListKpi() {
                         targets: [target],
                         tags: [],
                         priority: 'Medium', // Default priority, adjust as necessary
-                        completion: row['Status'] === 'Done' ? 100 : 0
+                        completion: completionToAdd,
                     });
                 } else {
                     acc[goalIndex].targets.push(target);
                     // Adjust completion calculation based on the weight of the targets
-                    acc[goalIndex].completion += target.weight;
+                    acc[goalIndex].completion += completionToAdd;
                 }
+
+                
     
                 return acc;
             }, []);
             auth.setKpi([...auth.kpi, ...newGoals]);
+            console.log('newGoals', newGoals);
             setToggleImportModal(false);
             toast.success("Goals Imported Successfully");
         };
