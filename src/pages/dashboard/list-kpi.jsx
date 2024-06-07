@@ -77,6 +77,8 @@ export function ListKpi() {
                     },
                 };
 
+                const completionToAdd = row['Status'] === 'Done' ? row['Weight'] : 0;
+
                 if (row["TargetType"] === "Currency") {
                     target.type.currency = {
                         value: {
@@ -121,12 +123,12 @@ export function ListKpi() {
                         targets: [target],
                         tags: [],
                         priority: "Medium", // Default priority, adjust as necessary
-                        completion: row["Status"] === "Done" ? 100 : 0,
+                        completion: completionToAdd,
                     });
                 } else {
                     acc[goalIndex].targets.push(target);
                     // Adjust completion calculation based on the weight of the targets
-                    acc[goalIndex].completion += target.weight;
+                    acc[goalIndex].completion += completionToAdd;
                 }
 
                 return acc;
