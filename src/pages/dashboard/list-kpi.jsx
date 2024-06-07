@@ -208,7 +208,7 @@ export function ListKpi() {
                         href="https://docs.google.com/spreadsheets/d/1r1FHIp5VrpBkXxvlE53Gd-j8SyvrFU6eq7PiNiJIwYI/edit#gid=0"
                         target="_blank"
                     >
-                        Get Import Template
+                        Get Template
                     </CommonButton>
                     <CommonButton
                         type="primary"

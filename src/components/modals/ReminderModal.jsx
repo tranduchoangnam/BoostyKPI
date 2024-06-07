@@ -3,11 +3,12 @@ import { MobileTimePicker } from "@mui/x-date-pickers/MobileTimePicker";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+
 export function ReminderModal({ reminder, onSetReminder, onClose }) {
     const [reminderData, setReminderData] = useState(reminder);
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-            <div className="bg-white py-4 px-8   rounded-lg relative">
+            <div className="bg-white py-4 px-8 rounded-lg relative max-w-[90%]">
                 <div className="flex justify-between pt-2 pb-4 border-b">
                     <h1 className="text-[16px] font-bold">Reminder</h1>
                     <Switch
@@ -29,7 +30,7 @@ export function ReminderModal({ reminder, onSetReminder, onClose }) {
                         }}
                     />
                 </div>
-                <div className="grid grid-cols-2 my-6 gap-4">
+                <div className={`grid ${window.innerWidth < 640 ? 'grid-cols-1' : 'grid-cols-2'} my-6 gap-4`}>
                     <Select
                         label="Before Start"
                         value={reminderData.before_start || null}

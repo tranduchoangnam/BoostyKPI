@@ -21,6 +21,7 @@ import { v4 as uuidv4 } from "uuid";
 import { SuccessModal, DeleteModal } from "@/components/modals";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Box } from "@mui/material";
 
 export function DetailKpi() {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -94,16 +95,16 @@ export function DetailKpi() {
             auth.kpi.map((el) =>
                 el.id === kpi.id
                     ? {
-                          ...el,
-                          targets: [
-                              ...tableData,
-                              {
-                                  ...form,
-                                  status: "In Progress",
-                                  id: uuidv4(),
-                              },
-                          ],
-                      }
+                        ...el,
+                        targets: [
+                            ...tableData,
+                            {
+                                ...form,
+                                status: "In Progress",
+                                id: uuidv4(),
+                            },
+                        ],
+                    }
                     : el,
             ),
         );
@@ -173,106 +174,108 @@ export function DetailKpi() {
                         transition={{ duration: 0.5 }}
                         className="flex flex-col gap-4"
                     >
-                        <Card className="mx-0 mb-6 py-6 px-6 shadow-none">
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3, duration: 0.5 }}
-                                className="flex flex-wrap justify-center"
-                            >
-                                <div className="flex items-center lg:justify-start justify-center grow min-w-[320px]">
-                                    <div className="w-[200px] flex justify-center items-center">
-                                        <ProgressChart
-                                            value={kpi.completion || 0}
-                                        />
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <Typography className="text-[24px] text-[#131523] font-bold">
-                                            {kpi.name}
-                                        </Typography>
-                                        <Typography className="text-[18px] text-[#131523]">
-                                            {kpi.description}
-                                        </Typography>
-                                    </div>
-                                </div>
-                                <div className="flex flex-col justify-center gap-4 py-4">
-                                    <div className="flex gap-4 relative">
-                                        <div>
-                                            <Select
-                                                label="Priority"
-                                                value={kpi.priority}
-                                                onChange={(e) =>
-                                                    setKpi({
-                                                        ...kpi,
-                                                        priority: e,
-                                                    })
-                                                }
-                                                defaultValue={kpi.priority}
-                                                className="w-[100px]"
-                                                containerProps={{
-                                                    className:
-                                                        "!w-[100px] !min-w-[100px]",
-                                                }}
-                                            >
-                                                <Option value={"High"}>
-                                                    High
-                                                </Option>
-                                                <Option value={"Medium"}>
-                                                    Medium
-                                                </Option>
-                                                <Option value={"Low"}>
-                                                    Low
-                                                </Option>
-                                            </Select>
+                        <Box sx={{ mt: 3 }}>
+                            <Card className="mx-0 mb-6 py-6 px-6 shadow-none">
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.3, duration: 0.5 }}
+                                    className="flex flex-wrap justify-center"
+                                >
+                                    <div className="flex items-center lg:justify-start justify-center grow min-w-[320px]">
+                                        <div className="w-[200px] flex justify-center items-center">
+                                            <ProgressChart
+                                                value={kpi.completion || 0}
+                                            />
                                         </div>
-                                        <div>
-                                            <div className="relative flex w-full max-h-[40px]">
-                                                <div className="absolute z-0 flex align-center justify-center right-0 top-0 w-full h-full">
-                                                    <RangePicker
-                                                        id="range-picker"
-                                                        value={rangeDate.value}
-                                                        showTime
-                                                        onChange={(
-                                                            date,
-                                                            dateString,
-                                                        ) =>
-                                                            setRangeDate({
-                                                                value: date,
+                                        <div className="flex flex-col">
+                                            <Typography className="text-[24px] text-[#131523] font-bold">
+                                                {kpi.name}
+                                            </Typography>
+                                            <Typography className="text-[18px] text-[#131523]">
+                                                {kpi.description}
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col justify-center gap-4 py-4">
+                                        <div className="flex gap-4 relative">
+                                            <div>
+                                                <Select
+                                                    label="Priority"
+                                                    value={kpi.priority}
+                                                    onChange={(e) =>
+                                                        setKpi({
+                                                            ...kpi,
+                                                            priority: e,
+                                                        })
+                                                    }
+                                                    defaultValue={kpi.priority}
+                                                    className="w-[100px]"
+                                                    containerProps={{
+                                                        className:
+                                                            "!w-[100px] !min-w-[100px]",
+                                                    }}
+                                                >
+                                                    <Option value={"High"}>
+                                                        High
+                                                    </Option>
+                                                    <Option value={"Medium"}>
+                                                        Medium
+                                                    </Option>
+                                                    <Option value={"Low"}>
+                                                        Low
+                                                    </Option>
+                                                </Select>
+                                            </div>
+                                            <div>
+                                                <div className="relative flex w-full max-h-[40px]">
+                                                    <div className="absolute z-0 flex align-center justify-center right-0 top-0 w-full h-full">
+                                                        <RangePicker
+                                                            id="range-picker"
+                                                            value={rangeDate.value}
+                                                            showTime
+                                                            onChange={(
+                                                                date,
                                                                 dateString,
-                                                            })
+                                                            ) =>
+                                                                setRangeDate({
+                                                                    value: date,
+                                                                    dateString,
+                                                                })
+                                                            }
+                                                            className="border-none w-full h-full bg-transparent focus:border-none"
+                                                        />
+                                                    </div>
+                                                    <Input
+                                                        label="Plan"
+                                                        defaultValue=" "
+                                                        onClick={() =>
+                                                            document
+                                                                .getElementById(
+                                                                    "range-picker",
+                                                                )
+                                                                .click()
                                                         }
-                                                        className="border-none w-full h-full bg-transparent focus:border-none"
+                                                        className="relative z-10"
                                                     />
                                                 </div>
-                                                <Input
-                                                    label="Plan"
-                                                    defaultValue=" "
-                                                    onClick={() =>
-                                                        document
-                                                            .getElementById(
-                                                                "range-picker",
-                                                            )
-                                                            .click()
-                                                    }
-                                                    className="relative z-10"
-                                                />
                                             </div>
                                         </div>
+                                        <div className="max-w-[320px]">
+                                            <TagsCard
+                                                tags={kpi.tags}
+                                                onSetTags={(tags) => {
+                                                    setKpi({
+                                                        ...kpi,
+                                                        tags,
+                                                    });
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="max-w-[320px]">
-                                        <TagsCard
-                                            tags={kpi.tags}
-                                            onSetTags={(tags) => {
-                                                setKpi({
-                                                    ...kpi,
-                                                    tags,
-                                                });
-                                            }}
-                                        />
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </Card>
+                                </motion.div>
+                            </Card>
+                        </Box>
                         <Card className="mx-0 mb-6 py-6 md:px-6 px-3 pb-0 shadow-none">
                             <>
                                 <motion.div
