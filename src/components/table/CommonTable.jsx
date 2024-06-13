@@ -85,7 +85,7 @@ export function CommonTable({
                             }`;
 
                             return (
-                                <tr key={page + "-" + ele.id} >
+                                <tr key={page + "-" + ele.id} className="hover:bg-blue-gray-50 w-full">
                                     {type === "checkbox" && (
                                         <td
                                             className={`py-3 px-0  flex justify-center ${

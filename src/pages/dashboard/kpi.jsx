@@ -57,8 +57,8 @@ export function DetailKpi() {
 
     useEffect(() => {
         setKpi(auth.kpi.find((el) => el.id === id));
-        setInitCompletion(auth.kpi.find((el) => el.id === id).completion);
-    }, [auth.kpi]);
+        setInitCompletion(auth.kpi.find((el) => el.id === id)?.completion);
+    }, [auth.kpi,id]);
     useEffect(() => {
         if (kpi) {
             setTableData(kpi.targets);

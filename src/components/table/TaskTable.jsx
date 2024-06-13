@@ -12,7 +12,10 @@ import { DatePicker, Select } from "antd";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import dayjs from "dayjs";
+import { TargetUpdateModal } from "@/components/modals/TargetUpdateModal";
 export function TaskTable({ tableData, setTableData }) {
+    const [open, setOpen] = useState(false);
+    const [currentTarget, setCurrentTarget] = useState(null);
     const tableHead = [
         "Task Name",
         "Metric",
@@ -46,6 +49,10 @@ export function TaskTable({ tableData, setTableData }) {
                         variant="small"
                         color="blue-gray"
                         className="font-bold text-[14px]"
+                        onClick={() => {
+                            setOpen(true);
+                            setCurrentTarget(ele);
+                        }}
                     >
                         {ele.name}
                     </Typography>
@@ -127,9 +134,19 @@ export function TaskTable({ tableData, setTableData }) {
             </td>
         </>
     );
+    const setTarget = (target) => {
+        setTableData(tableData.map((t) => (t.id === target.id ? target : t)));
+        console.log(target);
+    };
 
     return (
         <>
+            <TargetUpdateModal
+                open={open}
+                setOpen={setOpen}
+                target={currentTarget}
+                setTarget={setTarget}
+            />
             <CommonTable
                 tableHeadJsx={tableHeadJsx}
                 setTableData={setTableData}

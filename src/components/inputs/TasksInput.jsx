@@ -38,14 +38,14 @@ export const TasksInput = ({ tasks, setTasks }) => {
     };
     return (
         <>
-            <div className="w-full px-8">
+            <div className="w-full px-2">
                 <Button
                     size="small"
                     variant="contained"
                     sx={{
                         marginBottom: "16px",
                         marginLeft: "16px",
-                        backgroundColor: "#1E5EFF",
+                        backgroundColor: "#00437f",
                     }}
                     onClick={() => handleAddTask()}
                 >
