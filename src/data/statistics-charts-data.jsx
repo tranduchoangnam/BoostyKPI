@@ -1,5 +1,6 @@
 import { chartsConfig } from "@/configs";
 import { Typography } from "@material-tailwind/react";
+import { Box } from "@mui/material";
 import { Select } from "antd";
 const websiteViewsChart = {
     type: "donut",
@@ -218,7 +219,7 @@ export const statisticsChartsData = [
                                 KPIs Today
                             </Typography>
                         </div>
-                        <div className="gap-2 ml-16">
+                        <Box sx={{ ml: { md: 8, xs: 1 } }}>
                             <Typography className="text-[20px] font-bold text-[#131523]">
                                 {dailySalesChart.series[1].data.reduce(
                                     (a, b) => a + b,
@@ -228,7 +229,7 @@ export const statisticsChartsData = [
                             <Typography className="text-[14px] text-[#5A607F]">
                                 KPIs Yesterday
                             </Typography>
-                        </div>
+                        </Box>
                     </div>
                 </>
             ),
