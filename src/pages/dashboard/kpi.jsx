@@ -127,6 +127,22 @@ export function DetailKpi() {
         setShowDeleteModal(false);
         toast.success("Tasks(s) deleted successfully");
     };
+    const handleSave = () => {
+        auth.setKpi(
+            auth.kpi.map((el) =>
+                el.id === kpi.id
+                    ? {
+                        ...el,
+                        plan: rangeDate.dateString,
+                        priority: kpi.priority,
+                        tags: kpi.tags,
+                        targets: tableData,
+                    }
+                    : el,
+            ),
+        );
+        toast.success("Goal updated successfully");
+    }
 
     return (
         <>
@@ -160,7 +176,7 @@ export function DetailKpi() {
                             secondary: "Cancel",
                         }}
                         onPrimary={() => {
-                            toast.success("Goal updated successfully");
+                            handleSave();
                         }}
                         onSecondary={() => {
                             navigate("/kpi");
